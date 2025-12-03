@@ -1,0 +1,370 @@
+<div class="settings-page-wrapper">
+
+  <div class="settings-layout">
+    <!-- Menu Lateral -->
+    <aside class="config-sidebar">
+      <nav class="config-nav">
+
+        <!-- Meu Perfil -->
+        <a href="javascript:void(0)" (click)="selectPanel('info-pessoal')"
+          [class.active]="activePanel() === 'info-pessoal'" class="nav-item">
+          <i class="fas fa-user"></i>
+          <div class="nav-text">
+            <span class="nav-primary-text">{{ 'CONFIG.MY_PROFILE' | translate }}</span>
+            <span class="nav-secondary-text">{{ 'CONFIG.CHANGE_PERSONAL_DATA' | translate }}</span>
+          </div>
+          <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
+
+        <!-- Itens do Menu  -->
+        <a href="javascript:void(0)" (click)="selectPanel('alertas')" [class.active]="activePanel() === 'alertas'"
+          class="nav-item">
+          <i class="fas fa-bell"></i>
+          <div class="nav-text">
+            <span class="nav-primary-text">{{ 'CONFIG.NOTIFICATIONS' | translate }}</span>
+            <span class="nav-secondary-text">{{ 'CONFIG.MANAGE_ALERTS' | translate }}</span>
+          </div>
+          <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
+
+        <a href="javascript:void(0)" (click)="selectPanel('acessibilidade')"
+          [class.active]="activePanel() === 'acessibilidade'" class="nav-item">
+          <i class="fas fa-eye"></i>
+          <div class="nav-text">
+            <span class="nav-primary-text">{{ 'CONFIG.ACCESSIBILITY' | translate }}</span>
+            <span class="nav-secondary-text">{{ 'CONFIG.ADJUST_FONT' | translate }}</span>
+          </div>
+          <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
+
+        <a href="javascript:void(0)" (click)="selectPanel('privacidade')"
+          [class.active]="activePanel() === 'privacidade'" class="nav-item">
+          <i class="fas fa-lock"></i>
+          <div class="nav-text">
+            <span class="nav-primary-text">{{ 'CONFIG.PRIVACY' | translate }}</span>
+            <span class="nav-secondary-text">{{ 'CONFIG.DATA_CONTROL' | translate }}</span>
+          </div>
+          <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
+
+        <a href="javascript:void(0)" (click)="selectPanel('idioma')" [class.active]="activePanel() === 'idioma'"
+          class="nav-item">
+          <i class="fas fa-globe"></i>
+          <div class="nav-text">
+            <span class="nav-primary-text">{{ 'CONFIG.LANGUAGE' | translate }}</span>
+            <span class="nav-secondary-text">{{ 'CONFIG.SELECT_INTERFACE_LANGUAGE' | translate }}</span>
+          </div>
+          <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
+
+        <a href="javascript:void(0)" (click)="selectPanel('suporte')" [class.active]="activePanel() === 'suporte'"
+          class="nav-item">
+          <i class="fas fa-question"></i>
+          <div class="nav-text">
+            <span class="nav-primary-text">{{ 'CONFIG.SUPPORT' | translate }}</span>
+            <span class="nav-secondary-text">{{ 'CONFIG.CONTACT_AND_HELP' | translate }}</span>
+          </div>
+          <i class="fas fa-chevron-right arrow-icon"></i>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Conteúdo do Painel Principal -->
+    <main class="config-content"
+      [ngClass]="{'alertas-mode': activePanel() === 'alertas','acessibilidade-mode': activePanel() === 'acessibilidade','privacidade-mode': activePanel() === 'privacidade','language-mode': activePanel() === 'idioma'}">
+      <div *ngIf="activePanel() === 'info-pessoal'" class="config-panel">
+        <h2>
+          {{ 'CONFIG.PERSONAL_INFO' | translate }}
+          <i class="fas fa-times close-icon" (click)="goToDashboard()"></i>
+        </h2>
+
+        <!-- Formulário de Edição -->
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" [value]="profileData().name" (input)="updateField('name', $event)"
+            placeholder="Seu nome completo" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" [value]="profileData().email" (input)="updateField('email', $event)"
+            placeholder="seu@email.com" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="telefone">Telefone:</label>
+          <input type="tel" id="telefone" [value]="profileData().phone" (input)="updateField('phone', $event)"
+            placeholder="(xx) xxxxx-xxxx (Opcional)" autocomplete="off">
+        </div>
+
+        <div class="button-actions">
+          <button class="btn btn-save" [disabled]="!hasChanges() || isLoading()" (click)="saveChanges()">
+            <i *ngIf="isLoading()" class="fas fa-spinner fa-spin mr-2"></i>
+            {{ 'ACTIONS.SAVE' | translate }}
+          </button>
+          <button class="btn btn-danger" [disabled]="isLoading()" (click)="showDeleteModal.set(true)">
+            {{ 'ACTIONS.DELETE' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Painéis -->
+      <div *ngIf="activePanel() !== 'info-pessoal'" class="config-panel">
+
+        <!-- Alarmes -->
+        <ng-container *ngIf="activePanel() === 'alertas'">
+          <h2>{{ 'CONFIG.MEDICATION_ALERT' | translate }}
+            <i class="fas fa-times close-icon" (click)="goToDashboard()"></i>
+          </h2>
+
+          <section class="section" [class.panel-disabled]="!alarmSettings().enabled">
+            <label class="row">
+              <span>{{ 'CONFIG.RECEIVE_MEDICATION_ALERTS' | translate }}</span>
+              <input type="checkbox" [checked]="alarmSettings().enabled" (change)="toggleAlarm('enabled')">
+            </label>
+          </section>
+
+          <section class="section sound">
+            <label class="row" [class.disabled]="!alarmSettings().enabled">
+              <span>{{ 'CONFIG.SOUND_NOTIFICATION' | translate }}</span>
+              <input type="checkbox" [checked]="alarmSettings().soundEnabled" (change)="toggleAlarm('soundEnabled')"
+                [disabled]="!alarmSettings().enabled">
+            </label>
+
+            <div class="sound-options">
+              <label class="sound-item" [class.selected]="alarmSettings().soundName === 'despertador-curto'"
+                [class.disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled"
+                (click)="setSound('despertador-curto')">
+                <input type="radio" name="sound" (change)="setSound('despertador-curto')"
+                  [checked]="alarmSettings().soundName === 'despertador-curto'"
+                  [disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled" hidden>
+                <span class="sound-circle" [class.active]="alarmSettings().soundName === 'despertador-curto'"></span>
+                <span class="sound-label">Campainha Suave</span>
+              </label>
+
+              <label class="sound-item" [class.selected]="alarmSettings().soundName === 'despertador-longo'"
+                [class.disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled"
+                (click)="setSound('despertador-longo')">
+                <input type="radio" name="sound" (change)="setSound('despertador-longo')"
+                  [checked]="alarmSettings().soundName === 'despertador-longo'"
+                  [disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled" hidden>
+                <span class="sound-circle" [class.active]="alarmSettings().soundName === 'despertador-longo'"></span>
+                <span class="sound-label">Alarme Simples</span>
+              </label>
+
+              <label class="sound-item" [class.selected]="alarmSettings().soundName === 'alarme-intermitente'"
+                [class.disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled"
+                (click)="setSound('alarme-intermitente')">
+                <input type="radio" name="sound" (change)="setSound('alarme-intermitente')"
+                  [checked]="alarmSettings().soundName === 'alarme-intermitente'"
+                  [disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled" hidden>
+                <span class="sound-circle" [class.active]="alarmSettings().soundName === 'alarme-intermitente'"></span>
+                <span class="sound-label">Melodia Calmante</span>
+              </label>
+
+              <label class="sound-item" [class.selected]="alarmSettings().soundName === 'vibracao'"
+                [class.disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled"
+                (click)="setSound('vibracao')">
+                <input type="radio" name="sound" (change)="setSound('vibracao')"
+                  [checked]="alarmSettings().soundName === 'vibracao'"
+                  [disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled" hidden>
+                <span class="sound-circle" [class.active]="alarmSettings().soundName === 'vibracao'"></span>
+                <span class="sound-label">Vibração</span>
+              </label>
+            </div>
+
+            <div class="volume-row">
+              <div class="range-wrapper" [class.disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled">
+                <i class="fa-solid fa-volume-low speaker-icon" aria-hidden="true"></i>
+                <input id="volumeRange" title="Volume" aria-label="Volume" type="range" min="0" max="100"
+                  [value]="alarmSettings().volume" (input)="setAlarmVolume($any($event.target).value);"
+                  [style.background]="rangeBackground()"
+                  [disabled]="!alarmSettings().soundEnabled || !alarmSettings().enabled">
+                <i class="fa-solid fa-volume-high speaker-icon" aria-hidden="true"></i>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <label class="row" [class.disabled]="!alarmSettings().enabled">
+              <span>{{ 'CONFIG.VISUAL_NOTIFICATION' | translate }}</span>
+              <input type="checkbox" [checked]="alarmSettings().visualNotification"
+                (change)="toggleAlarm('visualNotification')" [disabled]="!alarmSettings().enabled">
+            </label>
+          </section>
+
+          <div class="button-actions">
+            <button class="btn btn-save" (click)="saveAlarmSettings()">{{ 'ACTIONS.SAVE' | translate }}</button>
+            <button class="btn btn-secondary" (click)="resetAlarmSettings()">{{ 'CONFIG.RESTORE_DEFAULT' | translate }}</button>
+          </div>
+
+        </ng-container>
+
+        <!-- Acessibilidade Visual -->
+        <ng-container *ngIf="activePanel() === 'acessibilidade'">
+          <h2>{{ 'CONFIG.VISUAL_ACCESSIBILITY' | translate }}
+            <i class="fas fa-times close-icon" (click)="goToDashboard()"></i>
+          </h2>
+
+          <section class="section">
+            <h3 class="sub-title">{{ 'CONFIG.TEXT_SIZE' | translate }}</h3>
+            <div class="size-options">
+              <button class="size-btn" [class.active]="accessibilitySettings().textSize === 'pequeno'"
+                (click)="setTextSize('pequeno')">{{ 'CONFIG.SMALL' | translate }}</button>
+              <button class="size-btn" [class.active]="accessibilitySettings().textSize === 'normal'"
+                (click)="setTextSize('normal')">{{ 'CONFIG.NORMAL' | translate }}</button>
+              <button class="size-btn" [class.active]="accessibilitySettings().textSize === 'grande'"
+                (click)="setTextSize('grande')">{{ 'CONFIG.LARGE' | translate }}</button>
+              <button class="size-btn" [class.active]="accessibilitySettings().textSize === 'extra'"
+                (click)="setTextSize('extra')">{{ 'CONFIG.EXTRA_LARGE' | translate }}</button>
+            </div>
+          </section>
+
+          <section class="section">
+            <label class="row">
+              <span>{{ 'CONFIG.SCREEN_CONTRAST' | translate }}</span>
+              <input type="checkbox" [checked]="accessibilitySettings().contrast"
+                (change)="toggleAccessibility('contrast')">
+            </label>
+            <label class="row">
+              <span>{{ 'CONFIG.DARK_MODE' | translate }}</span>
+              <input type="checkbox" [checked]="accessibilitySettings().darkMode"
+                (change)="toggleAccessibility('darkMode')">
+            </label>
+            <label class="row">
+              <span>{{ 'CONFIG.HIGH_CONTRAST' | translate }}</span>
+              <input type="checkbox" [checked]="accessibilitySettings().highContrast"
+                (change)="toggleAccessibility('highContrast')">
+            </label>
+          </section>
+
+          <div class="button-actions">
+            <button class="btn btn-secondary" (click)="resetAccessibilitySettings()">{{ 'CONFIG.RESTORE_DEFAULT' | translate }}</button>
+          </div>
+        </ng-container>
+
+        <!-- Privacidade de Dados -->
+        <ng-container *ngIf="activePanel() === 'privacidade'">
+          <h2>{{ 'CONFIG.YOUR_PRIVACY' | translate }}
+            <i class="fas fa-times close-icon" (click)="goToDashboard()"></i>
+          </h2>
+          <section class="section">
+            <h3 class="sub-title">{{ 'CONFIG.DATA_USAGE_IMPROVEMENT' | translate }}</h3>
+            <label class="row">
+              <span>{{ 'CONFIG.ALLOW_ANONYMOUS_DATA' | translate }}</span>
+              <input type="checkbox" [checked]="$any(privacySettings()).dataCollection"
+                (change)="togglePrivacy('dataCollection')">
+            </label>
+          </section>
+          <section class="section">
+            <h3 class="sub-title">{{ 'CONFIG.DATA_SHARING_PARTNERS' | translate }}</h3>
+            <label class="row">
+              <span>{{ 'CONFIG.SHARE_DATA_HEALTH_RESEARCH' | translate }}</span>
+              <input type="checkbox" [checked]="$any(privacySettings()).pesquisasDeSaude"
+                (change)="togglePrivacy('pesquisasDeSaude')">
+            </label>
+          </section>
+          <section class="section privacy-links">
+            <a href="javascript:void(0)" (click)="openPrivacyPolicy()" class="privacy-link">
+              <i class="fas fa-file-alt"></i>
+              {{ 'CONFIG.PRIVACY_POLICY' | translate }}
+            </a>
+            <a href="javascript:void(0)" (click)="openTermsOfUse()" class="privacy-link">
+              <i class="fas fa-file-contract"></i>
+              {{ 'CONFIG.TERMS_OF_USE' | translate }}
+            </a>
+          </section>
+          <section class="section">
+            <h3 class="sub-title">{{ 'CONFIG.DATA_CONTROL_SECTION' | translate }}</h3>
+            <button class="btn btn-export" (click)="exportUserDataAsPDF()">
+              <i class="fas fa-download"></i>
+              {{ 'CONFIG.EXPORT_DATA' | translate }}
+            </button>
+            <p class="section-description">{{ 'CONFIG.DOWNLOAD_PERSONAL_INFO' | translate }}</p>
+          </section>
+        </ng-container>
+
+        <!-- Idiomas -->
+        <ng-container *ngIf="activePanel() === 'idioma'">
+          <div class="config-panel language-mode">
+            <h2 class="section-title">
+              {{ 'CONFIG.SELECT_LANGUAGE' | translate }}
+              <i class="fas fa-times close-icon" (click)="goToDashboard()"></i>
+            </h2>
+            <div class="language-list">
+              <button *ngFor="let lang of availableLanguages" class="lang-item"
+                [class.selected]="selectedLanguage() === lang.code" (click)="selectLanguage(lang.code)">
+                {{ lang.name }}
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Ajuda e Suporte -->
+        <ng-container *ngIf="activePanel() === 'suporte'">
+          <h2>{{ 'CONFIG.SUPPORT' | translate }}
+            <i class="fas fa-times close-icon" (click)="goToDashboard()"></i>
+          </h2>
+          <section class="support-section message-section">
+            <textarea
+              class="support-textarea"
+              [(ngModel)]="supportMessage"
+              placeholder="Escreva uma mensagem..."
+              rows="6">
+            </textarea>
+            <button class="btn btn-send-message" (click)="sendSupportMessage()">
+              {{ 'CONFIG.SEND_MESSAGE' | translate }}
+            </button>
+          </section>
+          <div class="support-divider"></div>
+          <section class="support-section solutions-section">
+            <h3>{{ 'CONFIG.ACCESS_MAIN_SOLUTIONS' | translate }}</h3>
+            <div class="solutions-grid">
+              <div *ngFor="let solution of supportSolutions" class="solution-card" (click)="openSolutionModal(solution)">
+                <div class="solution-content">
+                  <i [class]="solution.icon"></i>
+                  <span class="solution-text">{{ solution.titleKey | translate }}</span>
+                </div>
+                <i class="fas fa-chevron-right solution-arrow"></i>
+              </div>
+            </div>
+          </section>
+        </ng-container>
+
+        <ng-template #otherPanel>
+          <h2>{{ activePanel() | uppercase }}</h2>
+          <p>Conteúdo da seção {{ activePanel() }}.</p>
+        </ng-template>
+      </div>
+      <div *ngIf="isLoading()" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Processando...</p>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Confirmação de Exclusão -->
+<div *ngIf="showDeleteModal()" class="modal-overlay">
+  <div class="modal-content">
+    <h3>{{ 'CONFIG.CONFIRM_ACCOUNT_DELETION' | translate }}</h3>
+    <p>{{ 'CONFIG.ACCOUNT_DELETE_WARNING' | translate }}</p>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" (click)="showDeleteModal.set(false)" [disabled]="isLoading()">{{ 'ACTIONS.CANCEL' | translate }}</button>
+      <button class="btn btn-confirm-danger" (click)="deleteAccount()" [disabled]="isLoading()">{{ 'ACTIONS.DELETE' | translate }}</button>
+    </div>
+  </div>
+</div>
+
+<!-- Cards de Soluções de Suporte  -->
+<div *ngIf="showSolutionModal()" class="solution-modal-overlay" (click)="closeSolutionModal()">
+  <div class="solution-modal-card" (click)="$event.stopPropagation()">
+    <div class="solution-modal-header">
+      <h3>{{ selectedSolution?.titleKey | translate }}</h3>
+      <i class="fas fa-times" (click)="closeSolutionModal()" style="cursor: pointer; font-size: 1.5rem;"></i>
+    </div>
+    <div class="solution-modal-body">
+      <p>{{ selectedSolution?.contentKey | translate }}</p>
+    </div>
+  </div>
+</div>

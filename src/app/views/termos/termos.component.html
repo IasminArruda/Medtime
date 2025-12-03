@@ -1,0 +1,79 @@
+<div class="nav">
+  <a routerLink="/dashboard" title="Voltar">
+    <i class="fas fa-chevron-left"></i>
+  </a>
+
+  <div class="logo">
+    <img src="assets/img/Logo.png" alt="logo">
+  </div>
+
+  <div class="nav-user" *ngIf="authService.currentUser$ | async as user" (click)="toggleUserMenu()" #userIcon>
+    <i class="fas fa-user-circle nav-user-icon"></i>
+    <span class="nav-user-name">
+      {{ user.perfil === 'admin' ? ('NAVIGATION.ADM' | translate) : user.nome }}
+    </span>
+  </div>
+</div>
+
+<div class="user-sidebar" #userMenu [class.active]="userMenuAtivo">
+    <div class="user-profile-card">
+        <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        <div class="profile-details">
+            <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
+            <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
+      <i class="fas fa-horizontal-rule"></i>
+         
+    </div>
+      </div>
+
+    <div class="user-menu-options">
+    <div class="config">
+      <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
+        <i class="fas fa-cog option-icon"></i>
+        <h5>{{ 'NAVIGATION.SETTINGS' | translate }}</h5>
+      </a>
+    </div>
+        <a routerLink="/politica-privacidade" (click)="toggleUserMenu()" class="menu-option">
+            <i class="fas fa-shield-alt option-icon"></i>
+            <h5>Política de Privacidade</h5>
+          </a>
+        <a (click)="efetuarLogout()" class="menu-option logout-option">
+            <i class="fas fa-sign-out-alt option-icon"></i>
+            <h5>Fazer Logout</h5>
+          </a>
+     
+  </div>
+</div>
+<div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
+
+<h1>Termos de Uso</h1>
+
+<div class="container">
+  <p>No MedTime, valorizamos sua privacidade e a segurança de suas informações. Esta política explica de forma clara como
+  coletamos, usamos, assessoramos e protegemos seus dados quando você utiliza o site no aplicativo e o site.</p>
+  <h3>Que informações coletamos?</h3>
+  <h4>Dados que você fornece:
+  Seu nome, e-mail e número de telefone.
+  Informações sobre seus medicamentos (nome, dosagem, horários, histórico de tomadas)
+  Dados do QR Code:
+  Informações dos medicamentos lidas através do QR Code.</h4>
+  <h3>Como usamos suas informações?</h3>
+  <h4>Fornecer o serviço MedTime: Para enviar alertas de medicação, registrar seu histórico de tomadas e exibir bulas.
+  Melhorar o MedTime: Usamos dados anônimos e agrupados para entender como o aplicativo é usado.
+  Comunicar com você: Proteger e enviar avisos sobre serviço ou atualizações.</h4>
+  <h3>Se tiver dúvidas sobre Política de Privacidade, entre em contato</h3>
+  <h3>E-mail: suporte@medtime.com</h3>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="social-icons">
+      <a href="https://instagram.com/medtime.3" target="_blank" class="icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com" target="_blank" class="icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank" class="icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com" target="_blank" class="icon"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+</footer>

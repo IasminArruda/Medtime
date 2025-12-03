@@ -1,0 +1,17 @@
+<div class="scanner-page">
+  <i routerLink="/dashboard" class="fas fa-circle-arrow-left"></i>
+  <div class="scanner-logo">
+    <img src="assets/img/Logo.png" alt="Medtime logo"/>
+  </div>
+
+  <div class="scanner-card">
+    <div class="scanner-view">
+      <div id="reader" #reader class="qr-reader"></div>
+    </div>
+
+    <div class="manual-input">
+      <input id="urlManual" #manualInput class="url-input" type="text" placeholder="{{ 'SCANNER.PLACEHOLDER' | translate }}" autocomplete="off" />
+      <button class="btn-read" (click)="readManualUrl(manualInput.value)">{{ 'SCANNER.BUTTON_READ' | translate }}</button>
+    </div>
+  </div>
+</div>

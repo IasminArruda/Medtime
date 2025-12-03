@@ -1,0 +1,88 @@
+<div class="nav">
+  <div class="logo">
+    <img src="assets/img/Logo.png" alt="logo">
+  </div>
+
+  <h3 (click)="voltar()" style="cursor: pointer">Voltar</h3>
+  <h3 (click)="irParaCuriosidades()" style="cursor: pointer">Curiosidades</h3>
+
+  <form>
+    <i class="fas fa-search"></i>
+    <input type="text" class="input" [placeholder]="'HOME.SEARCH_PLACEHOLDER' | translate">
+  </form>
+
+  <div class="nav-user" (click)="handleUserClick()" #userIcon>
+    <i class="fas fa-user-circle nav-user-icon"></i>
+    <span class="nav-user-name" *ngIf="isLoggedIn">
+      {{ authService.getUsuario()?.perfil === 'admin' ? ('NAVIGATION.ADM' | translate) : (authService.getUsuario()?.nome || authService.getUsuario()?.name) }}
+    </span>
+  </div>
+</div>
+
+<div class="user-sidebar" #userMenu [class.active]="userMenuAtivo">
+    <div class="user-profile-card">
+        <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        <div class="profile-details">
+            <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
+            <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
+      <i class="fas fa-horizontal-rule"></i>
+    </div>
+      </div>
+    <div class="user-menu-options">
+    <div class="config">
+      <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
+        <i class="fas fa-cog option-icon"></i>
+        <h5>{{ 'NAVIGATION.SETTINGS' | translate }}</h5>
+      </a>
+    </div>
+        <a routerLink="/politica-privacidade" (click)="toggleUserMenu()" class="menu-option">
+            <i class="fas fa-shield-alt option-icon"></i>
+            <h5>Política de Privacidade</h5>
+          </a>
+        <a (click)="efetuarLogout()" class="menu-option logout-option">
+            <i class="fas fa-sign-out-alt option-icon"></i>
+            <h5>Fazer Logout</h5>
+        </a>
+  </div>
+</div>
+<div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
+
+  <h1>{{ 'ABOUT.TITLE' | translate }}</h1>
+
+<!-- Cards -->
+<div class="container">
+  <div class="cards-grid">
+    <div class="card">
+      <h2>{{ 'ABOUT.KNOW_MEDTIME_TITLE' | translate }}</h2>
+      <p>{{ 'ABOUT.KNOW_MEDTIME_TEXT' | translate }}</p>
+    </div>
+
+    <div class="card">
+      <h2>{{ 'ABOUT.OUR_OBJECTIVE_TITLE' | translate }}</h2>
+      <p>{{ 'ABOUT.OUR_OBJECTIVE_TEXT' | translate }}</p>
+    </div>
+
+    <div class="card">
+      <h2>{{ 'ABOUT.BEHIND_MEDTIME_TITLE' | translate }}</h2>
+      <p>{{ 'ABOUT.BEHIND_MEDTIME_TEXT' | translate }}</p>
+    </div>
+
+    <div class="imagem">
+      <img src="assets/img/foto.png" alt="Imagem">
+    </div>
+
+    </div>
+    </div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="social-icons">
+      <a href="https://instagram.com/medtime.3" target="_blank" class="icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com" target="_blank" class="icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank" class="icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com" target="_blank" class="icon"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+</footer>

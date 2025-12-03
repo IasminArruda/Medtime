@@ -1,0 +1,74 @@
+<div class="voltar-home">
+  <a routerLink="/home" title="Ir para Home">
+    <i class="fas fa-circle-arrow-left"></i>
+  </a>
+</div>
+
+<!-- Containr principal para englobar os formulários de login e cadastro  -->
+<div class="container" id="container" [ngClass]="{ 'right-panel-active': isRightPanelActive }">
+
+<!-- Formulário de Cadastro -->
+<div class="form-container sign-up-container">
+  <form #cadastroForm="ngForm" (ngSubmit)="onSubmitCadastro(cadastroForm.value)">
+    <h1>{{ 'LOGIN.SIGN_UP' | translate }}</h1>
+    <div class="input-icon">
+      <input type="text" [placeholder]="'LOGIN.NAME' | translate" name="nome" required ngModel autocomplete="off"/>
+      <i class="fa fa-user"></i>
+    </div>
+    <div class="input-icon">
+      <input type="email" [placeholder]="'LOGIN.EMAIL' | translate" name="email" required ngModel autocomplete="off" />
+      <i class="fa fa-envelope"></i>
+    </div>
+    <div class="input-icon">
+      <input type="password" [placeholder]="'LOGIN.PASSWORD' | translate" name="senha" required ngModel autocomplete="off"/>
+      <i class="fa fa-lock"></i>
+    </div>
+    <button type="submit">{{ 'LOGIN.REGISTER' | translate }}</button>
+  </form>
+</div>
+
+<!-- Formulário de Login -->
+<div class="form-container sign-in-container">
+  <form #loginForm="ngForm" (ngSubmit)="onSubmitLogin(loginForm.value)">
+    <h1>{{ 'LOGIN.LOGIN' | translate }}</h1>
+    <div class="input-icon">
+      <input type="email" [placeholder]="'LOGIN.EMAIL' | translate" name="email" required ngModel autocomplete="off" />
+      <i class="fa fa-envelope"></i>
+    </div>
+    <div class="input-icon">
+      <input type="password" [placeholder]="'LOGIN.PASSWORD' | translate" name="senha" required ngModel autocomplete="off" />
+      <i class="fa fa-lock"></i>
+    </div>
+    <button type="submit">{{ 'LOGIN.ENTER' | translate }}</button>
+  </form>
+</div>
+
+<!-- Painel Azul -->
+<div class="overlay-container">
+  <div class="overlay">
+    <!-- Painel Esquerdo: aparece quando cadastro está ativo -->
+    <div class="overlay-panel overlay-left">
+      <div class="logo-header">
+          <img src="assets/img/Logo.png" alt="MedTime">
+      </div>
+      <div class="class-item">
+        <h1>{{ 'LOGIN.WELCOME' | translate }}</h1>
+        <p>{{ 'LOGIN.HAVE_ACCOUNT' | translate }}</p>
+        <button class="ghost" (click)="showSignInPanel()">{{ 'LOGIN.SIGN_IN_BUTTON' | translate }}</button>
+      </div>
+    </div>
+
+    <!-- Painel Direito: aparece quando login está ativo -->
+    <div class="overlay-panel overlay-right">
+      <div class="logo-header">
+          <img src="assets/img/Logo.png" alt="MedTime" >
+      </div>
+      <div class="class-item">
+        <h1>{{ 'LOGIN.WELCOME_BACK' | translate }}</h1>
+        <p>{{ 'LOGIN.NO_ACCOUNT' | translate }}</p>
+        <button class="ghost" (click)="showSignUpPanel()">{{ 'LOGIN.SIGN_UP_BUTTON' | translate }}</button>
+      </div>
+    </div>
+
+  </div>
+</div>

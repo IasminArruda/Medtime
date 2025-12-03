@@ -1,0 +1,99 @@
+<div class="nav">
+  <div class="menuImg" #menuIcon (click)="toggleMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <div class="menu-mobile" #menu [class.active]="menuAtivo">
+
+    <a routerLink="/dashboard" (click)="toggleMenu()">{{ 'NAVIGATION.HOME' | translate }}</a>
+    <a routerLink="/sobre" (click)="toggleMenu()">{{ 'NAVIGATION.ABOUT_US' | translate }}</a>
+    <a routerLink="/curiosidades" (click)="toggleMenu()">{{ 'NAVIGATION.CURIOSITIES' | translate }}</a>
+    <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear QR Code</a>
+    <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear novo QR Code</a>
+    <a *ngIf="temProgramacao" routerLink="/qrcode" (click)="toggleMenu()">Ver Programação</a>
+    <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate }}</a>
+  </div>
+
+  <div class="logo">
+    <img src="assets/img/Logo.png" alt="logo">
+  </div>
+
+  <form>
+    <i class="fas fa-search"></i>
+    <input type="text" class="input" [placeholder]="'HOME.SEARCH_PLACEHOLDER' | translate">
+  </form>
+
+  <div class="nav-user" *ngIf="authService.currentUser$ | async as user" (click)="toggleUserMenu()" #userIcon>
+    <i class="fas fa-user-circle nav-user-icon"></i>
+    <span class="nav-user-name">
+      {{ user.perfil === 'admin' ? ('NAVIGATION.ADM' | translate) : user.nome }}
+    </span>
+  </div>
+</div>
+
+<div class="user-sidebar" #userMenu [class.active]="userMenuAtivo">
+    <div class="user-profile-card">
+        <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        <div class="profile-details">
+            <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
+            <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
+      <i class="fas fa-horizontal-rule"></i>
+         
+    </div>
+      </div>
+
+    <div class="user-menu-options">
+    <div class="config">
+      <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
+        <i class="fas fa-cog option-icon"></i>
+        <h5>{{ 'NAVIGATION.SETTINGS' | translate }}</h5>
+      </a>
+    </div>
+        <a routerLink="/politica-privacidade" (click)="toggleUserMenu()" class="menu-option">
+            <i class="fas fa-shield-alt option-icon"></i>
+            <h5>Política de Privacidade</h5>
+          </a>
+        <a (click)="efetuarLogout()" class="menu-option logout-option">
+            <i class="fas fa-sign-out-alt option-icon"></i>
+            <h5>Fazer Logout</h5>
+          </a>
+     
+  </div>
+</div>
+<div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
+
+<div class="admin-sidebar-wrapper">
+  <aside class="admin-sidebar">
+    <nav class="admin-nav">
+      <a *ngFor="let item of administradorItems" href="javascript:void(0)" (click)="selectPanel(item.id)"
+        [class.active]="activePanel() === item.id" class="nav-item">
+        <i [class]="item.icon"></i>
+        <span class="nav-text">{{ item.textKey | translate }}</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="admin-content-area">
+    <div *ngIf="activePanel() === 'gerenciar-conteudo'">
+      <h2>{{ 'MENU.MANAGE_CONTENT' | translate }}</h2>
+      <p>Área para gerenciar artigos, imagens, etc.</p>
+    </div>
+    <div *ngIf="activePanel() === 'gerenciar-usuario'">
+      <h2>{{ 'MENU.MANAGE_USER' | translate }}</h2>
+      <p>Área para adicionar, editar ou remover usuários.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="social-icons">
+      <a href="https://instagram.com/medtime.3" target="_blank" class="icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com" target="_blank" class="icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank" class="icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com" target="_blank" class="icon"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+</footer>

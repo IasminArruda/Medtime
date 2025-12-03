@@ -1,0 +1,19 @@
+{
+  "name": "backend-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@api/chatpro": "file:.api/apis/chatpro",
+    "api": "^6.1.3",
+    "dotenv": "^17.2.3",
+    "twilio": "^5.10.6"
+  }
+}

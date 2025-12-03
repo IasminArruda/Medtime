@@ -1,0 +1,95 @@
+<div class="nav">
+  <div class="logo">
+    <img src="assets/img/Logo.png" alt="logo">
+  </div>
+
+    <h3 (click)="irParaSobreNos()">Sobre Nós</h3>
+    <h3 (click)="irParaCuriosidades()">Curiosidades</h3>
+
+  <form>
+    <i class="fas fa-search"></i>
+    <input type="text" class="input" placeholder="Procurando alguma coisa?">
+  </form>
+
+  <div class="user">
+    <i class="fas fa-user-circle" (click)="irParaLogin()"></i>
+  </div>
+</div>
+
+<!-- Carrossel -->
+<div class="carrossel" (mouseenter)="pauseSlide()" (mouseleave)="startAutoSlide()">
+
+  <div class="carrossel-images" [style.transform]="'translateX(' + (-currentIndex * 100) + '%)'">
+
+    <img *ngFor="let img of images" [src]="img" alt="Img">
+  </div>
+
+  <button class="prev" (click)="moveSlide(-1)">&#10094;</button>
+  <button class="next" (click)="moveSlide(1)">&#10095;</button>
+</div>
+
+<!-- Perguntas -->
+<div class="perguntas-container">
+  <details class="faq">
+    <summary> Para que serve o MedTime?</summary>
+    <p>O MedTime foi desenvolvido para ajudar os usuários a gerenciar seu tratamento médico de forma mais eficiente.</p>
+  </details>
+
+  <details class="faq">
+    <summary> O site é responsivo e funciona em diferentes dispositivos?</summary>
+    <p>Sim. O MedTime foi projetado com layout responsivo, o que permite o uso em computadores, tablets e celulares sem
+      perda de qualidade visual ou funcionalidade.</p>
+  </details>
+
+  <details class="faq">
+    <summary> Como funciona o sistema de leitura por QR Code?</summary>
+    <p>O usuário pode escanear um QR Code presente na receita médica. O sistema interpreta os dados e programa uma série de alarmes para lembrar o usuário de tomar os medicamentos nos horários corretos.</p>
+  </details>
+
+  <details class="faq">
+    <summary> Quem pode usar o MedTime?</summary>
+    <p>Qualquer pessoa que precise organizar seus medicamentos pode usar o MedTime, especialmente idosos,
+      cuidadores, pessoas com doenças crônicas ou qualquer usuário que deseje melhorar sua rotina de tratamento.</p>
+  </details>
+
+  <details class="faq">
+    <summary> Os dados do usuário estão protegidos?</summary>
+    <p>Sim. O MedTime utiliza práticas básicas de segurança, como criptografia de senhas e controle de acesso por login,
+      garantindo que os dados de cada usuário fiquem protegidos.</p>
+  </details>
+
+  <details class="faq">
+    <summary> Como o MedTime pode ajudar no dia a dia do usuário?</summary>
+    <p>O MedTime facilita a organização da rotina de medicação, evitando esquecimentos e erros de dose. Com lembretes
+      automáticos, leitura rápida de receitas por QR Code e uma interface simples, ele promove mais segurança e
+      autonomia para o usuário no tratamento médico diário.</p>
+  </details>
+</div>
+
+<!-- Carrossel de Marcas -->
+<div class="logo-carousel">
+  <div class="logo-track" id="logoTrack">
+    <div class="logo-item"><img src="assets/img/marcas/1.svg" alt="Logo 1" /></div>
+    <div class="logo-item"><img src="assets/img/marcas/2.svg" alt="Logo 2" /></div>
+    <div class="logo-item"><img src="assets/img/marcas/3.svg" alt="Logo 3" /></div>
+    <div class="logo-item"><img src="assets/img/marcas/4.svg" alt="Logo 4" /></div>
+    <div class="logo-item"><img src="assets/img/marcas/5.svg" alt="Logo 5" /></div>
+
+    <div class="logo-item"><img src="assets/img/marcas/1.svg" alt="Logo 1" /></div>
+    <div class="logo-item"><img src="assets/img/marcas/2.svg" alt="Logo 2" /></div>
+    <div class="logo-item"><img src="assets/img/marcas/3.svg" alt="Logo 3" /></div>
+    <div class="logo-item"><img src="assets/img/marcas/4.svg" alt="Logo 4" /></div>
+    <div class="logo-item"><img src="assets/img/marcas/5.svg" alt="Logo 5" /></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="social-icons">
+      <a href="https://instagram.com/medtime.3" target="_blank" class="icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com" target="_blank" class="icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank" class="icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com" target="_blank" class="icon"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+</footer>

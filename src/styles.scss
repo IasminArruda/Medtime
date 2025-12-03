@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.input {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.body-login {
+  background-color: #f9f9f9;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+body.body-sobre {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #024f87, #0f939b, #7DA0CA);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  padding-top: 80px;
+}
+
+:root {
+  --base-font-size: 1rem;
+}
+
+html.text-size-pequeno {
+  font-size: 14px;
+}
+
+html.text-size-normal {
+  font-size: 16px;
+}
+
+html.text-size-grande {
+  font-size: 18px;
+}
+
+html.text-size-extra {
+  font-size: 20px;
+}
+
+html.dark-mode {
+  background: #121212;
+  color: #eaeaea;
+}
+
+html.dark-mode body,
+html.dark-mode .config-content,
+html.dark-mode .config-sidebar,
+html.dark-mode .settings-layout,
+html.dark-mode .config-panel,
+html.dark-mode .section,
+html.dark-mode .row,
+html.dark-mode span,
+html.dark-mode label,
+html.dark-mode h2,
+html.dark-mode h3,
+html.dark-mode p {
+  background-color: #121212;
+  color: #eaeaea;
+}
+
+html.dark-mode input[type="text"],
+html.dark-mode input[type="email"],
+html.dark-mode input[type="tel"] {
+  background-color: #1e1e1e;
+  color: #eaeaea;
+  border-color: #333;
+}
+
+html.dark-mode .size-btn {
+  background: #1e1e1e;
+  color: #eaeaea;
+  border-color: #333;
+}
+
+html.dark-mode .size-btn.active {
+  background: #2a2a2a;
+  color: #eaeaea;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+html.contrast-on {
+  filter: contrast(1.08) saturate(1.02);
+}
+
+html.high-contrast {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+html.high-contrast body,
+html.high-contrast .config-content,
+html.high-contrast .config-sidebar,
+html.high-contrast .settings-layout,
+html.high-contrast .config-panel,
+html.high-contrast .section,
+html.high-contrast .row,
+html.high-contrast span,
+html.high-contrast label,
+html.high-contrast h2,
+html.high-contrast h3,
+html.high-contrast p {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+html.high-contrast input[type="text"],
+html.high-contrast input[type="email"],
+html.high-contrast input[type="tel"] {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+html.high-contrast .size-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+html.high-contrast .size-btn.active {
+  background: #fff !important;
+  color: #000 !important;
+  border-color: #fff !important;
+}
+

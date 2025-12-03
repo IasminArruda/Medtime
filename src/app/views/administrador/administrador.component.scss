@@ -1,0 +1,417 @@
+.nav {
+  width: 100%;
+  height: 4.375rem;
+  background: linear-gradient(to right, #024f87, #0f939b, #7DA0CA);
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Estilo para a logo */
+.logo {
+  margin-left: 2.5rem;
+
+  img {
+    max-width: 18%;
+    height: auto;
+    padding: 0rem 0rem 0rem 0rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+}
+
+.menu {
+  width: 100%;
+  justify-content: space-around;
+  display: flex;
+}
+
+.menu a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: black;
+}
+
+.menuhamb img {
+  width: 2.5rem;
+  cursor: pointer;
+  display: flex;
+}
+
+.menuhamb {
+  display: flex;
+  width: 3.75rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Menu lateral */
+.menu-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15.625rem;
+  height: auto;
+  background: linear-gradient(to right, #024f87, #0f939b, #7DA0CA);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  padding: 0.9375rem;
+  z-index: 2000;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateY(-0.625rem);
+  border-radius: 0.9375rem;
+  margin-left: 0.625rem;
+  margin-top: 0.625rem;
+}
+
+/* Essa parte mantém igual, é ela que faz aparecer */
+.menu-mobile.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-mobile a {
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem;
+  border-radius: 0.625rem;
+  transition: background 0.2s ease-in-out;
+  font-weight: bold;
+}
+
+.menu-mobile a:hover {
+  background-color: #052659;
+}
+
+.menuImg {
+  color: white;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+/* Barra de pesquisa */
+form {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 37.5rem;
+  height: 2.5rem;
+  background: white;
+  box-sizing: border-box;
+  border-radius: 1.5625rem;
+  border: 0.25rem solid white;
+  padding: 0.3125rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 5s;
+  flex-shrink: 0;
+}
+
+form i {
+  font-size: 1.25rem;
+  color: #6c6e6d;
+  margin-left: 0.3125rem;
+  margin-right: 0.0625rem;
+  margin-top: 0.1875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+/* Input da pesquisa */
+.input {
+  width: 100%;
+  height: 2.1875rem;
+  line-height: 1.875rem;
+  font-size: 1.2em;
+  border-radius: 1.25rem;
+  margin-top: 0.125rem;
+  padding: 0 1.25rem;
+  border: none;
+  outline: none;
+}
+
+.nav-user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.625rem;
+  padding: 0 0.625rem;
+  margin-right: 1.875rem;
+}
+
+.nav-user-icon {
+  font-size: 2.5625rem;
+  color: white;
+  margin-right: 0;
+}
+
+.nav-user-name {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 0;
+  white-space: nowrap;
+}
+
+/* Estilos para o Menu do Usuário */
+.user-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 290px;
+  height: 320px;
+  background: linear-gradient(to right, #024f87, #0f939b, #7DA0CA);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  padding: 15px;
+  z-index: 2000;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateY(-10px);
+  border-radius: 15px;
+  margin-left: 1190px;
+  margin-top: 10px;
+}
+
+.user-sidebar.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.user-profile-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 8px 8px;
+}
+
+.profile-avatar {
+  margin-left: -8px;
+  margin-top: -25px;
+  margin-right: 10px;
+
+  .fas.fa-user-circle {
+    font-size: 3rem;
+    color: white;
+    display: block;
+  }
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 0;
+  margin-top: 0;
+  padding-bottom: 8px;
+}
+
+.profile-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: -20px;
+  color: white;
+  margin-top: -25px;
+}
+
+.profile-email {
+  font-size: 0.9rem;
+  margin-top: 0px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.user-menu-options {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin: -55px;
+  margin-left: -20px;
+}
+
+.fas.fa-cog.option-icon {
+  font-size: 22px;
+  margin-left: 22px;
+  margin-top: 10px;
+}
+
+.config h5 {
+  color: white;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+h5 {
+  margin-left: -10px;
+  color: white;
+}
+
+h5:hover {
+  text-decoration: underline;
+  transform: scale(1.1);
+}
+
+.user-menu-options .menu-option {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.user-menu-options .menu-option .option-icon {
+  font-size: 22px;
+  margin-right: 12px;
+  width: 28px;
+  text-align: center;
+}
+
+.logout-option {
+  color: white;
+  margin-top: auto;
+  cursor: pointer;
+  margin: 4px;
+}
+
+/* Estilos para o overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+// Menu administrador
+.admin-sidebar-wrapper {
+  display: flex;
+  height: calc(100vh - 4rem - 55px);
+  margin-top: 4rem;
+}
+
+.admin-sidebar {
+  width: 350px;
+  background-color: #024f87;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  padding-top: 0;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 2.80rem 2rem;
+  text-decoration: none;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+  i {
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .nav-text {
+    flex-grow: 1;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &.active {
+    background-color: #052659;
+  }
+}
+
+.admin-content-area {
+  flex-grow: 1;
+  padding: 2.5rem 3rem;
+  background-color: white;
+}
+
+.admin-content-area h2 {
+  color: #0f939b;
+  border-bottom: 2px solid #0f939b;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+/* Footer */
+.footer {
+  width: 100%;
+  height: 35px;
+  background: linear-gradient(to right, #024f87, #0f939b, #7DA0CA);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  text-align: center;
+  position: relative;
+  bottom: auto;
+  left: auto;
+  z-index: 1;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 5px;
+  margin-left: 20px;
+}
+
+.social-icons .icon {
+  background-color: #ffffff;
+  color: #052659;
+  font-size: 24px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-icons .icon:hover {
+  background-color: #052659;
+  color: #ffffff;
+  transform: scale(1.1);
+}
