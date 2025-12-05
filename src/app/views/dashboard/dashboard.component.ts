@@ -181,6 +181,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.userMenuAtivo = false;
   }
 
+  navigateToVerProgramacao() {
+    // Navega para a rota /qrcode informando que queremos ver as programações
+    this.router.navigate(['/qrcode'], { state: { verProgramacao: true } });
+  }
+
   verificarProgramacao(): boolean {
     try {
       const alarmes = localStorage.getItem(this.STORAGE_KEY);

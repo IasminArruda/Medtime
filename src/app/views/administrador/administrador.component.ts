@@ -3,9 +3,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 export interface AdministradorItems {
-  id: string; // Para controle do painel ativo
-  icon: string; // Classes do FontAwesome (ex: 'fas fa-home')
-  textKey: string; // Chave de tradução (ex: 'MENU.MANAGE_CONTENT')
+  id: string; 
+  icon: string;
+  textKey: string;
 }
 
 @Component({
@@ -18,9 +18,9 @@ export class AdministradorComponent {
   userMenuAtivo = false;
   temProgramacao = false;
   isAdmin = false;
-  id: string | undefined; // Para controle do painel ativo
-  icon: string | undefined; // Classes do FontAwesome, como 'fas fa-home'
-  textKey: string | undefined; // Chave de tradução para o texto principal
+  id: string | undefined;
+  icon: string | undefined;
+  textKey: string | undefined;
 
   @ViewChild('menu') menuElement!: ElementRef;
   @ViewChild('menuIcon') menuIcon!: ElementRef;
@@ -47,6 +47,10 @@ export class AdministradorComponent {
     this.authService.logout();
     this.router.navigate(['/home']);
     this.userMenuAtivo = false;
+  }
+
+  navigateToVerProgramacao() {
+    this.router.navigate(['/qrcode'], { state: { verProgramacao: true } });
   }
 
   @HostListener('document:click', ['$event'])

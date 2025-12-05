@@ -176,17 +176,16 @@
     "LABEL_MEDICAMENTO": "Medicamento:",
     "LABEL_START_TIME": "Hora Inicial:",
     "LABEL_TOTAL_DOSES": "Total de Doses:",
-    "EDIT_TITLE": "Editar Programação",
     "START_TIME_LABEL": "Horário de início:",
     "DURATION_DAYS_LABEL": "Duração (dias):",
     "SAVE_CHANGES": "Salvar Alterações",
     "CREATE_TITLE": "Criar Nova Programação",
     "START_TIME_INPUT": "Horário de Início:",
     "GENERATE_SCHEDULE": "Gerar Programação",
-    "SCHEDULE_DOSAGES_TITLE": "Programação de Doses:",
     "SCHEDULE_TOTAL": "Total de {{count}} doses em {{days}} dia(s)",
     "SCHEDULE_PREVIEW": "Programação",
     "CANCEL_SCHEDULE": "Cancelar",
+    "VIEW_SCHEDULE": "Ver Programação",
     "CONFIRM_SAVE": "Confirmar e Salvar Programação",
     "SAVING": "Salvando...",
     "ALERT_CHOOSE_START": "Escolha a hora inicial.",
@@ -205,5 +204,7 @@
     "UPDATED_LOCAL": "Programação atualizada localmente. (Banco indisponível)",
     "DELETED_SUCCESS": "Programação excluída com sucesso!",
     "DELETED_LOCAL": "Programação excluída localmente."
+    ,
+    "DELETED_ALL_AUTOMATIC": "Tratamentos finalizados e removidos."
   }
 }

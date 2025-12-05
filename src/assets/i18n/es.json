@@ -141,6 +141,7 @@
     "RECIPE_INFO_TITLE": "Información de la Receta",
     "SCHEDULES_TITLE": "Programaciones Agendadas",
     "VIEW_SCHEDULES": "Ver Horarios Programados ({{count}} dosis)",
+    "VIEW_SCHEDULE": "Ver Programación",
     "EDIT_BUTTON": "Editar",
     "LABEL_MEDICAMENTO": "Medicamento:",
     "LABEL_START_TIME": "Hora Inicial:",
@@ -154,8 +155,6 @@
     "GENERATE_SCHEDULE": "Generar Programación",
     "SCHEDULE_DOSAGES_TITLE": "Programación de Dosis:",
     "SCHEDULE_TOTAL": "Total de {{count}} dosis en {{days}} día(s)",
-    "SCHEDULE_PREVIEW": "Programación",
-    "CANCEL_SCHEDULE": "Cancelar",
     "CONFIRM_SAVE": "Confirmar y Guardar Programación",
     "SAVING": "Guardando...",
     "ALERT_CHOOSE_START": "Elija la hora de inicio.",
@@ -174,6 +173,8 @@
     "UPDATED_LOCAL": "Programación actualizada localmente. (Servidor no disponible)",
     "DELETED_SUCCESS": "¡Programación eliminada con éxito!",
     "DELETED_LOCAL": "Programación eliminada localmente."
+    ,
+    "DELETED_ALL_AUTOMATIC": "Tratamientos finalizados y eliminados."
   },
   "DASHBOARD": {
     "FAQ_Q1": "¿Qué es un \"anticuerpo\"?",

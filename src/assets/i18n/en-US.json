@@ -172,6 +172,7 @@
     "RECIPE_INFO_TITLE": "Prescription Information",
     "SCHEDULES_TITLE": "Scheduled Programs",
     "VIEW_SCHEDULES": "View Scheduled Times ({{count}} doses)",
+    "VIEW_SCHEDULE": "View Schedule",
     "EDIT_BUTTON": "Edit",
     "LABEL_MEDICAMENTO": "Medication:",
     "LABEL_START_TIME": "Start Time:",
@@ -185,8 +186,6 @@
     "GENERATE_SCHEDULE": "Generate Schedule",
     "SCHEDULE_DOSAGES_TITLE": "Dose Schedule:",
     "SCHEDULE_TOTAL": "Total of {{count}} doses in {{days}} day(s)",
-    "SCHEDULE_PREVIEW": "Schedule",
-    "CANCEL_SCHEDULE": "Cancel",
     "CONFIRM_SAVE": "Confirm and Save Schedule",
     "SAVING": "Saving...",
     "ALERT_CHOOSE_START": "Choose the start time.",
@@ -205,5 +204,7 @@
     "UPDATED_LOCAL": "Schedule updated locally. (Server unavailable)",
     "DELETED_SUCCESS": "Schedule deleted successfully!",
     "DELETED_LOCAL": "Schedule deleted locally."
+    ,
+    "DELETED_ALL_AUTOMATIC": "Treatments finished and removed."
   }
 }

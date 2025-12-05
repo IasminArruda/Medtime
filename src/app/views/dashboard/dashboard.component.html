@@ -9,7 +9,7 @@
     <a routerLink="/curiosidades" (click)="toggleMenu()">{{ 'NAVIGATION.CURIOSITIES' | translate }}</a>
     <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear QR Code</a>
     <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear novo QR Code</a>
-    <a *ngIf="temProgramacao" routerLink="/qrcode" (click)="toggleMenu()">Ver Programação</a>
+    <a *ngIf="temProgramacao" href="#" (click)="navigateToVerProgramacao(); toggleMenu(); $event.preventDefault()">Ver Programação</a>
     <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate }}</a>
 
   </div>

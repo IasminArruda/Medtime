@@ -1,3 +1,8 @@
+body {
+  padding-top: 4.375rem;
+  padding-bottom: 72px;
+}
+
 .nav {
   width: 100%;
   height: 4.375rem;
@@ -14,15 +19,15 @@
 /* Estilo para a logo */
 .logo {
   margin-left: 2.5rem;
+}
 
-  img {
-    max-width: 18%;
-    height: auto;
-    padding: 0rem 0rem 0rem 0rem;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-  }
+.logo img {
+  max-width: 18%;
+  height: auto;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .menu {
@@ -50,7 +55,7 @@
   align-items: center;
 }
 
-/* Menu lateral */
+/* Menu lateral mobile */
 .menu-mobile {
   position: fixed;
   top: 0;
@@ -97,6 +102,7 @@
 }
 
 /* Barra de pesquisa */
+form.nav-search,
 form {
   position: absolute;
   left: 50%;
@@ -111,7 +117,7 @@ form {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: all 5s;
+  transition: all 0.3s;
   flex-shrink: 0;
 }
 
@@ -126,7 +132,6 @@ form i {
   justify-content: center;
   height: 100%;
 }
-
 
 /* Input da pesquisa */
 .input {
@@ -202,12 +207,12 @@ form i {
   margin-left: -8px;
   margin-top: -25px;
   margin-right: 10px;
+}
 
-  .fas.fa-user-circle {
-    font-size: 3rem;
-    color: white;
-    display: block;
-  }
+.profile-avatar .fas.fa-user-circle {
+  font-size: 3rem;
+  color: white;
+  display: block;
 }
 
 .profile-details {
@@ -287,7 +292,7 @@ h5:hover {
   margin: 4px;
 }
 
-/* Estilos para o overlay */
+/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -306,7 +311,7 @@ h5:hover {
   visibility: visible;
 }
 
-// SISTEMA DE ALERTAS
+/* Sistemas de Alertas */
 .alert-container {
   position: fixed;
   top: 20px;
@@ -315,63 +320,51 @@ h5:hover {
   z-index: 1000;
   width: 90%;
   max-width: 400px;
+}
 
-  .alert {
-    padding: 0;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideDown 0.3s ease-out;
-    justify-content: center;
-    display: flex;
-    align-items: center;
+.alert-container .alert {
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideDown 0.3s ease-out;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
 
-    &.alert-sucesso {
-      background-color: white;
-      border: 2px solid #024f87;
+.alert-container .alert.alert-sucesso {
+  background-color: white;
+  border: 2px solid #024f87;
+}
 
-      .alert-content {
-        color: #024f87;
-      }
+.alert-container .alert.alert-sucesso .alert-content {
+  color: #024f87;
+}
 
-      .alert-icon {
-        color: #024f87;
-      }
-    }
+.alert-container .alert.alert-erro {
+  background-color: #024f87;
+}
 
-    &.alert-erro {
-      background-color: #024f87;
+.alert-container .alert.alert-erro .alert-content {
+  color: white;
+}
 
-      .alert-content {
-        color: white;
-      }
+.alert-container .alert.alert-aviso {
+  background-color: white;
+  border: 2px solid #7DA0CA;
+}
 
-      .alert-icon {
-        color: white;
-      }
-    }
+.alert-container .alert.alert-aviso .alert-content {
+  color: #7DA0CA;
+}
 
-    &.alert-aviso {
-      background-color: white;
-      border: 2px solid #7DA0CA;
-
-      .alert-content {
-        color: #7DA0CA;
-      }
-
-      .alert-icon {
-        color: #7DA0CA;
-      }
-    }
-  }
-
-  .alert-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
-    font-weight: 500;
-  }
+.alert-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  font-weight: 500;
 }
 
 @keyframes slideDown {
@@ -388,14 +381,16 @@ h5:hover {
 
 /* Container Principal */
 .container {
-  width: 700px;
-  height: 350px;
-  margin: 150px auto 40px auto;
+  width: 800px;
+  max-width: calc(100% - 40px);
+  height: 450px;
+  margin: 150px auto 12px auto;
   padding: 40px;
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border: 2px solid #052659;
+  box-sizing: border-box;
 }
 
 /* Títulos */
@@ -419,6 +414,169 @@ h5:hover {
   background-color: white;
 }
 
+.alarme-grid,
+.alarms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 120px;
+}
+
+.alarmes-grid,
+.alarm-card,
+.alarme-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+  border: 1px solid rgba(2, 79, 135, 0.12);
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(2, 79, 135, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* empurra as ações para baixo */
+  gap: 12px;
+  font-size: 0.95rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  min-height: 220px;
+  /* deixa os cards mais altos */
+  max-height: none;
+  box-sizing: border-box;
+}
+
+.alarme-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(2, 79, 135, 0.12);
+}
+
+/* Caso você use alarme-card (pt-br) — ajustes finos */
+.alarme-card {
+  background: #ffffff;
+  border: 1px solid #d6eaf8;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+  min-height: 220px;
+}
+
+.alarm-title,
+.med-name {
+  color: #023e66;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.alarm-row {
+  display: flex;
+  justify-content: space-between;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+/* Ações do card alinhadas ao final */
+.alarm-actions,
+.card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  justify-content: flex-end;
+  align-self: stretch;
+}
+
+.btn-primary {
+  background-color: #024f87;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-primary:hover {
+  background-color: #053b63;
+}
+
+.btn-editar,
+.btn-deletar {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-editar:hover {
+  border-color: #024f87;
+  color: #024f87;
+}
+
+.btn-deletar:hover {
+  border-color: #d9534f;
+  color: #d9534f;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.med-dose {
+  color: #333;
+  margin: 6px 0 0 0;
+}
+
+/* Info rows */
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.info-label {
+  color: #024f87;
+  font-weight: 700;
+  width: 110px;
+}
+
+.info-value {
+  color: #233;
+}
+
+.schedule-list li {
+  padding: 10px 0;
+  border-bottom: 1px dashed #eee;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.horario-item {
+  color: #024f87;
+  font-weight: 700;
+  min-width: 70px;
+}
+
+.horario-detalhe {
+  color: #333;
+}
+
+.dot {
+  color: #7DA0CA;
+  margin: 0 6px;
+}
+
+.alarm-card .small,
+.alarm-card .meta-small {
+  padding: 6px 8px;
+  font-size: 0.85rem;
+}
+
 .info-row {
   display: flex;
   margin-bottom: 4px;
@@ -430,6 +588,20 @@ h5:hover {
   font-weight: bold;
 }
 
+.info-value {
+  color: #333;
+  margin-left: 6px;
+}
+
+.alarme-card .med-name .info-label,
+.alarme-card .med-dose .info-label,
+.alarme-card .meta-small .info-label {
+  font-weight: 700;
+  color: #024f87;
+  margin-right: 6px;
+}
+
+/* FORMULÁRIOS / BOTÕES */
 .container h3 {
   color: #024f87;
   margin-top: 10px;
@@ -505,7 +677,7 @@ h5:hover {
   margin-left: 40px;
 }
 
-/* Menu lateral para programação */
+/* Overlay do modal de preview */
 .schedule-modal-overlay {
   position: fixed;
   top: 0;
@@ -517,6 +689,7 @@ h5:hover {
   animation: fadeIn 0.3s ease-out;
 }
 
+/* Modal central (preview antes de salvar) */
 .schedule-modal {
   position: fixed;
   right: 0;
@@ -707,8 +880,66 @@ h5:hover {
   color: #024f87;
 }
 
+/* SIDEBAR fixa (abertura via botão 'Ver Programação') */
+.schedule-sidebar {
+  position: fixed;
+  right: -420px;
+  top: 0;
+  height: 100vh;
+  width: 380px;
+  background: #fff;
+  box-shadow: -8px 0 20px rgba(0, 0, 0, 0.08);
+  transition: right 0.28s ease;
+  z-index: 1700;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.schedule-sidebar.open {
+  right: 0;
+}
+
+.schedule-sidebar .sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.schedule-sidebar .close-sidebar {
+  background: transparent;
+  border: 0;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+/* overlay para sidebar */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 1600;
+}
+
+/* Botões pequenos */
+.btn-editar,
+.btn-deletar {
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #ddd;
+}
+
 /* Footer */
 .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
   width: 100%;
   height: 35px;
   background: linear-gradient(to right, #024f87, #0f939b, #7DA0CA);
@@ -718,11 +949,8 @@ h5:hover {
   align-items: center;
   padding: 10px 0;
   text-align: center;
-  position: relative;
-  bottom: auto;
-  left: auto;
-  z-index: 1;
-  margin-top: 91px;
+  z-index: 1000;
+  margin-top: 0;
 }
 
 .social-icons {

@@ -172,6 +172,7 @@
     "RECIPE_INFO_TITLE": "Informations de l'ordonnance",
     "SCHEDULES_TITLE": "Programmes Planifiés",
     "VIEW_SCHEDULES": "Voir les horaires programmés ({{count}} doses)",
+    "VIEW_SCHEDULE": "Voir la programmation",
     "EDIT_BUTTON": "Modifier",
     "LABEL_MEDICAMENTO": "Médicament :",
     "LABEL_START_TIME": "Heure de début :",
@@ -185,8 +186,6 @@
     "GENERATE_SCHEDULE": "Générer le programme",
     "SCHEDULE_DOSAGES_TITLE": "Programme de doses :",
     "SCHEDULE_TOTAL": "Total de {{count}} doses en {{days}} jour(s)",
-    "SCHEDULE_PREVIEW": "Programmation",
-    "CANCEL_SCHEDULE": "Annuler",
     "CONFIRM_SAVE": "Confirmer et enregistrer le programme",
     "SAVING": "Enregistrement...",
     "ALERT_CHOOSE_START": "Choisissez l'heure de début.",
@@ -205,5 +204,7 @@
     "UPDATED_LOCAL": "Programme mis à jour localement. (Serveur indisponible)",
     "DELETED_SUCCESS": "Programme supprimé avec succès !",
     "DELETED_LOCAL": "Programme supprimé localement."
+    ,
+    "DELETED_ALL_AUTOMATIC": "Traitements terminés et supprimés."
   }
 }
