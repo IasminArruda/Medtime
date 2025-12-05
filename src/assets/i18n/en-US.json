@@ -185,6 +185,8 @@
     "GENERATE_SCHEDULE": "Generate Schedule",
     "SCHEDULE_DOSAGES_TITLE": "Dose Schedule:",
     "SCHEDULE_TOTAL": "Total of {{count}} doses in {{days}} day(s)",
+    "SCHEDULE_PREVIEW": "Schedule",
+    "CANCEL_SCHEDULE": "Cancel",
     "CONFIRM_SAVE": "Confirm and Save Schedule",
     "SAVING": "Saving...",
     "ALERT_CHOOSE_START": "Choose the start time.",

@@ -310,6 +310,10 @@ export class QrcodeComponent implements OnInit, OnDestroy {
     });
   }
 
+  fecharScheduleModal() {
+    this.schedule = [];
+  }
+
   abrirEdicao(alarme: AlarmeAgendado) {
     this.editandoAlarmeId = alarme.id;
     this.editHoraInicio = alarme.horaI;

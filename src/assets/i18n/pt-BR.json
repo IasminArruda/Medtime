@@ -185,6 +185,8 @@
     "GENERATE_SCHEDULE": "Gerar Programação",
     "SCHEDULE_DOSAGES_TITLE": "Programação de Doses:",
     "SCHEDULE_TOTAL": "Total de {{count}} doses em {{days}} dia(s)",
+    "SCHEDULE_PREVIEW": "Programação",
+    "CANCEL_SCHEDULE": "Cancelar",
     "CONFIRM_SAVE": "Confirmar e Salvar Programação",
     "SAVING": "Salvando...",
     "ALERT_CHOOSE_START": "Escolha a hora inicial.",

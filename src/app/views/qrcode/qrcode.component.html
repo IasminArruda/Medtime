@@ -155,23 +155,40 @@
     <input type="time" id="inicio" [(ngModel)]="horaInicial" name="horaInicial" required class="input-field">
 
     <button type="button" class="btn-gerar" (click)="gerarSchedule()">
-     {{ 'QRCODE.GENERATE_SCHEDULE' | translate }}
+       {{ 'QRCODE.GENERATE_SCHEDULE' | translate }}
     </button>
   </form>
 
-  <!-- EXIBIR PROGRAMAÇÃO GERADA -->
-  <div *ngIf="schedule.length > 0" id="scheduleDiv" class="schedule-container">
-    <h4>{{ 'QRCODE.SCHEDULE_PREVIEW' | translate }}:</h4>
-    <div id="scheduleList" class="schedule-list">
-      <p class="schedule-total"><strong>{{ getScheduleTotalText() }}</strong></p>
-      <ul>
-        <li *ngFor="let item of schedule; let i = index" class="schedule-item">
-          <span class="dose-numero"><strong>Dose {{ i + 1 }}:</strong></span>
-          <span class="dose-info">{{ item.horario }} - {{ item.dose }} (Dia {{ item.dia }})</span>
-        </li>
-      </ul>
-      <button type="button" class="btn-confirmar" (click)="confirmarAlarme()" [disabled]="saving">
+  <!-- MENU LATERAL COM PROGRAMAÇÃO GERADA -->
+  <div *ngIf="schedule.length > 0" class="schedule-modal-overlay" (click)="fecharScheduleModal()"></div>
+  <div *ngIf="schedule.length > 0" class="schedule-modal">
+    <div class="modal-header">
+      <h3>{{ 'QRCODE.SCHEDULE_PREVIEW' | translate }}</h3>
+    </div>
+
+    <div class="modal-content">
+      <div class="schedule-info">
+        <p class="medication-name"><strong>{{ medicamentoSelecionado?.nome }}</strong></p>
+        <p class="schedule-total">{{ getScheduleTotalText() }}</p>
+      </div>
+
+      <div class="schedule-list-modal">
+        <ul class="schedule-ul-modal">
+          <li *ngFor="let item of schedule; let i = index" class="schedule-item-modal">
+            <span class="dose-numero-modal">{{ i + 1 }}</span>
+            <span class="dose-time-modal">{{ item.horario }}</span>
+            <span class="dose-day-modal">Dia {{ item.dia }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn-confirmar-modal" (click)="confirmarAlarme()" [disabled]="saving">
         <i class="fas fa-check"></i> {{ (saving ? 'QRCODE.SAVING' : 'QRCODE.CONFIRM_SAVE') | translate }}
+      </button>
+      <button type="button" class="btn-cancelar-modal" (click)="fecharScheduleModal()">
+        {{ 'ACTIONS.CANCEL' | translate }}
       </button>
     </div>
   </div>
