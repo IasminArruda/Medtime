@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/services/translation.service';
 import { AlarmeService } from 'src/app/services/alarme.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 interface AlarmeAgendado {
-  id: string | number; // ID do banco de dados (número) ou local (string)
+  id: string | number;
   nome: string;
   dose: string;
-  horaI: string; // hora inicial
+  horaI: string;
   duracao: number;
-  intervalo: number; // Intervalo entre doses (horas)
-  dataCriacao: number; // timestamp
+  intervalo: number;
+  dataCriacao: number;
   userId: string | number;
-  horarios: Array<{ horario: string; dose: string; dia: number }>; // sequência de horários
+  horarios: Array<{ horario: string; dose: string; dia: number }>;
 }
 
 @Component({
@@ -21,13 +21,23 @@ interface AlarmeAgendado {
   templateUrl: './qrcode.component.html',
   styleUrls: ['./qrcode.component.scss']
 })
-export class QrcodeComponent implements OnInit {
-  qrData: any = null; // Array de medicamentos ou medicamento único
-  medicamentos: any[] = []; // Lista de medicamentos do QR code
-  medicamentoSelecionado: any = null; // Medicamento atualmente selecionado
+export class QrcodeComponent implements OnInit, OnDestroy {
+  temProgramacao = false;
+  isLoggedIn = false;
+  qrData: any = null;
+  medicamentos: any[] = [];
+  medicamentoSelecionado: any = null;
   horaInicial: string = '';
   schedule: Array<{ horario: string; dose: string; dia: number }> = [];
   saving = false;
+  isAdmin = false;
+  menuAtivo = false;
+  userMenuAtivo = false;
+
+  @ViewChild('menu') menuElement!: ElementRef;
+  @ViewChild('menuIcon') menuIcon!: ElementRef;
+  @ViewChild('userMenu') userMenuElement!: ElementRef;
+  @ViewChild('userIcon') userIconElement!: ElementRef;
 
   // Propriedades para gerenciar alarmes
   alarmes: AlarmeAgendado[] = [];
@@ -37,23 +47,22 @@ export class QrcodeComponent implements OnInit {
   editDose: string = '';
   editDuracao: number = 0;
   mensagem: string = '';
-  mensagemStatus: string = '';
+  mensagemStatus: 'sucesso' | 'erro' | 'aviso' = 'sucesso';
 
   private readonly STORAGE_KEY = 'medtime_alarmes_agendados';
+  private alertaTimeout: any = null;
 
-  constructor(private router: Router, private alarmeService: AlarmeService, private authService: AuthService, private translation: TranslationService) { }
+  constructor(
+    private router: Router,
+    private alarmeService: AlarmeService,
+    public authService: AuthService,
+    private translation: TranslationService,) { }
 
   ngOnInit(): void {
     const state: any = window.history.state || {};
     this.qrData = state.qrData || null;
-    // If no qrData (navigated from menu 'Ver Programação'), do not redirect
-    // to scanner — just load scheduled alarms from storage and allow the
-    // user to view existing programações. qrData will be null in that case.
 
-    // Processar medicamentos - pode ser array ou objeto único
     if (!this.qrData) {
-      // Navegado a partir do menu 'Ver Programação' — sem dados escaneados.
-      // Apenas inicializar listas vazias e carregar alarmes do storage.
       this.medicamentos = [];
       this.medicamentoSelecionado = null;
     } else {
@@ -84,9 +93,12 @@ export class QrcodeComponent implements OnInit {
     this.carregarAlarmesDoStorage();
   }
 
-  /**
-   * Carrega alarmes do localStorage para o usuário atual
-   */
+  ngOnDestroy(): void {
+    // Limpar timeout ao destruir componente
+    if (this.alertaTimeout) {
+      clearTimeout(this.alertaTimeout);
+    }
+  }
   private carregarAlarmesDoStorage(): void {
     try {
       const todosAlarmes = localStorage.getItem(this.STORAGE_KEY);
@@ -102,18 +114,71 @@ export class QrcodeComponent implements OnInit {
     }
   }
 
-  /**
-   * Salva alarmes no localStorage
-   */
+  exibirAlerta(mensagem: string, status: 'sucesso' | 'erro' | 'aviso' = 'sucesso', duracao: number = 4000): void {
+    this.mensagem = mensagem;
+    this.mensagemStatus = status;
+
+    // Limpar timeout anterior se houver
+    if (this.alertaTimeout) {
+      clearTimeout(this.alertaTimeout);
+    }
+
+    // Auto-fechar após duração especificada
+    this.alertaTimeout = setTimeout(() => {
+      this.fecharAlerta();
+    }, duracao);
+  }
+
+  fecharAlerta(): void {
+    this.mensagem = '';
+    if (this.alertaTimeout) {
+      clearTimeout(this.alertaTimeout);
+      this.alertaTimeout = null;
+    }
+  }
+
+  getAlertIcon(): string {
+    switch (this.mensagemStatus) {
+      case 'sucesso':
+        return 'fas fa-check-circle';
+      case 'erro':
+        return 'fas fa-exclamation-circle';
+      case 'aviso':
+        return 'fas fa-info-circle';
+      default:
+        return 'fas fa-info-circle';
+    }
+  }
+
+  atualizarMedicamentoSelecionado(): void {
+  }
+
+  excluirAlarmeConfirm(id: string | number): void {
+    if (window.confirm(this.translation.instant('QRCODE.CONFIRM_DELETE'))) {
+      this.excluirAlarme(id);
+    }
+  }
+
+  medicamentosDisponiveis(): any[] {
+    return this.medicamentos.filter(med => !this.isMedicamentoProgramado(med));
+  }
+
+  isMedicamentoProgramado(medicamento: any): boolean {
+    return this.alarmes.some(
+      alarme =>
+        alarme.nome.toLowerCase() === medicamento.nome.toLowerCase() &&
+        alarme.dose === medicamento.dose &&
+        alarme.intervalo === medicamento.intervalo &&
+        alarme.duracao === medicamento.duracao
+    );
+  }
+
   private salvarAlarmesNoStorage(): void {
     try {
       const todosAlarmes = localStorage.getItem(this.STORAGE_KEY);
       let alarmesParsed: AlarmeAgendado[] = todosAlarmes ? JSON.parse(todosAlarmes) : [];
 
-      // Remover alarmes antigos do usuário atual
       alarmesParsed = alarmesParsed.filter(a => a.userId !== this.userId);
-
-      // Adicionar novos alarmes
       alarmesParsed.push(...this.alarmes);
 
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(alarmesParsed));
@@ -123,17 +188,14 @@ export class QrcodeComponent implements OnInit {
     }
   }
 
-  /**
-   * Gera uma série de horários de alarme para o medicamento selecionado
-   */
   gerarSchedule() {
     if (!this.horaInicial) {
-      window.alert(this.translation.instant('QRCODE.ALERT_CHOOSE_START'));
+      this.exibirAlerta('Por favor, defina uma hora inicial', 'aviso');
       return;
     }
 
     if (!this.medicamentoSelecionado) {
-      window.alert(this.translation.instant('QRCODE.ALERT_SELECT_MEDICINE'));
+      this.exibirAlerta('Por favor, selecione um medicamento', 'aviso');
       return;
     }
 
@@ -142,7 +204,7 @@ export class QrcodeComponent implements OnInit {
     const dose = this.medicamentoSelecionado.dose || '';
 
     if (intervaloHoras <= 0 || duracaoDias <= 0) {
-      window.alert(this.translation.instant('QRCODE.ALERT_INTERVAL_DURATION'));
+      this.exibirAlerta('Intervalo e duração devem ser maiores que zero', 'erro');
       return;
     }
 
@@ -168,13 +230,9 @@ export class QrcodeComponent implements OnInit {
     }
   }
 
-  /**
-   * Confirma e salva o alarme (apenas um registro no banco com info básicas)
-   * Os horários são salvos no localStorage
-   */
   confirmarAlarme() {
     if (this.schedule.length === 0) {
-      window.alert(this.translation.instant('QRCODE.ALERT_GENERATE_BEFORE_CONFIRM'));
+      this.exibirAlerta('Por favor, gere um schedule antes de confirmar', 'aviso');
       return;
     }
 
@@ -184,12 +242,10 @@ export class QrcodeComponent implements OnInit {
       return;
     }
 
-    // Criar um ID único temporário para este alarme (será substituído pelo ID do banco depois)
+    // Criar um ID único temporário para este alarme
     const alarmeIdTemp = `alarme_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-    // Criar objeto do alarme agendado (com horários no localStorage)
     const novoAlarme: AlarmeAgendado = {
-      id: alarmeIdTemp, // ID temporário, será atualizado quando o banco responder
+      id: alarmeIdTemp,
       nome: this.medicamentoSelecionado.nome || 'Medicamento',
       dose: this.medicamentoSelecionado.dose || '',
       horaI: this.horaInicial,
@@ -197,12 +253,11 @@ export class QrcodeComponent implements OnInit {
       intervalo: Number(this.medicamentoSelecionado.intervalo) || 24,
       dataCriacao: Date.now(),
       userId: this.userId,
-      horarios: [...this.schedule] // Cópia da sequência de horários
+      horarios: [...this.schedule]
     };
 
     this.saving = true;
 
-    // Salvar um registro no banco de dados (opcional, apenas para histórico)
     const payloadBanco = {
       nome: novoAlarme.nome,
       dose: novoAlarme.dose,
@@ -219,19 +274,18 @@ export class QrcodeComponent implements OnInit {
         console.log('Alarme salvo no banco com sucesso:', res);
 
         // Usar o ID retornado pelo banco
-        const bancoId = res.id || res.ID; // Tenta ambos (Sequelize pode retornar como 'id' ou 'ID')
+        const bancoId = res.id || res.ID;
 
-        // Adicionar o novo alarme à lista local COM O ID DO BANCO
-        novoAlarme.id = bancoId; // Substituir ID local pelo ID real do banco
+        novoAlarme.id = bancoId;
 
-        // Adicionar à lista
         this.alarmes.push(novoAlarme);
-
-        // Salvar no localStorage
         this.salvarAlarmesNoStorage();
+        this.exibirAlerta(
+          `✓ ${novoAlarme.nome} foi agendado com sucesso! ${this.schedule.length} doses programadas.`,
+          'sucesso',
+          3000
+        );
 
-        this.mensagem = `Programação criada com sucesso! ${this.schedule.length} doses agendadas.`;
-        this.mensagemStatus = 'sucesso';
         this.horaInicial = '';
         this.schedule = [];
         this.saving = false;
@@ -243,8 +297,12 @@ export class QrcodeComponent implements OnInit {
         this.alarmes.push(novoAlarme);
         this.salvarAlarmesNoStorage();
 
-        this.mensagem = `Programação criada localmente! ${this.schedule.length} doses agendadas. (Banco indisponível)`;
-        this.mensagemStatus = 'sucesso';
+        this.exibirAlerta(
+          `✓ ${novoAlarme.nome} foi agendado localmente! ${this.schedule.length} doses programadas.`,
+          'sucesso',
+          3000
+        );
+
         this.horaInicial = '';
         this.schedule = [];
         this.saving = false;
@@ -252,9 +310,6 @@ export class QrcodeComponent implements OnInit {
     });
   }
 
-  /**
-   * Abre modo de edição para um alarme
-   */
   abrirEdicao(alarme: AlarmeAgendado) {
     this.editandoAlarmeId = alarme.id;
     this.editHoraInicio = alarme.horaI;
@@ -262,13 +317,10 @@ export class QrcodeComponent implements OnInit {
     this.editDuracao = alarme.duracao;
   }
 
-  /**
-   * Salva edição do alarme (atualiza localStorage e banco de dados)
-   */
   salvarEdicao() {
     if (!this.editandoAlarmeId) return;
     if (!this.editHoraInicio) {
-      window.alert(this.translation.instant('QRCODE.ALERT_START_REQUIRED'));
+      this.exibirAlerta('Por favor, defina uma hora de início', 'aviso');
       return;
     }
 
@@ -289,7 +341,6 @@ export class QrcodeComponent implements OnInit {
         alarmeAtualizado.intervalo
       );
 
-      // Salvar no localStorage
       this.salvarAlarmesNoStorage();
 
       // Atualizar no banco de dados (se houver ID do banco)
@@ -303,37 +354,27 @@ export class QrcodeComponent implements OnInit {
 
       console.log('Atualizando alarme no banco:', payloadBanco);
 
-      // Apenas atualizar no banco se for um ID numérico (real do banco)
-      // Se for string, é um ID temporário local que não está no banco
       const isNumericId = typeof this.editandoAlarmeId === 'number' || !isNaN(Number(this.editandoAlarmeId));
 
       if (isNumericId) {
         this.alarmeService.updateAlarme(this.editandoAlarmeId, payloadBanco).subscribe({
           next: (res) => {
             console.log('Alarme atualizado no banco com sucesso:', res);
-            this.mensagem = 'Programação atualizada com sucesso!';
-            this.mensagemStatus = 'sucesso';
+            this.exibirAlerta('✓ Programação atualizada com sucesso!', 'sucesso');
           },
           error: (err) => {
             console.error('Erro ao atualizar no banco:', err);
-            // Mesmo com erro no banco, os dados locais foram atualizados
-            this.mensagem = 'Programação atualizada localmente. (Banco indisponível)';
-            this.mensagemStatus = 'sucesso';
+            this.exibirAlerta('✓ Programação atualizada localmente. (Banco indisponível)', 'sucesso');
           }
         });
       } else {
-        // ID temporário - apenas atualização local
-        this.mensagem = 'Programação atualizada localmente.';
-        this.mensagemStatus = 'sucesso';
+        this.exibirAlerta('✓ Programação atualizada localmente.', 'sucesso');
       }
 
       this.cancelarEdicao();
     }
   }
 
-  /**
-   * Recalcula os horários com base na hora inicial, dose, duração e intervalo
-   */
   private recalcularHorarios(horaInicial: string, dose: string, duracao: number, intervalo: number): Array<{ horario: string; dose: string; dia: number }> {
     const horarios: Array<{ horario: string; dose: string; dia: number }> = [];
 
@@ -362,9 +403,6 @@ export class QrcodeComponent implements OnInit {
     return horarios;
   }
 
-  /**
-   * Cancela modo de edição
-   */
   cancelarEdicao() {
     this.editandoAlarmeId = null;
     this.editHoraInicio = '';
@@ -372,16 +410,12 @@ export class QrcodeComponent implements OnInit {
     this.editDuracao = 0;
   }
 
-  /**
-   * Deleta um alarme agendado (remove de localStorage e banco)
-   */
+
   excluirAlarme(id: string | number) {
     if (window.confirm(this.translation.instant('QRCODE.CONFIRM_DELETE'))) {
       this.alarmes = this.alarmes.filter(a => a.id !== id);
       this.salvarAlarmesNoStorage();
 
-      // Apenas tentar deletar do banco se for um ID numérico (real do banco)
-      // Se for string, é um ID temporário local que não está no banco
       const isNumericId = typeof id === 'number' || !isNaN(Number(id));
 
       if (isNumericId) {
@@ -389,30 +423,22 @@ export class QrcodeComponent implements OnInit {
         this.alarmeService.deleteAlarme(id).subscribe({
           next: (res) => {
             console.log('Alarme deletado do banco com sucesso:', res);
-            this.mensagem = 'Programação excluída com sucesso!';
-            this.mensagemStatus = 'sucesso';
+            this.exibirAlerta('✓ Programação excluída com sucesso!', 'sucesso');
             this.verificarSeHaAlarmes();
           },
           error: (err) => {
             console.error('Erro ao deletar do banco:', err);
-            // Mesmo com erro no banco, foi deletado localmente
-            this.mensagem = 'Programação excluída localmente. (Banco indisponível)';
-            this.mensagemStatus = 'sucesso';
+            this.exibirAlerta('✓ Programação excluída localmente. (Banco indisponível)', 'sucesso');
             this.verificarSeHaAlarmes();
           }
         });
       } else {
-        // ID temporário - apenas foi deletado localmente
-        this.mensagem = 'Programação excluída localmente.';
-        this.mensagemStatus = 'sucesso';
+        this.exibirAlerta('✓ Programação excluída localmente.', 'sucesso');
         this.verificarSeHaAlarmes();
       }
     }
   }
 
-  /**
-   * Verifica se ainda há alarmes. Se não houver, limpa o QR data e oferece opções
-   */
   private verificarSeHaAlarmes() {
     if (this.alarmes.length === 0) {
       // Aguardar um pouco para mostrar a mensagem de sucesso antes de limpar
@@ -424,40 +450,29 @@ export class QrcodeComponent implements OnInit {
           this.qrData = null;
           this.horaInicial = '';
           this.schedule = [];
-          this.mensagem = '';
-          this.mensagemStatus = '';
+          this.fecharAlerta();
           this.router.navigate(['/scanner']);
         } else {
           // Limpar dados e ir para dashboard
           this.qrData = null;
           this.horaInicial = '';
           this.schedule = [];
-          this.mensagem = '';
-          this.mensagemStatus = '';
+          this.fecharAlerta();
           this.router.navigate(['/dashboard']);
         }
       }, 500);
     }
   }
 
-  /**
-   * Retorna a quantidade de doses para um alarme
-   */
   getTotalDoses(alarme: AlarmeAgendado): number {
     return alarme.horarios ? alarme.horarios.length : 0;
   }
 
-  /**
-   * Verifica quantos medicamentos já têm programação
-   */
   getMedicamentosProgramados(): number {
     const nomesMedicamentos = this.medicamentos.map(m => m.nome);
     return this.alarmes.filter(a => nomesMedicamentos.includes(a.nome)).length;
   }
 
-  /**
-   * Verifica se todos os medicamentos já estão programados
-   */
   todosMedicamentosProgramados(): boolean {
     return this.getMedicamentosProgramados() === this.medicamentos.length;
   }
@@ -478,4 +493,56 @@ export class QrcodeComponent implements OnInit {
       return `Total de ${this.schedule.length} doses em ${this.medicamentoSelecionado?.duracao || 0} dia(s)`;
     }
   }
+
+ toggleMenu() {
+    this.menuAtivo = !this.menuAtivo;
+    if (this.menuAtivo) {
+        this.userMenuAtivo = false;
+    }
+  }
+
+  toggleUserMenu() {
+    this.userMenuAtivo = !this.userMenuAtivo;
+    if (this.userMenuAtivo) {
+      this.menuAtivo = false;
+    }
+  }
+
+  fecharQualquerMenu() {
+    this.menuAtivo = false;
+    this.userMenuAtivo = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickFora(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    if (
+      this.menuAtivo &&
+      this.menuElement &&
+      this.menuIcon &&
+      !this.menuElement.nativeElement.contains(target) &&
+      !this.menuIcon.nativeElement.contains(target)
+    ) {
+      this.menuAtivo = false;
+    }
+
+    if (this.userMenuAtivo) {
+        if (
+            this.userMenuElement &&
+            this.userIconElement &&
+            !this.userMenuElement.nativeElement.contains(target) &&
+            !this.userIconElement.nativeElement.contains(target)
+        ) {
+            this.userMenuAtivo = false;
+        }
+    }
+  }
+
+  efetuarLogout() {
+    this.authService.logout();
+    this.router.navigate(['/home']);
+    this.userMenuAtivo = false;
+  }
+
 }

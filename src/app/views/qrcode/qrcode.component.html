@@ -1,51 +1,118 @@
-<div class="volta">
-  <a routerLink="/dashboard" title="{{ 'NAVIGATION.BACK' | translate }}">
-    <i class="fas fa-arrow-left"></i>
-  </a>
+<div class="nav">
+  <div class="menuImg" #menuIcon (click)="toggleMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <div class="menu-mobile" #menu [class.active]="menuAtivo">
+
+    <a routerLink="/dashboard" (click)="toggleMenu()">{{ 'NAVIGATION.HOME' | translate }}</a>
+    <a routerLink="/sobre" (click)="toggleMenu()">{{ 'NAVIGATION.ABOUT_US' | translate }}</a>
+    <a routerLink="/curiosidades" (click)="toggleMenu()">{{ 'NAVIGATION.CURIOSITIES' | translate }}</a>
+    <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear QR Code</a>
+    <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear novo QR Code</a>
+    <a *ngIf="temProgramacao" routerLink="/qrcode" (click)="toggleMenu()">Ver Programação</a>
+    <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate }}</a>
+  </div>
+
+  <div class="logo">
+    <img src="assets/img/Logo.png" alt="logo">
+  </div>
+
+  <form>
+    <i class="fas fa-search"></i>
+    <input type="text" class="input" [placeholder]="'HOME.SEARCH_PLACEHOLDER' | translate">
+  </form>
+
+  <div class="nav-user" *ngIf="authService.currentUser$ | async as user" (click)="toggleUserMenu()" #userIcon>
+    <i class="fas fa-user-circle nav-user-icon"></i>
+    <span class="nav-user-name">
+      {{ user.perfil === 'admin' ? ('NAVIGATION.ADM' | translate) : user.nome }}
+    </span>
+  </div>
+</div>
+
+<div class="user-sidebar" #userMenu [class.active]="userMenuAtivo">
+    <div class="user-profile-card">
+        <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        <div class="profile-details">
+            <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
+            <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
+      <i class="fas fa-horizontal-rule"></i>
+    </div>
+      </div>
+    <div class="user-menu-options">
+    <div class="config">
+      <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
+        <i class="fas fa-cog option-icon"></i>
+        <h5>{{ 'NAVIGATION.SETTINGS' | translate }}</h5>
+      </a>
+    </div>
+        <a routerLink="/politica-privacidade" (click)="toggleUserMenu()" class="menu-option">
+            <i class="fas fa-shield-alt option-icon"></i>
+            <h5>Política de Privacidade</h5>
+          </a>
+        <a (click)="efetuarLogout()" class="menu-option logout-option">
+            <i class="fas fa-sign-out-alt option-icon"></i>
+            <h5>Fazer Logout</h5>
+          </a>
+  </div>
+</div>
+<div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
+
+<!-- ALERTAS TEMPORÁRIOS -->
+<div class="alert-container">
+  <div *ngIf="mensagem" [class.alert-sucesso]="mensagemStatus === 'sucesso'" [class.alert-erro]="mensagemStatus === 'erro'" [class.alert-aviso]="mensagemStatus === 'aviso'" class="alert">
+    <div class="alert-content">
+      <span>{{ mensagem }}</span>
+    </div>
+  </div>
 </div>
 
 <div class="container">
-  <h3>{{ 'QRCODE.TITLE_MEDICINES' | translate }}</h3>
-  <div *ngIf="medicamentos && medicamentos.length > 0">
-    <!-- Se houver múltiplos medicamentos E nem todos estejam programados, mostrar seletor -->
-    <div *ngIf="medicamentos.length > 1 && !todosMedicamentosProgramados()" style="margin-bottom: 15px;">
-      <label for="medicamentoSelect"><strong>{{ 'QRCODE.SELECT_MEDICINE' | translate }}</strong></label>
-      <select id="medicamentoSelect" name="medicamentoSelecionado" [(ngModel)]="medicamentoSelecionado" style="width: 100%; padding: 8px; margin-top: 5px;">
-        <option *ngFor="let med of medicamentos" [ngValue]="med">
+  <!-- SEÇÃO DE INFORMAÇÕES DO RECEITUÁRIO -->
+  <div *ngIf="medicamentos && medicamentos.length > 0" class="secao-informacoes">
+    <h2>{{ 'QRCODE.RECIPE_INFO_TITLE' | translate }}</h2>
+
+    <!-- Se houver múltiplos medicamentos não programados, mostrar seletor (apenas interno) -->
+    <div *ngIf="medicamentosDisponiveis().length > 1" class="select-wrapper">
+      <label for="medicamentoSelect" class="label-select">{{ 'QRCODE.SELECT_MEDICINE' | translate }}</label>
+      <select id="medicamentoSelect" name="medicamentoSelecionado" [(ngModel)]="medicamentoSelecionado" (change)="atualizarMedicamentoSelecionado()" class="select-medicamento">
+        <option *ngFor="let med of medicamentosDisponiveis()" [ngValue]="med">
           {{ med.nome }} - {{ med.dose }} ({{ med.intervalo }}h, {{ med.duracao }}d)
         </option>
       </select>
     </div>
 
-    <!-- Se todos estão programados, mostrar mensagem -->
-    <div *ngIf="todosMedicamentosProgramados()" style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
-      <strong>{{ 'QRCODE.ALL_PROGRAMMED' | translate }}</strong>
-    </div>
-
-    <!-- Exibir informações do medicamento selecionado -->
-    <div *ngIf="medicamentoSelecionado && !todosMedicamentosProgramados()" style="border: 1px solid #ddd; padding: 10px; border-radius: 4px; background: #f9f9f9;">
-      <p><strong>{{ 'QRCODE.LABEL_NAME' | translate }}</strong> <span id="nomeDisplay">{{ medicamentoSelecionado.nome || 'N/A' }}</span></p>
-      <p><strong>{{ 'QRCODE.LABEL_DOSE' | translate }}</strong> <span id="doseDisplay">{{ medicamentoSelecionado.dose || 'N/A' }}</span></p>
-      <p><strong>{{ 'QRCODE.LABEL_INTERVAL' | translate }}</strong> <span id="intervaloDisplay">{{ medicamentoSelecionado.intervalo || 'N/A' }}</span> {{ 'QRCODE.LABEL_HOURS' | translate }}</p>
-      <p><strong>{{ 'QRCODE.LABEL_DURATION' | translate }}</strong> <span id="duracaoDisplay">{{ medicamentoSelecionado.duracao || 'N/A' }}</span> {{ 'QRCODE.LABEL_DAYS' | translate }}</p>
+    <!-- Exibir informações do medicamento  -->
+    <div *ngIf="medicamentoSelecionado" class="card-informacoes">
+      <div class="info-row"><span class="info-label">{{ ('QRCODE.LABEL_NAME' | translate) | slice:0:-1 }}</span><span class="info-sep">:</span><span class="info-value">{{ medicamentoSelecionado.nome || 'N/A' }}</span></div>
+      <div class="info-row"><span class="info-label">{{ ('QRCODE.LABEL_DOSE' | translate) | slice:0:-1 }}</span><span class="info-sep">:</span><span class="info-value">{{ medicamentoSelecionado.dose || 'N/A' }}</span></div>
+      <div class="info-row"><span class="info-label">{{ ('QRCODE.LABEL_INTERVAL' | translate) | slice:0:-1 }}</span><span class="info-sep">:</span><span class="info-value">{{ medicamentoSelecionado.intervalo || 'N/A' }} {{ 'QRCODE.LABEL_HOURS' | translate }}</span></div>
+      <div class="info-row"><span class="info-label">{{ ('QRCODE.LABEL_DURATION' | translate) | slice:0:-1 }}</span><span class="info-sep">:</span><span class="info-value">{{ medicamentoSelecionado.duracao || 'N/A' }} {{ 'QRCODE.LABEL_DAYS' | translate }}</span></div>
     </div>
   </div>
 
-  <!-- LISTA DE ALARMES AGENDADOS -->
-  <h3>{{ 'QRCODE.SCHEDULES_TITLE' | translate }}:</h3>
-  <ul id="AlarmeItem">
+  <!-- INSTRUÇÃO PARA O USUÁRIO -->
+  <h3 class="instruction-title">{{ 'QRCODE.INSTRUCTION_TITLE' | translate }}</h3>
+
+  <ul id="AlarmeItem" *ngIf="alarmes.length > 0">
     <li *ngFor="let alarme of alarmes" class="alarme-item">
-      <div>
-        <p><strong>{{ 'QRCODE.LABEL_MEDICAMENTO' | translate }}</strong> {{ alarme.nome }}</p>
-        <p><strong>{{ 'QRCODE.LABEL_DOSE' | translate }}</strong> {{ alarme.dose }}</p>
-        <p><strong>{{ 'QRCODE.LABEL_INTERVAL' | translate }}</strong>{{ alarme.intervalo }} {{'QRCODE.LABEL_HOURS' | translate }}</p>
-        <p><strong>{{ 'QRCODE.LABEL_START_TIME' | translate }}</strong> {{ alarme.horaI }}</p>
-        <p><strong>{{ 'QRCODE.LABEL_DURATION' | translate }}</strong> {{ alarme.duracao }} {{ 'QRCODE.LABEL_DAYS' | translate }}</p>
-        <p><strong>{{ 'QRCODE.LABEL_TOTAL_DOSES' | translate }}</strong> {{ getTotalDoses(alarme) }}</p>
+      <div class="alarme-info">
+        <p><strong>{{ 'QRCODE.LABEL_MEDICAMENTO' | translate }}:</strong> {{ alarme.nome }}</p>
+        <p><strong>{{ 'QRCODE.LABEL_DOSE' | translate }}:</strong> {{ alarme.dose }}</p>
+        <p><strong>{{ 'QRCODE.LABEL_INTERVAL' | translate }}:</strong> {{ alarme.intervalo }} {{'QRCODE.LABEL_HOURS' | translate }}</p>
+        <p><strong>{{ 'QRCODE.LABEL_START_TIME' | translate }}:</strong> {{ alarme.horaI }}</p>
+        <p><strong>{{ 'QRCODE.LABEL_DURATION' | translate }}:</strong> {{ alarme.duracao }} {{ 'QRCODE.LABEL_DAYS' | translate }}</p>
+        <p><strong>{{ 'QRCODE.LABEL_TOTAL_DOSES' | translate }}:</strong> {{ getTotalDoses(alarme) }}</p>
 
         <!-- Expandir horários da programação -->
         <details style="margin-top: 10px; cursor: pointer;">
-          <summary style="font-weight: bold; color: #0066cc;">{{ getViewSchedulesText(alarme) }}</summary>
+          <summary style="font-weight: bold; color: #0066cc; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+            {{ getViewSchedulesText(alarme) }}
+          </summary>
           <ul style="margin-top: 10px; list-style: none; padding-left: 20px;">
             <li *ngFor="let horario of alarme.horarios" style="padding: 5px 0; border-bottom: 1px solid #e0e0e0;">
               <strong>{{ horario.horario }}</strong> - {{ horario.dose }} (Dia {{ horario.dia }})
@@ -53,56 +120,70 @@
           </ul>
         </details>
       </div>
-      <div id="acoesAlarme">
-        <button (click)="abrirEdicao(alarme)">{{ 'QRCODE.EDIT_BUTTON' | translate }}</button>
-        <button (click)="excluirAlarme(alarme.id)">{{ 'ACTIONS.DELETE' | translate }}</button>
+      <div id="acoesAlarme" class="acoes-alarme">
+        <button class="btn-editar" (click)="abrirEdicao(alarme)" title="{{ 'QRCODE.EDIT_BUTTON' | translate }}">
+          <i class="fas fa-edit"></i> {{ 'QRCODE.EDIT_BUTTON' | translate }}
+        </button>
+        <button class="btn-deletar" (click)="excluirAlarmeConfirm(alarme.id)" title="{{ 'ACTIONS.DELETE' | translate }}">
+          <i class="fas fa-trash"></i> {{ 'ACTIONS.DELETE' | translate }}
+        </button>
       </div>
     </li>
   </ul>
 
   <!-- FORMULÁRIO DE EDIÇÃO (OCULTO INICIALMENTE) -->
-  <div id="editarForm" *ngIf="editandoAlarmeId" style="margin-top: 10px;">
+  <div id="editarForm" *ngIf="editandoAlarmeId" class="form-edicao">
     <h4>{{ 'QRCODE.EDIT_TITLE' | translate }}</h4>
     <label>{{ 'QRCODE.START_TIME_LABEL' | translate }}
-      <input type="time" name="editHoraInicio" [(ngModel)]="editHoraInicio">
-    </label><br>
+      <input type="time" name="editHoraInicio" [(ngModel)]="editHoraInicio" class="input-field">
+    </label>
     <label>{{ 'QRCODE.LABEL_DOSE' | translate }}
-      <input type="text" name="editDose" [(ngModel)]="editDose">
-    </label><br>
+      <input type="text" name="editDose" [(ngModel)]="editDose" class="input-field">
+    </label>
     <label>{{ 'QRCODE.DURATION_DAYS_LABEL' | translate }}
-      <input type="number" name="editDuracao" [(ngModel)]="editDuracao">
-    </label><br>
-    <button (click)="salvarEdicao()">{{ 'QRCODE.SAVE_CHANGES' | translate }}</button>
-    <button (click)="cancelarEdicao()">{{ 'ACTIONS.CANCEL' | translate }}</button>
-  </div>
-
-  <!-- FORMULÁRIO PARA CRIAR ALARME -->
-  <form id="formAlarme" *ngIf="!editandoAlarmeId && !todosMedicamentosProgramados()">
-    <h3>{{ 'QRCODE.CREATE_TITLE' | translate }}</h3>
-    <label for="inicio">{{ 'QRCODE.START_TIME_INPUT' | translate }}</label>
-    <input type="time" id="inicio" [(ngModel)]="horaInicial" name="horaInicial" required>
-
-    <button type="button" (click)="gerarSchedule()">{{ 'QRCODE.GENERATE_SCHEDULE' | translate }}</button>
-  </form>
-
-  <!-- EXIBIR PROGRAMAÇÃO GERADA -->
-  <div *ngIf="schedule.length > 0" id="scheduleDiv" style="margin-top: 20px;">
-    <h4>Programação de Doses:</h4>
-    <div id="scheduleList" style="background: #f0f8ff; border: 1px solid #0066cc; border-radius: 5px; padding: 15px;">
-      <p style="font-weight: bold; margin-bottom: 10px;">{{ getScheduleTotalText() }}</p>
-      <ul style="list-style: none; padding: 0;">
-        <li *ngFor="let item of schedule; let i = index" style="padding: 8px; border-bottom: 1px solid #ddd; margin-bottom: 5px;">
-          <strong>Dose {{ i + 1 }}:</strong> {{ item.horario }} - {{ item.dose }} (Dia {{ item.dia }})
-        </li>
-      </ul>
-        <button type="button" (click)="confirmarAlarme()" [disabled]="saving" style="margin-top: 15px; background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-        {{ (saving ? 'QRCODE.SAVING' : 'QRCODE.CONFIRM_SAVE') | translate }}
-      </button>
+      <input type="number" name="editDuracao" [(ngModel)]="editDuracao" class="input-field">
+    </label>
+    <div class="form-buttons">
+      <button class="btn-salvar" (click)="salvarEdicao()">{{ 'QRCODE.SAVE_CHANGES' | translate }}</button>
+      <button class="btn-cancelar" (click)="cancelarEdicao()">{{ 'ACTIONS.CANCEL' | translate }}</button>
     </div>
   </div>
 
-  <!-- RESULTADO -->
-  <div id="resultado" [ngClass]="mensagemStatus">
-    {{ mensagem }}
+  <!-- FORMULÁRIO PARA CRIAR ALARME -->
+  <form id="formAlarme" *ngIf="!editandoAlarmeId && medicamentosDisponiveis().length > 0" class="form-criar-alarme">
+    <label for="inicio">{{ 'QRCODE.START_TIME_INPUT' | translate }}</label>
+    <input type="time" id="inicio" [(ngModel)]="horaInicial" name="horaInicial" required class="input-field">
+
+    <button type="button" class="btn-gerar" (click)="gerarSchedule()">
+     {{ 'QRCODE.GENERATE_SCHEDULE' | translate }}
+    </button>
+  </form>
+
+  <!-- EXIBIR PROGRAMAÇÃO GERADA -->
+  <div *ngIf="schedule.length > 0" id="scheduleDiv" class="schedule-container">
+    <h4>{{ 'QRCODE.SCHEDULE_PREVIEW' | translate }}:</h4>
+    <div id="scheduleList" class="schedule-list">
+      <p class="schedule-total"><strong>{{ getScheduleTotalText() }}</strong></p>
+      <ul>
+        <li *ngFor="let item of schedule; let i = index" class="schedule-item">
+          <span class="dose-numero"><strong>Dose {{ i + 1 }}:</strong></span>
+          <span class="dose-info">{{ item.horario }} - {{ item.dose }} (Dia {{ item.dia }})</span>
+        </li>
+      </ul>
+      <button type="button" class="btn-confirmar" (click)="confirmarAlarme()" [disabled]="saving">
+        <i class="fas fa-check"></i> {{ (saving ? 'QRCODE.SAVING' : 'QRCODE.CONFIRM_SAVE') | translate }}
+      </button>
+    </div>
   </div>
 </div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="social-icons">
+      <a href="https://instagram.com/medtime.3" target="_blank" class="icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com" target="_blank" class="icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank" class="icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com" target="_blank" class="icon"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+</footer>

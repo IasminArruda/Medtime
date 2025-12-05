@@ -102,7 +102,7 @@
     "MANAGE_ALARM": "Gérer l'Alarme",
     "CONTACT": "Contact"
   },
-  
+
   "NAVIGATION": {
     "ABOUT_US": "À Propos de Nous",
     "CURIOSITIES": "Curiosités",
@@ -169,6 +169,7 @@
     "LABEL_DURATION": "Durée :",
     "LABEL_HOURS": "heures",
     "LABEL_DAYS": "jours",
+    "RECIPE_INFO_TITLE": "Informations de l'ordonnance",
     "SCHEDULES_TITLE": "Programmes Planifiés",
     "VIEW_SCHEDULES": "Voir les horaires programmés ({{count}} doses)",
     "EDIT_BUTTON": "Modifier",
@@ -187,13 +188,15 @@
     "CONFIRM_SAVE": "Confirmer et enregistrer le programme",
     "SAVING": "Enregistrement...",
     "ALERT_CHOOSE_START": "Choisissez l'heure de début.",
-    "ALERT_SELECT_MEDICINE": "Sélectionnez un médicament.",
+    "ALERT_SELECT_MEDICINE": "Sélectionnez vos médicaments",
     "ALERT_INTERVAL_DURATION": "L'intervalle et la durée doivent être supérieurs à 0.",
     "ALERT_NO_USER": "Utilisateur non identifié. Veuillez vous connecter.",
     "ALERT_GENERATE_BEFORE_CONFIRM": "Générez le programme avant de confirmer.",
     "ALERT_START_REQUIRED": "L'heure de début est requise.",
     "CONFIRM_DELETE": "Voulez-vous vraiment supprimer ce programme ?",
     "CONFIRM_NO_ALARMS": "Aucun programme actif. Voulez-vous scanner un nouveau QR code ?\n\nOK = Nouveau QR code\nAnnuler = Aller à l'accueil",
+    "INSTRUCTION_TITLE": "Choisissez l'heure de début de votre traitement",
+    "INSTRUCTION_DESC": "Sélectionnez ci-dessous l'heure de début pour démarrer votre traitement.",
     "CREATED_SUCCESS": "Programme créé avec succès ! {{count}} doses programmées.",
     "CREATED_LOCAL": "Programme créé localement ! {{count}} doses programmées. (Serveur indisponible)",
     "UPDATED_SUCCESS": "Programme mis à jour avec succès !",
