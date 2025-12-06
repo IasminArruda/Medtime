@@ -2,8 +2,9 @@ import { Component, ElementRef, HostListener, ViewChild, OnInit, OnDestroy } fro
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { Subject, firstValueFrom } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   userName = '';
   isAdmin = false;
   currentLanguage = 'pt-BR';
+  showPhonePrompt = false;
+  dddList: string[] = [
+    '11','12','13','14','15','16','17','18','19',
+    '21','22','24','27','28',
+    '31','32','33','34','35','37','38',
+    '41','42','43','44','45','46',
+    '51','53','54','55',
+    '61','62','63','64','65','66','67',
+    '68','69','71','73','74','75','77','79',
+    '81','82','83','84','85','86','87','88','89',
+    '91','92','93','94','95','96','97','98','99'
+  ];
+  selectedDDD = '';
+  phoneNumber = '';
 
   @ViewChild('menu') menuElement!: ElementRef;
   @ViewChild('menuIcon') menuIcon!: ElementRef;
@@ -39,11 +54,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     'assets/img/carrossel2/5.svg',
   ];
 
-  constructor(public authService: AuthService, private router: Router, private translate: TranslateService) {}
+  constructor(public authService: AuthService, private router: Router, private translate: TranslateService, private configService: ConfigService) {}
 
   ngOnInit(): void {
     this.temProgramacao = this.verificarProgramacao();
-    // Detecta idioma inicial
+    // Detectar idioma inicial
     this.currentLanguage = this.translate.currentLang || 'pt-BR';
     this.updateCarouselImages();
 
@@ -72,6 +87,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
           isAdministrator: this.isAdmin,
           Name: this.userName
       });
+
+      try {
+        const shouldShow = localStorage.getItem('medtime_show_phone_prompt') === 'true';
+        const userPhone = (user as any)?.phone || (user as any)?.telefone || '';
+        if (shouldShow && this.isLoggedIn && !userPhone) {
+          this.showPhonePrompt = true;
+        }
+      } catch (e) { }
+      // Recompute whether the current user has scheduled programs
+      try {
+        this.temProgramacao = this.verificarProgramacao();
+      } catch (e) { }
     });
 
     // Inicializa o carrossel
@@ -191,9 +218,40 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const alarmes = localStorage.getItem(this.STORAGE_KEY);
       if (!alarmes) { return false; }
       const lista = JSON.parse(alarmes);
-      return Array.isArray(lista) && lista.length > 0;
+      if (!Array.isArray(lista) || lista.length === 0) return false;
+      const user = this.authService.getUsuario() as any;
+      if (user && (user.id || user._id || user.ID)) {
+        const userId = String(user.id || user._id || user.ID);
+        const filtered = lista.filter((a: any) => String(a.userId || a.UserId || a.user || '') === userId);
+        return filtered.length > 0;
+      }
+      return lista.length > 0;
     } catch {
       return false;
     }
+  }
+
+  async savePhoneForNotifications(): Promise<void> {
+    const ddd = (this.selectedDDD || '').trim();
+    const phone = (this.phoneNumber || '').replace(/\D/g, '');
+    if (!ddd) { window.alert('Por favor selecione o DDD da sua cidade.'); return; }
+    if (!/^[0-9]{8,9}$/.test(phone)) { window.alert('Informe um número válido com 8 ou 9 dígitos (sem DDD).'); return; }
+
+    const formatted = `+55${ddd}${phone}`;
+
+    try {
+      await firstValueFrom(this.configService.updateProfileOnServer({ phone: formatted }));
+      this.showPhonePrompt = false;
+      try { localStorage.removeItem('medtime_show_phone_prompt'); } catch (e) {}
+      window.alert('Telefone salvo! Você começará a receber notificações quando tiver programações.');
+    } catch (e) {
+      console.error('Erro ao salvar telefone:', e);
+      window.alert('Erro ao salvar telefone. Tente novamente.');
+    }
+  }
+
+  skipPhonePrompt(): void {
+    this.showPhonePrompt = false;
+    try { localStorage.removeItem('medtime_show_phone_prompt'); } catch (e) {}
   }
 }

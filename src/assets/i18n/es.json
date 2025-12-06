@@ -28,7 +28,7 @@
     "SIMPLE_ALARM": "Alarma Simple",
     "CALM_MELODY": "Melodía Calmante",
     "VIBRATION": "Vibración",
-    "VISUAL_NOTIFICATION": "Notificación Visual (Pop-up)",
+    "VISUAL_NOTIFICATION": "Notificación por WhatsApp",
     "TEXT_SIZE": "Tamaño del Texto",
     "SMALL": "Pequeño",
     "NORMAL": "Normal",
@@ -56,12 +56,15 @@
     "SOLUTION_MANAGE_PRESCRIPTIONS": "Gestionar recetas y Códigos QR",
     "SOLUTION_MEDICATION_REMINDERS": "Recordatorios y Horarios de Medicamentos",
     "SOLUTION_MEDICATION_INFO": "Información sobre Medicamentos",
-    "SOLUTION_SPECIFIC_DOUBTS": "Dudas específicas para Personas Mayores"
-    ,
+    "SOLUTION_SPECIFIC_DOUBTS": "Dudas específicas para Personas Mayores",
     "SOLUTION_MANAGE_PRESCRIPTIONS_DESC": "Aquí puede gestionar sus recetas médicas y generar códigos QR para compartirlos con farmacéuticos.",
+    "SOLUTION_MANAGE_PRESCRIPTIONS_HTML": "<p>Objetivo: registrar, visualizar y generar Códigos QR de las recetas para presentarlos al farmacéutico o cuidador.</p><ol style=\"margin:6px 0 12px 20px;\"><li>En Inicio, toque la tarjeta 'Gestionar recetas y Códigos QR'.</li><li>Pantalla de recetas: toque 'Agregar receta' (o +).</li><li>Rellene los campos solicitados: nombre del paciente, prescripción del médico, fecha de emisión, validez y observaciones.</li><li>Adjunte la foto de la receta: toque 'Agregar imagen' → elija foto de la galería o use la cámara.</li><li>Toque Guardar / Confirmar. La receta aparecerá en la lista.</li><li>Para generar Código QR: seleccione la receta deseada → toque 'Generar Código QR'.</li><li>La app mostrará el QR; toque Compartir para enviar por WhatsApp/Email o Imprimir si está disponible.</li><li>Para editar o eliminar: seleccione la receta → Editar para cambiar información o Eliminar para remover (confirme la eliminación).</li></ol><p><strong>Consejo de seguridad:</strong> verifique la validez y permita que solo los cuidadores autorizados tengan acceso — use la función Compartir con permisos.</p>",
     "SOLUTION_MEDICATION_REMINDERS_DESC": "Configure recordatorios automáticos para no olvidar tomar sus medicamentos a tiempo.",
+    "SOLUTION_MEDICATION_REMINDERS_HTML": "<p>Objetivo: crear alertas de horarios, repetición y hacer seguimiento de la administración.</p><ol style=\"margin:6px 0 12px 20px;\"><li>En Inicio, toque la tarjeta 'Recordatorios y Horarios de Medicamentos'.</li><li>Toque 'Agregar Recordatorio' o el botón '+'.</li><li>Complete: Nombre del medicamento; Dosis (ej.: 500 mg); Forma (tableta, jarabe, inyección); Horarios (ej.: 08:00, 12:00, 20:00); Frecuencia (diario, días específicos); Duración (hasta la fecha X o por N días).</li><li>Active sonido/push y, si está disponible, elija si el recordatorio se repite los fines de semana.</li><li>Guarde. El recordatorio aparecerá en la lista con estado (Activo/Pausado).</li><li>Al llegar la hora: la app mostrará una notificación con botones 'Marcar como Tomado' o 'Recordar después'.</li><li>Historial: toque el recordatorio → ver historial de dosis tomadas y faltas.</li><li>Ajustes: vaya a Configuración → Alertas de Medicamentos para configurar volumen, vibración y modo silencioso.</li></ol><p><strong>Consejo para personas mayores:</strong> utilice textos grandes (Configuración → Accesibilidad → Tamaño de Texto) y un sonido de alerta alto.</p>",
     "SOLUTION_MEDICATION_INFO_DESC": "Consulte información detallada sobre medicamentos, efectos secundarios e interacciones.",
+    "SOLUTION_MEDICATION_INFO_HTML": "<p>Objetivo: consultar descripción, efectos secundarios, contraindicaciones e instrucciones de uso.</p><ol style=\"margin:6px 0 12px 20px;\"><li>En Inicio, toque la tarjeta 'Información sobre Medicamentos'.</li><li>Use el cuadro de búsqueda para escribir el nombre del medicamento.</li><li>En la lista de resultados, toque el medicamento deseado para abrir la ficha.</li><li>La ficha incluye: Indicaciones; Posología; Efectos secundarios; Interacciones con otros medicamentos; Precauciones y contraindicaciones; Observaciones del médico (cuando vinculada a la receta).</li><li>Si desea guardar para acceso rápido: toque 'Favorito'.</li><li>Si hay duda técnica: toque 'Preguntar al Especialista' (o Dudas específicas — dirige al canal de soporte/FAQ).</li><li>Consejo: active el modo lectura (icono de ojo) para simplificar el texto y ampliar la fuente.</li></ol>",
     "SOLUTION_SPECIFIC_DOUBTS_DESC": "Sección con información y preguntas frecuentes dirigida a personas mayores.",
+    "SOLUTION_SPECIFIC_DOUBTS_HTML": "<p>Objetivo: área dedicada con lenguaje simple, soporte y preguntas frecuentes específicas para personas mayores.</p><ol style=\"margin:6px 0 12px 20px;\"><li>En Inicio, toque la tarjeta 'Dudas específicas para Personas Mayores'.</li><li>La pantalla abrirá secciones como: Cómo almacenar medicamentos, Cómo tomar correctamente, Señales de alerta, Accesibilidad.</li><li>Navegue por temas rápidos (botones/accordion). Toque para abrir la explicación en lenguaje simple.</li><li>Preguntas y respuestas (FAQ): toque un elemento para ver la respuesta detallada y ejemplos prácticos.</li><li>Hable con un agente: toque 'Ayuda y Soporte' → elija Chat, Llamar (si está disponible) o Programar llamada con cuidadores/administrador.</li><li>Recursos extras: videos cortos (ícono de play) sobre administración segura de medicamentos y checklists imprimibles.</li><li>Consejo de usabilidad: active Modo Anciano en la configuración para interfaz con botones más grandes, alto contraste y lectura en voz alta (si está disponible).</li><li>Pasos comunes para editar/agregar (botones del prototipo).</li></ol>",
     "ADD_OBSERVATION": "Agregar observación",
     "OBSERVATION_PLACEHOLDER": "Escriba una anotación...",
     "SOUND_NOTIFICATION_UNAVAILABLE": "Las notificaciones sonoras aún no están disponibles. ¡Disculpe el inconveniente!"
@@ -109,10 +112,19 @@
     "HOME": "Inicio",
     "SETTINGS": "Configuración",
     "SCAN_QR_CODE": "Escanear Código QR",
+    "SCAN_NEW_QR": "Escanear nuevo Código QR",
     "ADMINISTRATOR": "Administrador",
     "PRIVACY_POLICY": "Política de Privacidad",
     "LOGOUT": "Cerrar Sesión",
     "ADM": "ADM"
+  },
+  "PRIVACY": {
+    "TITLE": "Política de Privacidad",
+    "PRIVACY_HTML": "<p>MedTime valora su privacidad y protege sus datos personales de acuerdo con las leyes de protección de datos aplicables.</p><h3>Qué recopilamos:</h3><h4>- Datos que usted proporciona: nombre, correo electrónico, teléfono, medicamentos, historial y condiciones de salud.</h4><h4>- Datos de uso de la aplicación: escaneos de Códigos QR, horarios de uso, tipo de dispositivo y páginas visitadas.</h4><h3>Cómo los usamos:</h3><h4>- Para enviar alertas y registrar el uso de medicamentos.</h4><h4>- Para mostrar información sobre medicamentos, como prospectos.</h4><h4>- Para mejorar la plataforma con datos anónimos.</h4><h4>- Para garantizar la seguridad del servicio.</h4><h3>Seguridad y compartición:</h3><h4>Sus datos se almacenan de forma segura y solo se comparten con socios esenciales para prestar el servicio. No vendemos sus datos.</h4><h3>Sus derechos:</h3><h4>Puede acceder, corregir o eliminar sus datos y gestionar permisos en cualquier momento. Esta política puede actualizarse. Se le informará en la aplicación o sitio si ocurren cambios importantes.</h4><h3>Si tiene preguntas sobre la Política de Privacidad, contáctenos</h3><h3>Correo: suporte@medtime.com</h3>"
+  },
+  "TERMS": {
+    "TITLE": "Términos de Uso",
+    "TERMS_HTML": "<p>En MedTime, valoramos su privacidad y la seguridad de su información. Esta política explica claramente cómo recopilamos, usamos, procesamos y protegemos sus datos cuando utiliza la aplicación y el sitio.</p><h3>Qué información recopilamos?</h3><h4>Datos que usted proporciona: Su nombre, correo y número de teléfono. Información sobre sus medicamentos (nombre, dosis, horarios, historial de administración). Datos del Código QR: información de medicamentos leída mediante Código QR.</h4><h3>Cómo usamos su información?</h3><h4>Proporcionar el servicio MedTime: Para enviar alertas de medicación, registrar su historial de administración y mostrar prospectos. Mejorar MedTime: Usamos datos anónimos y agregados para entender cómo se usa la aplicación. Comunicarnos con usted: Para proteger y enviar avisos de servicio o actualizaciones.</h4><h3>Si tiene preguntas sobre la Política de Privacidad, contáctenos</h3><h3>Correo: suporte@medtime.com</h3>"
   },
   "CURIOSITIES": {
     "TITLE": "Curiosidad del Día",
@@ -188,7 +200,16 @@
     "FAQ_Q5": "¿Qué condición es el principal factor de riesgo modificable para enfermedades cardíacas, accidentes cerebrovasculares y diabetes tipo 2?",
     "FAQ_A5": "La hipertensión (presión arterial alta).",
     "FAQ_Q6": "¿Cuál es la principal diferencia entre un virus y una bacteria?",
-    "FAQ_A6": "La bacteria es un organismo unicelular que puede replicarse a sí mismo, mientras que un virus es una partícula que necesita invadir una célula hospedadora para replicarse."
+    "FAQ_A6": "La bacteria es un organismo unicelular que puede replicarse a sí mismo, mientras que un virus es una partícula que necesita invadir una célula hospedadora para replicarse.",
+    "PHONE_PROMPT_TITLE": "Registre su número para recibir recordatorios",
+    "PHONE_PROMPT_DESC": "Registre su número (Brasil) para recibir alertas de medicamentos por SMS/WhatsApp. Es obligatorio el código de país <strong>+55</strong>. Seleccione el DDD y escriba su número (sin espacios).",
+    "PHONE_PROMPT_DDD_LABEL": "DDD",
+    "PHONE_PROMPT_DDD_SELECT": "Seleccione",
+    "PHONE_PROMPT_PHONE_LABEL": "Número de teléfono",
+    "PHONE_PROMPT_PHONE_PLACEHOLDER": "Ej.: 988776655",
+    "PHONE_PROMPT_SAVE": "Guardar número",
+    "PHONE_PROMPT_SKIP": "Omitir",
+    "PHONE_PROMPT_INVALID": "Número inválido. Ingrese DDD y número válidos (8-9 dígitos)."
   },
   "LOGIN": {
     "LOGIN": "Iniciar sesión",

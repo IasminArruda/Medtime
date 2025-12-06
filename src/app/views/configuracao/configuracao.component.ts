@@ -478,9 +478,13 @@ export class ConfiguracaoComponent implements OnInit {
       const fromAuth = this.configService.getCurrentUserProfile();
       let profileData: UserProfile | null = fromAuth;
 
-      if (!profileData) {
-        const fetched = await firstValueFrom(this.configService.fetchProfileFromServer());
-        profileData = fetched;
+      if (!profileData || !profileData.phone) {
+        try {
+          const fetched = await firstValueFrom(this.configService.fetchProfileFromServer());
+          profileData = fetched || profileData;
+        } catch (e) {
+          console.warn('Falha ao buscar perfil no servidor, usando dados locais se existirem.', e);
+        }
       }
 
       const phone = profileData?.phone ?? '';

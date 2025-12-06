@@ -7,10 +7,9 @@
     <a routerLink="/dashboard" (click)="toggleMenu()">{{ 'NAVIGATION.HOME' | translate }}</a>
     <a routerLink="/sobre" (click)="toggleMenu()">{{ 'NAVIGATION.ABOUT_US' | translate }}</a>
     <a routerLink="/curiosidades" (click)="toggleMenu()">{{ 'NAVIGATION.CURIOSITIES' | translate }}</a>
-    <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear QR Code</a>
-    <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear novo QR Code</a>
-    <a *ngIf="temProgramacao" href="#" (click)="openVerProgramacao(); toggleMenu(); $event.preventDefault()">Ver
-      Programação</a>
+    <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">{{ 'NAVIGATION.SCAN_QR_CODE' | translate }}</a>
+    <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">{{ 'NAVIGATION.SCAN_NEW_QR' | translate }}</a>
+    <a *ngIf="temProgramacao" href="#" (click)="openVerProgramacao(); toggleMenu(); $event.preventDefault()">{{ 'QRCODE.VIEW_SCHEDULE' | translate }}</a>
     <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate
       }}</a>
   </div>
@@ -41,10 +40,8 @@
             <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
             <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
       <i class="fas fa-horizontal-rule"></i>
-
     </div>
       </div>
-
     <div class="user-menu-options">
     <div class="config">
       <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
@@ -74,19 +71,15 @@
   </div>
 </div>
 
-<!-- CONTAINER GRANDE: só aparece quando NÃO estamos em modoProgramacao (fluxo de criação) -->
 <div class="container" *ngIf="!modoProgramacao">
 
   <!-- SEÇÃO DE INFORMAÇÕES DO RECEITUÁRIO -->
   <div *ngIf="medicamentos && medicamentos.length > 0" class="secao-informacoes">
     <h2>{{ 'QRCODE.RECIPE_INFO_TITLE' | translate }}</h2>
-
-    <!-- Mostrar select apenas quando o QR tiver MAIS DE 1 medicamento prescrito -->
     <div *ngIf="medicamentos.length > 1" class="select-wrapper">
       <label for="medicamentoSelect" class="label-select">{{ 'QRCODE.SELECT_MEDICINE' | translate }}</label>
       <select id="medicamentoSelect" name="medicamentoSelecionado" [(ngModel)]="medicamentoSelecionado"
         (change)="atualizarMedicamentoSelecionado()" class="select-medicamento">
-        <!-- opções baseadas nos medicamentos ainda disponíveis (não programados) -->
         <option *ngFor="let med of medicamentosDisponiveis()" [ngValue]="med">
           {{ med.nome }} - {{ med.dose }} ({{ med.intervalo }}h, {{ med.duracao }}d)
         </option>
@@ -123,7 +116,6 @@
 
   <h3 class="instruction-title">{{ 'QRCODE.INSTRUCTION_TITLE' | translate }}</h3>
 
-  <!-- FORMULÁRIO PARA CRIAR ALARME (fluxo scanner) -->
   <form id="formAlarme" *ngIf="!editandoAlarmeId && medicamentosDisponiveis().length > 0" class="form-criar-alarme"
     (submit)="$event.preventDefault()">
     <label for="inicio">{{ 'QRCODE.START_TIME_INPUT' | translate }}</label>
@@ -134,7 +126,6 @@
     </button>
   </form>
 
-  <!-- MODAL PREVIEW DE SCHEDULE (apenas no fluxo de criação) -->
   <div *ngIf="schedule.length > 0" class="schedule-modal-overlay" (click)="fecharScheduleModal()"></div>
   <div *ngIf="schedule.length > 0" class="schedule-modal">
     <div class="modal-header">
@@ -168,9 +159,7 @@
     </div>
   </div>
 </div>
-<!-- === FIM CONTAINER GRANDE === -->
 
-<!-- ===== CARDS (mostram os alarmes visíveis) ===== -->
 <div *ngIf="modoProgramacao && alarmesVisiveis.length > 0" class="alarme-grid">
   <div *ngFor="let alarme of alarmesVisiveis" class="alarme-card">
     <div class="card-top">
@@ -221,42 +210,48 @@
   </div>
 </div>
 
-<!-- FORMULÁRIO DE EDIÇÃO (apenas quando estamos vendo/gerenciando alarmes) -->
-<div id="editarForm" *ngIf="modoProgramacao && editandoAlarmeId" class="form-edicao">
-  <h4>{{ 'QRCODE.EDIT_TITLE' | translate }}</h4>
-  <label>{{ 'QRCODE.START_TIME_LABEL' | translate }}
-    <input type="time" name="editHoraInicio" [(ngModel)]="editHoraInicio" class="input-field">
-  </label>
-  <label>{{ 'QRCODE.LABEL_DOSE' | translate }}
-    <input type="text" name="editDose" [(ngModel)]="editDose" class="input-field">
-  </label>
-  <label>{{ 'QRCODE.DURATION_DAYS_LABEL' | translate }}
-    <input type="number" name="editDuracao" [(ngModel)]="editDuracao" class="input-field">
-  </label>
-  <div class="form-buttons">
+<!-- FORMULÁRIO DE EDIÇÃO -->
+<div class="edit-overlay" *ngIf="modoProgramacao && editandoAlarmeId" (click)="cancelarEdicao()"></div>
+<div id="editarForm" *ngIf="modoProgramacao && editandoAlarmeId" class="form-edicao" role="dialog" aria-modal="true">
+  <div class="edit-header">
+    <h4>{{ 'QRCODE.EDIT_TITLE' | translate }}</h4>
+    <button class="close-edit" (click)="cancelarEdicao()" aria-label="Fechar">&times;</button>
+  </div>
+  <div class="edit-body">
+    <label class="edit-label">{{ 'QRCODE.START_TIME_LABEL' | translate }}
+      <input type="time" name="editHoraInicio" [(ngModel)]="editHoraInicio" class="input-field">
+    </label>
+    <label class="edit-label">{{ 'QRCODE.LABEL_DOSE' | translate }}
+      <input type="text" name="editDose" [(ngModel)]="editDose" class="input-field">
+    </label>
+    <label class="edit-label">{{ 'QRCODE.DURATION_DAYS_LABEL' | translate }}
+      <input type="number" name="editDuracao" [(ngModel)]="editDuracao" class="input-field">
+    </label>
+  </div>
+  <div class="form-buttons modal-actions">
     <button class="btn-salvar" (click)="salvarEdicao()">{{ 'QRCODE.SAVE_CHANGES' | translate }}</button>
     <button class="btn-cancelar" (click)="cancelarEdicao()">{{ 'ACTIONS.CANCEL' | translate }}</button>
   </div>
 </div>
 
-<!-- SIDEBAR DE PROGRAMAÇÃO (apenas em modoProgramacao) -->
+<!-- SIDEBAR DE PROGRAMAÇÃO  -->
 <aside class="schedule-sidebar" [class.open]="sidebarOpen && modoProgramacao">
   <div class="sidebar-header">
     <h3>{{ selectedAlarme?.nome }}</h3>
-    <button class="close-sidebar" (click)="closeScheduleSidebar()">&times;</button>
   </div>
   <div class="sidebar-content" *ngIf="selectedAlarme && modoProgramacao">
-    <div class="info-row">
-      <span class="info-label">{{ 'QRCODE.LABEL_START_TIME' | translate }}</span>
-      <span class="info-value">{{ selectedAlarme.horaI }}</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">{{ 'QRCODE.LABEL_TOTAL_DOSES' | translate }}</span>
-      <span class="info-value">{{ getTotalDoses(selectedAlarme) }}</span>
+    <div class="summary-card">
+      <p class="summary-title">{{ selectedAlarme?.nome }}</p>
+      <p class="summary-sub">{{ 'QRCODE.SCHEDULE_TOTAL' | translate:{count: getTotalDoses(selectedAlarme), days: getDurationDays(selectedAlarme)} }}</p>
     </div>
     <ul class="schedule-list">
-      <li *ngFor="let h of selectedAlarme.horarios">
-        <strong>{{ h.horario }}</strong> — {{ h.dose }} (Dia {{ h.dia }})
+      <li *ngFor="let h of selectedAlarme.horarios; let i = index">
+        <div class="num-badge">{{ i + 1 }}</div>
+
+        <div class="item-content">
+          <div class="time">{{ h.horario }}</div>
+          <div class="day">Dia {{ h.dia }}</div>
+        </div>
       </li>
     </ul>
   </div>

@@ -7,9 +7,9 @@
 
     <a routerLink="/sobre" (click)="toggleMenu()">{{ 'NAVIGATION.ABOUT_US' | translate }}</a>
     <a routerLink="/curiosidades" (click)="toggleMenu()">{{ 'NAVIGATION.CURIOSITIES' | translate }}</a>
-    <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear QR Code</a>
-    <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear novo QR Code</a>
-    <a *ngIf="temProgramacao" href="#" (click)="navigateToVerProgramacao(); toggleMenu(); $event.preventDefault()">Ver Programação</a>
+    <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">{{ 'NAVIGATION.SCAN_QR_CODE' | translate }}</a>
+    <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">{{ 'NAVIGATION.SCAN_NEW_QR' | translate }}</a>
+    <a *ngIf="temProgramacao" href="#" (click)="navigateToVerProgramacao(); toggleMenu(); $event.preventDefault()">{{ 'QRCODE.VIEW_SCHEDULE' | translate }}</a>
     <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate }}</a>
 
   </div>
@@ -62,7 +62,37 @@
 </div>
 <div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
 
-<!-- Carrossel -->
+  <!-- Aviso de Telefone para Notificações -->
+  <div *ngIf="showPhonePrompt" class="phone-prompt">
+    <div class="phone-prompt-backdrop" (click)="skipPhonePrompt()"></div>
+    <div class="phone-prompt-card" role="dialog" aria-modal="true">
+      <h3>{{ 'DASHBOARD.PHONE_PROMPT_TITLE' | translate }}</h3>
+      <p [innerHTML]="'DASHBOARD.PHONE_PROMPT_DESC' | translate"></p>
+
+      <div class="phone-input-row">
+        <div class="country-box">+55</div>
+        <div class="input-group">
+          <label for="ddd">{{ 'DASHBOARD.PHONE_PROMPT_DDD_LABEL' | translate }}</label>
+          <select id="ddd" [(ngModel)]="selectedDDD">
+            <option value="">{{ 'DASHBOARD.PHONE_PROMPT_DDD_SELECT' | translate }}</option>
+            <option *ngFor="let d of dddList" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="phone">{{ 'DASHBOARD.PHONE_PROMPT_PHONE_LABEL' | translate }}</label>
+          <input id="phone" type="tel" [(ngModel)]="phoneNumber" placeholder="{{ 'DASHBOARD.PHONE_PROMPT_PHONE_PLACEHOLDER' | translate }}" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="phone-prompt-actions">
+        <button class="btn btn-save" (click)="savePhoneForNotifications()">{{ 'DASHBOARD.PHONE_PROMPT_SAVE' | translate }}</button>
+        <button class="btn btn-secondary" (click)="skipPhonePrompt()">{{ 'DASHBOARD.PHONE_PROMPT_SKIP' | translate }}</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carrossel -->
 <div class="carrossel" (mouseenter)="pauseSlide()" (mouseleave)="startAutoSlide()">
 
   <div class="carrossel-images" [style.transform]="'translateX(' + (-currentIndex * 100) + '%)'">

@@ -275,7 +275,6 @@
   color: #333;
 }
 
-/* --- Loading Overlay --- */
 .loading-overlay {
   position: absolute;
   top: 0;
@@ -310,6 +309,82 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.solution-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.solution-modal-card {
+  background: #fff;
+  width: min(960px, 94%);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(5, 38, 89, 0.25);
+  overflow: hidden;
+}
+
+.solution-modal-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid rgba(5, 38, 89, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.solution-modal-header h3 {
+  margin: 0;
+  color: #052659;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.solution-modal-header i {
+  cursor: pointer;
+  color: #052659;
+}
+
+.solution-modal-body {
+  padding: 20px 28px 28px 28px;
+  color: #333;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.solution-modal-body p {
+  margin: 0 0 12px 0;
+}
+
+.solution-modal-body ol {
+  margin: 8px 0 12px 20px;
+  padding: 0;
+}
+
+.solution-modal-body li {
+  margin: 8px 0;
+}
+
+.solution-modal-body strong {
+  color: #052659;
+}
+
+.solution-modal-body .tip {
+  display: block;
+  margin-top: 12px;
+  background: #f7fbff;
+  border-left: 4px solid #dbeeff;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.solution-modal-body a {
+  color: #052659;
+  font-weight: 600;
 }
 
 /* Estilos Específicos para o Modo "Alertas" */
@@ -1230,6 +1305,7 @@
     transform: translateY(-20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;

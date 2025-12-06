@@ -28,7 +28,7 @@
     "SIMPLE_ALARM": "Simple Alarm",
     "CALM_MELODY": "Calm Melody",
     "VIBRATION": "Vibration",
-    "VISUAL_NOTIFICATION": "Visual Notification (Pop-up)",
+    "VISUAL_NOTIFICATION": "Notification via WhatsApp",
     "TEXT_SIZE": "Text Size",
     "SMALL": "Small",
     "NORMAL": "Normal",
@@ -56,12 +56,15 @@
     "SOLUTION_MANAGE_PRESCRIPTIONS": "Manage prescriptions and QR Codes",
     "SOLUTION_MEDICATION_REMINDERS": "Medication Reminders & Schedules",
     "SOLUTION_MEDICATION_INFO": "Medication Information",
-    "SOLUTION_SPECIFIC_DOUBTS": "Specific Doubts for Seniors"
-    ,
+    "SOLUTION_SPECIFIC_DOUBTS": "Specific Doubts for Seniors",
     "SOLUTION_MANAGE_PRESCRIPTIONS_DESC": "Here you can manage your prescriptions and generate QR codes to share with pharmacists.",
+    "SOLUTION_MANAGE_PRESCRIPTIONS_HTML": "<p>Objective: register, view and generate QR Codes of prescriptions to present to the pharmacist or caregiver.</p><ol style=\"margin:6px 0 12px 20px;\"><li>On Home, tap the 'Manage prescriptions and QR Codes' card.</li><li>On the prescriptions screen: tap 'Add Prescription' (or +).</li><li>Fill in the requested fields: patient name, doctor's prescription, issue date, validity and notes.</li><li>Attach the prescription photo: tap 'Add image' → choose a photo from gallery or use the camera.</li><li>Tap Save / Confirm. The prescription will appear in the list.</li><li>To generate a QR Code: select the desired prescription → tap 'Generate QR Code'.</li><li>The app will show the QR; tap Share to send via WhatsApp/Email or Print if available.</li><li>To edit or delete: select the prescription → Edit to change information or Delete to remove (confirm deletion).</li></ol><p><strong>Security tip:</strong> check the validity and allow only authorized caregivers to access — use the Share feature with permission.</p>",
     "SOLUTION_MEDICATION_REMINDERS_DESC": "Set automatic reminders so you don't forget to take your medications on time.",
+    "SOLUTION_MEDICATION_REMINDERS_HTML": "<p>Objective: create schedule alerts, repetition and track administrations.</p><ol style=\"margin:6px 0 12px 20px;\"><li>On Home, tap the 'Medication Reminders & Schedules' card.</li><li>Tap 'Add Reminder' or the '+' button.</li><li>Fill in: Medication name; Dosage (e.g., 500 mg); Form (tablet, syrup, injection); Times (e.g., 08:00, 12:00, 20:00); Frequency (daily, specific days); Duration (until date X or for N days).</li><li>Enable sound/push and, if available, choose whether the reminder repeats on weekends.</li><li>Save. The reminder will appear in the list with status (Active/Paused).</li><li>When time comes: the app will show a notification with 'Mark as Taken' or 'Remind Later' buttons.</li><li>History: tap the reminder → view history of taken doses and missed ones.</li><li>Settings: go to Settings → Medication Alerts to configure volume, vibration and silent mode.</li></ol><p><strong>Tip for seniors:</strong> use large text (Settings → Accessibility → Text Size) and a loud alert sound.</p>",
     "SOLUTION_MEDICATION_INFO_DESC": "View detailed medication information, side effects, and interactions.",
+    "SOLUTION_MEDICATION_INFO_HTML": "<p>Objective: consult description, side effects, contraindications and usage instructions.</p><ol style=\"margin:6px 0 12px 20px;\"><li>On Home, tap the 'Medication Information' card.</li><li>Use the search box to type the medication name.</li><li>In the result list, tap the desired medication to open its record.</li><li>The record includes: Indications; Dosage instructions; Side effects; Interactions with other medications; Precautions and contraindications; Doctor's notes (when linked to a prescription).</li><li>To save for quick access: tap 'Favorite'.</li><li>If technical doubt exists: tap 'Ask the Specialist' (or Specific Doubts — routes to support/FAQ channel).</li><li>Tip: enable reading mode (eye icon) to simplify text and enlarge font.</li></ol>",
     "SOLUTION_SPECIFIC_DOUBTS_DESC": "Section with information and frequently asked questions tailored for older adults.",
+    "SOLUTION_SPECIFIC_DOUBTS_HTML": "<p>Objective: dedicated area with simple language, support and FAQs tailored for seniors.</p><ol style=\"margin:6px 0 12px 20px;\"><li>On Home, tap the 'Specific Doubts for Seniors' card.</li><li>The screen will open sections like: How to store medicines, How to take correctly, Warning signs, Accessibility.</li><li>Browse quick topics (buttons/accordion). Tap to open the simple-language explanation.</li><li>Questions & Answers (FAQ): tap an item to see the detailed answer and practical examples.</li><li>Talk to an agent: tap 'Help & Support' → choose Chat, Call (if available) or Schedule a call with caregivers/administrator.</li><li>Extra resources: short videos (play icon) about safe medication administration and printable checklists.</li><li>Usability tip: enable Elder Mode in settings for larger buttons, high contrast and read-aloud (if available).</li><li>Common steps to edit/add (prototype buttons).</li></ol>",
     "ADD_OBSERVATION": "Add observation",
     "OBSERVATION_PLACEHOLDER": "Write a note...",
     "SOUND_NOTIFICATION_UNAVAILABLE": "Sound notifications are not yet available. Sorry for the inconvenience!"
@@ -88,10 +91,19 @@
     "HOME": "Home",
     "SETTINGS": "Settings",
     "SCAN_QR_CODE": "Scan QrCode",
+    "SCAN_NEW_QR": "Scan new QR Code",
     "ADMINISTRATOR": "Administrator",
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Logout",
     "ADM": "ADM"
+  },
+  "PRIVACY": {
+    "TITLE": "Privacy Policy",
+    "PRIVACY_HTML": "<p>MedTime values your privacy and protects your personal data in accordance with applicable data protection laws.</p><h3>What we collect:</h3><h4>- Data you provide: name, email, phone, medications, history and health conditions.</h4><h4>- App usage data: QR Code scans, usage times, device type and visited pages.</h4><h3>How we use it:</h3><h4>- To send alerts and record medication usage.</h4><h4>- To display medication information, such as leaflets.</h4><h4>- To improve the platform with anonymous data.</h4><h4>- To ensure the security of the service.</h4><h3>Security and sharing:</h3><h4>Your data is stored securely and only shared with partners essential to provide the service. We do not sell your data.</h4><h3>Your rights:</h3><h4>You can access, correct or delete your data and manage permissions at any time. This policy may be updated. You will be informed in the app or site if important changes occur.</h4><h3>If you have questions about the Privacy Policy, contact us</h3><h3>Email: suporte@medtime.com</h3>"
+  },
+  "TERMS": {
+    "TITLE": "Terms of Use",
+    "TERMS_HTML": "<p>At MedTime, we value your privacy and the security of your information. This policy explains clearly how we collect, use, process and protect your data when you use the app and the site.</p><h3>What information do we collect?</h3><h4>Data you provide: Your name, email and phone number. Information about your medications (name, dosage, schedules, administration history). QR Code data: medication information read via QR Code.</h4><h3>How do we use your information?</h3><h4>Provide the MedTime service: To send medication alerts, record your administration history and display leaflets. Improve MedTime: We use anonymous and aggregated data to understand how the app is used. Communicate with you: To protect and send service or update notices.</h4><h3>If you have questions about the Privacy Policy, contact us</h3><h3>Email: suporte@medtime.com</h3>"
   },
   "LOGIN": {
     "SIGN_UP": "Sign Up",
@@ -133,8 +145,24 @@
     "FAQ_Q5": "What condition is the main modifiable risk factor for heart disease, stroke and type 2 diabetes?",
     "FAQ_A5": "Hypertension (high blood pressure).",
     "FAQ_Q6": "What is the main difference between a virus and a bacterium?",
-    "FAQ_A6": "Bacteria is a single-celled organism that can replicate itself, while a virus is a particle that needs to invade a host cell to replicate."
+    "FAQ_A6": "Bacteria is a single-celled organism that can replicate itself, while a virus is a particle that needs to invade a host cell to replicate.",
+    "PHONE_PROMPT_TITLE": "Want notifications for your medications?",
+    "PHONE_PROMPT_DESC": "<p>Add your phone number to receive alerts when you have scheduled medications. Country code is <strong>+55</strong>. Select the DDD for your city and enter your number (no spaces).</p>",
+    "PHONE_PROMPT_DDD_LABEL": "DDD",
+    "PHONE_PROMPT_DDD_SELECT": "Select",
+    "PHONE_PROMPT_PHONE_LABEL": "Phone number",
+    "PHONE_PROMPT_PHONE_PLACEHOLDER": "E.g.: 988776655",
+    "PHONE_PROMPT_SAVE": "Save number",
+    "PHONE_PROMPT_SKIP": "Skip for now"
   },
+  "PHONE_PROMPT_TITLE": "Want notifications for your medications?",
+  "PHONE_PROMPT_DESC": "<p>Add your phone number to receive alerts when you have scheduled medications. Country code is <strong>+55</strong>. Select the DDD for your city and enter your number (no spaces).</p>",
+  "PHONE_PROMPT_DDD_LABEL": "DDD",
+  "PHONE_PROMPT_DDD_SELECT": "Select",
+  "PHONE_PROMPT_PHONE_LABEL": "Phone number",
+  "PHONE_PROMPT_PHONE_PLACEHOLDER": "E.g.: 988776655",
+  "PHONE_PROMPT_SAVE": "Save number",
+  "PHONE_PROMPT_SKIP": "Skip for now",
   "ABOUT": {
     "TITLE": "Transform your treatment. With MedTime, technology cares for you, dose by dose.",
     "KNOW_MEDTIME_TITLE": "Know MedTime",

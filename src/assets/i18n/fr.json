@@ -28,7 +28,7 @@
     "SIMPLE_ALARM": "Alarme Simple",
     "CALM_MELODY": "Mélodie Apaisante",
     "VIBRATION": "Vibration",
-    "VISUAL_NOTIFICATION": "Notification Visuelle (Pop-up)",
+    "VISUAL_NOTIFICATION": "Notification par WhatsApp",
     "TEXT_SIZE": "Taille du Texte",
     "SMALL": "Petit",
     "NORMAL": "Normal",
@@ -56,12 +56,15 @@
     "SOLUTION_MANAGE_PRESCRIPTIONS": "Gérer les ordonnances et les Codes QR",
     "SOLUTION_MEDICATION_REMINDERS": "Rappels et Horaires des Médicaments",
     "SOLUTION_MEDICATION_INFO": "Informations sur les Médicaments",
-    "SOLUTION_SPECIFIC_DOUBTS": "Questions spécifiques pour les personnes âgées"
-    ,
+    "SOLUTION_SPECIFIC_DOUBTS": "Questions spécifiques pour les personnes âgées",
     "SOLUTION_MANAGE_PRESCRIPTIONS_DESC": "Ici vous pouvez gérer vos ordonnances et générer des codes QR pour les partager avec les pharmaciens.",
+    "SOLUTION_MANAGE_PRESCRIPTIONS_HTML": "<p>Objectif : enregistrer, visualiser et générer des Codes QR des ordonnances à présenter au pharmacien ou au soignant.</p><ol style=\"margin:6px 0 12px 20px;\"><li>Sur l'accueil, appuyez sur la carte 'Gérer les ordonnances et les Codes QR'.</li><li>Écran des ordonnances : appuyez sur 'Ajouter une ordonnance' (ou +).</li><li>Remplissez les champs demandés : nom du patient, prescription du médecin, date d'émission, validité et remarques.</li><li>Joignez la photo de l'ordonnance : appuyez sur 'Ajouter une image' → choisissez une photo depuis la galerie ou utilisez l'appareil.</li><li>Appuyez sur Enregistrer / Confirmer. L'ordonnance apparaîtra dans la liste.</li><li>Pour générer un Code QR : sélectionnez l'ordonnance souhaitée → appuyez sur 'Générer un Code QR'.</li><li>L'application affichera le QR ; appuyez sur Partager pour envoyer par WhatsApp/Email ou Imprimer si disponible.</li><li>Pour modifier ou supprimer : sélectionnez l'ordonnance → Modifier pour changer les informations ou Supprimer pour retirer (confirmez la suppression).</li></ol><p><strong>Conseil de sécurité :</strong> vérifiez la validité et permettez uniquement aux soignants autorisés d'accéder — utilisez la fonction Partager avec permission.</p>",
     "SOLUTION_MEDICATION_REMINDERS_DESC": "Configurez des rappels automatiques pour ne pas oublier de prendre vos médicaments à l'heure.",
+    "SOLUTION_MEDICATION_REMINDERS_HTML": "<p>Objectif : créer des alertes d'horaires, des répétitions et suivre les administrations.</p><ol style=\"margin:6px 0 12px 20px;\"><li>Sur l'accueil, appuyez sur la carte 'Rappels et Horaires des Médicaments'.</li><li>Appuyez sur 'Ajouter un rappel' ou le bouton '+'.</li><li>Remplissez : Nom du médicament ; Dosage (ex. : 500 mg) ; Forme (comprimé, sirop, injection) ; Horaires (ex. : 08:00, 12:00, 20:00) ; Fréquence (quotidien, jours spécifiques) ; Durée (jusqu'à la date X ou pendant N jours).</li><li>Activez le son/push et, si disponible, choisissez si le rappel se répète le week-end.</li><li>Enregistrez. Le rappel apparaîtra dans la liste avec le statut (Actif/Pausé).</li><li>Au moment : l'application affichera une notification avec les boutons 'Marquer comme Pris' ou 'Me rappeler plus tard'.</li><li>Historique : appuyez sur le rappel → voir l'historique des doses prises et des absences.</li><li>Réglages : allez dans Paramètres → Alertes de Médicaments pour configurer le volume, la vibration et le mode silencieux.</li></ol><p><strong>Conseil pour les personnes âgées :</strong> utilisez des textes larges (Paramètres → Accessibilité → Taille du texte) et un son d'alerte fort.</p>",
     "SOLUTION_MEDICATION_INFO_DESC": "Consultez des informations détaillées sur les médicaments, les effets secondaires et les interactions.",
+    "SOLUTION_MEDICATION_INFO_HTML": "<p>Objectif : consulter la description, les effets secondaires, les contre-indications et les instructions d'utilisation.</p><ol style=\"margin:6px 0 12px 20px;\"><li>Sur l'accueil, appuyez sur la carte 'Informations sur les Médicaments'.</li><li>Utilisez la zone de recherche pour taper le nom du médicament.</li><li>Dans la liste des résultats, appuyez sur le médicament souhaité pour ouvrir sa fiche.</li><li>La fiche comprend : Indications ; Posologie ; Effets secondaires ; Interactions avec d'autres médicaments ; Précautions et contre-indications ; Remarques du médecin (lorsqu'elles sont liées à l'ordonnance).</li><li>Pour enregistrer pour un accès rapide : appuyez sur 'Favoris'.</li><li>En cas de doute technique : appuyez sur 'Demander au spécialiste' (ou Doutes spécifiques — dirige vers le canal de support/FAQ).</li><li>Astuce : activez le mode lecture (icône œil) pour simplifier le texte et agrandir la police.</li></ol>",
     "SOLUTION_SPECIFIC_DOUBTS_DESC": "Section avec informations et questions fréquentes pour les personnes âgées.",
+    "SOLUTION_SPECIFIC_DOUBTS_HTML": "<p>Objectif : espace dédié avec langage simple, assistance et questions fréquentes spécifiques aux personnes âgées.</p><ol style=\"margin:6px 0 12px 20px;\"><li>Sur l'accueil, appuyez sur la carte 'Doutes spécifiques pour les personnes âgées'.</li><li>L'écran ouvrira des sections comme : Comment stocker les médicaments, Comment prendre correctement, Signes d'alerte, Accessibilité.</li><li>Parcourez les sujets rapides (boutons/accordéon). Appuyez pour ouvrir l'explication en langage simple.</li><li>Questions et réponses (FAQ) : appuyez sur un élément pour voir la réponse détaillée et des exemples pratiques.</li><li>Parlez à un agent : appuyez sur 'Aide et Support' → choisissez Chat, Appeler (si disponible) ou Programmer un appel avec les aidants/administrateur.</li><li>Ressources supplémentaires : courtes vidéos (icône lecture) sur l'administration sûre des médicaments et checklists imprimables.</li><li>Conseil d'utilisabilité : activez le Mode Senior dans les paramètres pour une interface avec des boutons plus grands, un contraste élevé et une lecture vocale (si disponible).</li><li>Étapes communes pour éditer/ajouter (boutons du prototype).</li></ol>",
     "ADD_OBSERVATION": "Ajouter une observation",
     "OBSERVATION_PLACEHOLDER": "Écrivez une note...",
     "SOUND_NOTIFICATION_UNAVAILABLE": "Les notifications sonores ne sont pas encore disponibles. Désolé pour le désagrément!"
@@ -110,10 +113,19 @@
     "HOME": "Accueil",
     "SETTINGS": "Paramètres",
     "SCAN_QR_CODE": "Scanner le Code QR",
+    "SCAN_NEW_QR": "Scanner un nouveau code QR",
     "ADMINISTRATOR": "Administrateur",
     "PRIVACY_POLICY": "Politique de Confidentialité",
     "LOGOUT": "Déconnexion",
     "ADM": "ADM"
+  },
+  "PRIVACY": {
+    "TITLE": "Politique de Confidentialité",
+    "PRIVACY_HTML": "<p>MedTime valorise votre vie privée et protège vos données personnelles conformément aux lois applicables en matière de protection des données.</p><h3>Ce que nous collectons :</h3><h4>- Données que vous fournissez : nom, e-mail, téléphone, médicaments, historique et conditions de santé.</h4><h4>- Données d'utilisation de l'application : scans de Codes QR, horaires d'utilisation, type d'appareil et pages visitées.</h4><h3>Comment nous les utilisons :</h3><h4>- Pour envoyer des alertes et enregistrer l'utilisation des médicaments.</h4><h4>- Pour afficher des informations sur les médicaments, telles que les notices.</h4><h4>- Pour améliorer la plateforme avec des données anonymes.</h4><h4>- Pour garantir la sécurité du service.</h4><h3>Sécurité et partage :</h3><h4>Vos données sont stockées en toute sécurité et ne sont partagées qu'avec des partenaires essentiels au fonctionnement du service. Nous ne vendons pas vos données.</h4><h3>Vos droits :</h3><h4>Vous pouvez accéder, corriger ou supprimer vos données et gérer les autorisations à tout moment. Cette politique peut être mise à jour. Vous serez informé dans l'application ou sur le site en cas de changements importants.</h3><h3>Si vous avez des questions sur la Politique de Confidentialité, contactez-nous</h3><h3>Email : suporte@medtime.com</h3>"
+  },
+  "TERMS": {
+    "TITLE": "Conditions d'Utilisation",
+    "TERMS_HTML": "<p>Chez MedTime, nous accordons de l'importance à votre vie privée et à la sécurité de vos informations. Cette politique explique clairement comment nous collectons, utilisons, traitons et protégeons vos données lorsque vous utilisez l'application et le site.</p><h3>Quelles informations collectons-nous ?</h3><h4>Données que vous fournissez : votre nom, e-mail et numéro de téléphone. Informations sur vos médicaments (nom, posologie, horaires, historique d'administration). Données du Code QR : informations sur les médicaments lues via le Code QR.</h4><h3>Comment utilisons-nous vos informations ?</h3><h4>Fournir le service MedTime : pour envoyer des alertes de médication, enregistrer votre historique d'administration et afficher les notices. Améliorer MedTime : nous utilisons des données anonymes et agrégées pour comprendre l'utilisation de l'application. Communiquer avec vous : pour protéger et envoyer des notifications de service ou des mises à jour.</h4><h3>Si vous avez des questions sur la Politique de Confidentialité, contactez-nous</h3><h3>Email : suporte@medtime.com</h3>"
   },
   "CURIOSITIES": {
     "TITLE": "Curiosité du Jour",

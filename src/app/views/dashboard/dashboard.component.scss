@@ -503,3 +503,156 @@ h5:hover {
   opacity: 1;
   visibility: visible;
 }
+
+// Aviso de telefone
+.phone-prompt {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4000;
+}
+
+.phone-prompt-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 33, 71, 0.65);
+  z-index: 1;
+  backdrop-filter: blur(4px);
+}
+
+.phone-prompt-card {
+  width: min(760px, 92%);
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(3, 63, 100, 0.4);
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+  align-items: stretch;
+  position: relative;
+  z-index: 2;
+  max-height: 85vh;
+  overflow: auto;
+}
+
+.phone-prompt-card h3 {
+  margin: 0;
+  font-size: 1.45rem;
+  color: #052659;
+  font-weight: 800;
+}
+
+.phone-prompt-card p {
+  margin: 0;
+  color: #234a67;
+  font-size: 1rem;
+}
+
+.phone-prompt-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.phone-prompt-form .ddd-select {
+  width: 120px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cfe6f6;
+  background: #ffffff;
+  font-weight: 600;
+  color: #052659;
+}
+
+.phone-prompt-form .phone-input {
+  flex: 1 1 240px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cfe6f6;
+  background: #ffffff;
+  font-size: 1rem;
+}
+
+.phone-prompt-card .phone-input-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.phone-prompt-card .country-box {
+  background: #e8f6fb;
+  color: #052659;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  border: 1px solid #cfe6f6;
+  margin-top: 28px;
+}
+
+.phone-prompt-card .input-group label {
+  display: block;
+  font-weight: 700;
+  color: #234a67;
+  margin-bottom: 6px;
+}
+
+.phone-prompt-card select,
+.phone-prompt-card input[type="tel"] {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cfe6f6;
+  background: #fff;
+  font-size: 1rem;
+}
+
+.phone-prompt-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.phone-prompt-actions .btn-primary,
+.phone-prompt-actions .btn.btn-save {
+  background: linear-gradient(90deg,#0f939b,#024f87);
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(2,79,135,0.25);
+  cursor: pointer;
+}
+
+.phone-prompt-actions .btn-primary:hover,
+.phone-prompt-actions .btn.btn-save:hover {
+  transform: translateY(-2px)
+}
+
+.phone-prompt-actions .btn-secondary {
+  background: transparent;
+  color: #052659;
+  border: 1px solid rgba(5,38,89,0.12);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.phone-prompt-actions .btn-secondary:hover {
+  transform: translateY(-2px)
+}
+
+.phone-prompt-invalid {
+  color: #b00020;
+  font-weight: 700;
+  margin-top: 6px;
+}
+

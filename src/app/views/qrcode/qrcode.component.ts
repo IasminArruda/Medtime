@@ -368,6 +368,7 @@ export class QrcodeComponent implements OnInit, OnDestroy {
         this.horaInicial = '';
         this.schedule = [];
         this.saving = false;
+        setTimeout(() => this.scrollToBottom(), 120);
       },
       error: (err) => {
         console.error('Erro ao salvar no banco:', err);
@@ -377,8 +378,17 @@ export class QrcodeComponent implements OnInit, OnDestroy {
         this.markMedAsSavedForRecipe(this.medicamentoSelecionado, novoAlarme);
         this.schedule = [];
         this.saving = false;
+        setTimeout(() => this.scrollToBottom(), 120);
       }
     });
+  }
+
+  private scrollToBottom() {
+    try {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    } catch (e) {
+      window.scrollTo(0, document.body.scrollHeight || 0);
+    }
   }
 
   private markMedAsSavedForRecipe(medicamento: any, alarmeSalvo: AlarmeAgendado) {
@@ -584,7 +594,6 @@ export class QrcodeComponent implements OnInit, OnDestroy {
     try {
       const horarios = this.getHorariosForAlarme(alarme);
       if (horarios && horarios.length > 0) return horarios.length;
-      // Fallback: calcular baseado em duracao e intervalo
       const intervalo = Number(alarme.intervalo) || 24;
       const duracao = Number(alarme.duracao) || 1;
       const dosesPerDay = Math.max(1, Math.floor(24 / intervalo));
@@ -612,10 +621,6 @@ export class QrcodeComponent implements OnInit, OnDestroy {
   }
 
   openScheduleSidebar(alarme: AlarmeAgendado) {
-    // Garantir que temos a versão completa do alarme (com `horarios`) antes
-    // de abrir a sidebar. Procuramos no array local `this.alarmes` (carregado
-    // do storage/server). Se não existir ou não tiver `horarios`, calculamos
-    // os horários com base em horaI/intervalo/duracao.
     const encontrado = this.alarmes.find(a => String(a.id) === String(alarme.id));
     const alvo = encontrado ? { ...encontrado } : { ...alarme };
     alvo.horarios = this.getHorariosForAlarme(alvo);
@@ -659,6 +664,18 @@ export class QrcodeComponent implements OnInit, OnDestroy {
       !this.userMenuElement.nativeElement.contains(target) && !this.userIconElement.nativeElement.contains(target)) {
       this.userMenuAtivo = false;
     }
+    try {
+      if (this.sidebarOpen && this.modoProgramacao) {
+        const aside = document.querySelector('.schedule-sidebar') as HTMLElement | null;
+        if (aside && !aside.contains(target)) {
+          if (target.closest('.alarme-card') || target.closest('.card-actions') || target.closest('.btn-primary') || target.closest('.btn-editar')) {
+            return;
+          }
+          this.closeScheduleSidebar();
+        }
+      }
+    } catch (e) {
+    }
   }
 
   openVerProgramacao() {
@@ -670,5 +687,11 @@ export class QrcodeComponent implements OnInit, OnDestroy {
     this.editandoAlarmeId = null;
     this.horaInicial = '';
     console.log('openVerProgramacao -> alarmesVisiveis:', this.alarmesVisiveis.length);
+  }
+
+  getDurationDays(alarme: any): number {
+    if (!alarme) return 0;
+    if (alarme.duracaoEmDias) return alarme.duracaoEmDias;
+    return alarme.duracao || Math.ceil((alarme.totalDoses || 0) / (24 / (alarme.intervaloHoras || 1)));
   }
 }

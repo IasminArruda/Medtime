@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (role) => {
         console.log('Cadastro e login automático com sucesso!', role);
+        try { localStorage.setItem('medtime_show_phone_prompt', 'true'); } catch (e) { }
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
