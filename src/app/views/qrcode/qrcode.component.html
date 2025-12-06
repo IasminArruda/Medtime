@@ -10,8 +10,7 @@
     <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">{{ 'NAVIGATION.SCAN_QR_CODE' | translate }}</a>
     <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">{{ 'NAVIGATION.SCAN_NEW_QR' | translate }}</a>
     <a *ngIf="temProgramacao" href="#" (click)="openVerProgramacao(); toggleMenu(); $event.preventDefault()">{{ 'QRCODE.VIEW_SCHEDULE' | translate }}</a>
-    <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate
-      }}</a>
+    <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate }}</a>
   </div>
 
   <div class="logo">

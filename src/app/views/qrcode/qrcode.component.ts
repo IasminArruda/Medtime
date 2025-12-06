@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { TranslationService } from 'src/app/services/translation.service';
 import { AlarmeService } from 'src/app/services/alarme.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,6 +17,9 @@ interface AlarmeAgendado {
   userId: string | number;
   horarios: Array<{ horario: string; dose: string; dia: number }>;
   recipeKey?: string;
+  duracaoEmDias?: number;
+  totalDoses?: number;
+  intervaloHoras?: number;
 }
 
 @Component({
@@ -27,13 +30,13 @@ interface AlarmeAgendado {
 export class QrcodeComponent implements OnInit, OnDestroy {
   temProgramacao = false;
   isLoggedIn = false;
+  isAdmin = false;
   qrData: any = null;
   medicamentos: any[] = [];
   medicamentoSelecionado: any = null;
   horaInicial: string = '';
   schedule: Array<{ horario: string; dose: string; dia: number }> = [];
   saving = false;
-  isAdmin = false;
   menuAtivo = false;
   userMenuAtivo = false;
 
@@ -74,6 +77,8 @@ export class QrcodeComponent implements OnInit, OnDestroy {
     private translation: TranslationService) { }
 
   ngOnInit(): void {
+    this.updateUserFlags();
+
     this.checkNavigationState();
 
     const stateInit: any = window.history.state || {};
@@ -95,8 +100,10 @@ export class QrcodeComponent implements OnInit, OnDestroy {
       }
     }
 
-    const user = this.authService.getUsuario();
-    this.userId = user?.id || null;
+    if (!this.userId) {
+      this.updateUserFlags();
+    }
+
     if (!this.userId) {
       window.alert(this.translation.instant('QRCODE.ALERT_NO_USER'));
       this.router.navigate(['/login']);
@@ -148,6 +155,60 @@ export class QrcodeComponent implements OnInit, OnDestroy {
     }
   }
 
+  private updateUserFlags(): void {
+    try {
+      const maybeUser = (this.authService as any).getUsuario?.();
+      if (!maybeUser) {
+        this.isAdmin = false;
+        this.isLoggedIn = false;
+        this.userId = null;
+        return;
+      }
+
+      if (typeof (maybeUser as any).subscribe === 'function') {
+        const sub: Subscription = (maybeUser as Observable<any>).subscribe({
+          next: (user: any) => {
+            this._applyUserToFlags(user);
+          },
+          error: () => {
+            this.isAdmin = false;
+            this.isLoggedIn = false;
+          }
+        });
+        this.subscriptions.push(sub);
+      } else {
+        this._applyUserToFlags(maybeUser);
+      }
+    } catch (e) {
+      this.isAdmin = false;
+      this.isLoggedIn = false;
+      console.error('Erro em updateUserFlags', e);
+    }
+  }
+
+  private _applyUserToFlags(user: any) {
+    try {
+      if (!user) {
+        this.isAdmin = false;
+        this.isLoggedIn = false;
+        this.userId = null;
+        return;
+      }
+      this.userId = user?.id ?? user?.ID ?? user?.userId ?? this.userId;
+      this.isLoggedIn = true;
+      this.isAdmin = !!(
+        user?.isAdmin ||
+        user?.admin ||
+        user?.is_adm ||
+        user?.role === 'admin' ||
+        user?.perfil === 'admin' ||
+        (Array.isArray(user?.roles) && user.roles.includes('admin'))
+      );
+    } catch (e) {
+      this.isAdmin = false;
+    }
+  }
+
   private syncAlarmesWithServer() {
     if (!this.userId) return;
     this.alarmeService.getAlarmesByUser(this.userId).subscribe({
@@ -196,6 +257,9 @@ export class QrcodeComponent implements OnInit, OnDestroy {
   }
 
   private checkNavigationState() {
+    // Reavalia flags do usuário sempre que checamos o estado de navegação
+    this.updateUserFlags();
+
     const state: any = window.history.state || {};
     const wantModoProgramacao = !!state?.verProgramacao;
 
@@ -679,6 +743,8 @@ export class QrcodeComponent implements OnInit, OnDestroy {
   }
 
   openVerProgramacao() {
+    this.updateUserFlags();
+
     this.modoProgramacao = true;
     this.carregarAlarmesDoStorage();
     this.alarmesVisiveis = this.alarmes.slice();
