@@ -57,45 +57,173 @@
     justify-content: center;
   }
 
+  .flip-camera {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    background: rgba(2, 79, 135, 0.9);
+    color: #fff;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 50;
+  }
+
+  .flip-camera i {
+    font-size: 18px;
+    line-height: 1;
+    display: inline-block;
+  }
+
+  .flip-camera .flip-icon {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    display: inline-block;
+  }
+
   .qr-reader {
     width: 100% !important;
     height: 100% !important;
   }
 
-    .manual-input {
-      width: 100%;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
+  .manual-input {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
 
-    .url-input {
-      flex-grow: 1;
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 12px 16px;
-      border: none;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-      font-size: 1rem;
-      color: #333;
-      outline: none;
-    }
+  .url-input {
+    flex-grow: 1;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 12px 16px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+  }
 
-    .btn-read {
-      width: auto;
-      padding: 12px 24px;
-      max-width: 150px;
-      background: #052659;
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
+  .btn-read {
+    width: auto;
+    padding: 12px 24px;
+    max-width: 150px;
+    background: #052659;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
 
-    .btn-read:hover {
-      background: #041f47;
-    }
-    }
+  .btn-read:hover {
+    background: #041f47;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .scanner-page {
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    background: #7da0ca;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .scanner-page>i {
+    position: fixed;
+    top: -5px;
+    left: 14px;
+    font-size: 1.7rem;
+    background: #ffffff;
+    color: #052659;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    z-index: 99999;
+  }
+
+  .scanner-card {
+    width: calc(100% - 24px);
+    max-width: 600px;
+    height: calc(100vh - 230px);
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .scanner-view {
+    width: 100%;
+    flex: 1;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #reader,
+  .qr-reader {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  #reader video,
+  .qr-reader video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .manual-input {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding-bottom: 16px;
+  }
+
+  .url-input {
+    flex: 1;
+    height: 44px;
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 0 12px;
+    border: none;
+    outline: none;
+  }
+
+  .btn-read {
+    width: 110px;
+    height: 68px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  button.flip-camera p {
+    font-size: 14px;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+}

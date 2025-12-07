@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return {
-    getTranslation: (lang: string): Observable<any> => http.get(`/assets/i18n/${lang}.json`)
+    getTranslation: (lang: string): Observable<any> => http.get(`assets/i18n/${lang}.json`)
   };
 }
 import { AppRoutingModule } from './app-routing.module';

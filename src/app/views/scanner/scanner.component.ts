@@ -10,6 +10,8 @@ import { TranslationService } from 'src/app/services/translation.service';
 export class ScannerComponent implements AfterViewInit, OnDestroy {
   private html5QrCode: any = null;
   private scriptLoaded = false;
+  cameras: any[] = [];
+  currentCameraIndex = 0;
 
   constructor(private ngZone: NgZone, private router: Router, private translation: TranslationService) {}
 
@@ -53,7 +55,8 @@ export class ScannerComponent implements AfterViewInit, OnDestroy {
       this.html5QrCode = new globalAny.Html5Qrcode(readerId);
       globalAny.Html5Qrcode.getCameras().then((devices: any[]) => {
         if (devices && devices.length) {
-          const cameraId = devices[0].id;
+          this.cameras = devices;
+          const cameraId = devices[this.currentCameraIndex].id;
           this.html5QrCode.start(
             cameraId,
             { fps: 10, qrbox: { width: 250, height: 250 } },
@@ -67,6 +70,30 @@ export class ScannerComponent implements AfterViewInit, OnDestroy {
       }).catch((err: any) => console.error('Cameras error', err));
     } catch (e) {
       console.error('Erro ao iniciar scanner', e);
+    }
+  }
+
+  async flipCamera(): Promise<void> {
+    try {
+      if (!this.cameras || this.cameras.length <= 1) return;
+      if (this.html5QrCode && this.html5QrCode.stop) {
+        await this.html5QrCode.stop().catch(() => {});
+      }
+      this.currentCameraIndex = (this.currentCameraIndex + 1) % this.cameras.length;
+      const nextId = this.cameras[this.currentCameraIndex].id;
+      const globalAny: any = window as any;
+      this.html5QrCode = new globalAny.Html5Qrcode('reader');
+      await this.html5QrCode.start(
+        nextId,
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        (decodedText: string) => {
+          this.ngZone.run(() => this.onScanSuccess(decodedText));
+        },
+        (errorMessage: any) => {
+        }
+      ).catch((err: any) => console.error('Start error', err));
+    } catch (e) {
+      console.error('Erro ao alternar câmera', e);
     }
   }
 
