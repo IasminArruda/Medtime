@@ -31,6 +31,21 @@
   </div>
 </div>
 
+<div class="global-add-overlay" *ngIf="showAddHome || showAddDash || showAddLogo || editingHomeIndex !== null || editingDashIndex !== null || editingLogoIndex !== null" (click)="cancelAddHome(); cancelAddDash(); cancelAddLogo(); cancelEditHome(); cancelEditDash(); cancelEditLogo()">
+  <div class="add-panel-content" (click)="$event.stopPropagation()">
+    <input type="text" [(ngModel)]="addTempUrl" placeholder="Cole a URL da imagem aqui" />
+    <div class="add-panel-actions">
+      <button class="btn-cancel" (click)="cancelAddHome(); cancelAddDash(); cancelAddLogo(); cancelEditHome(); cancelEditDash(); cancelEditLogo()">Cancelar</button>
+      <button class="btn-confirm" *ngIf="showAddHome" (click)="confirmAddHome()">Confirmar</button>
+      <button class="btn-confirm" *ngIf="showAddDash" (click)="confirmAddDash()">Confirmar</button>
+      <button class="btn-confirm" *ngIf="showAddLogo" (click)="confirmAddLogo()">Confirmar</button>
+      <button class="btn-confirm" *ngIf="editingHomeIndex !== null" (click)="confirmEditHome()">Salvar</button>
+      <button class="btn-confirm" *ngIf="editingDashIndex !== null" (click)="confirmEditDash()">Salvar</button>
+      <button class="btn-confirm" *ngIf="editingLogoIndex !== null" (click)="confirmEditLogo()">Salvar</button>
+    </div>
+  </div>
+</div>
+
 <div class="user-sidebar" #userMenu [class.active]="userMenuAtivo">
     <div class="user-profile-card">
         <div class="profile-avatar">
@@ -40,7 +55,7 @@
             <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
             <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
       <i class="fas fa-horizontal-rule"></i>
-         
+
     </div>
       </div>
 
@@ -59,7 +74,7 @@
             <i class="fas fa-sign-out-alt option-icon"></i>
             <h5>Fazer Logout</h5>
           </a>
-     
+
   </div>
 </div>
 <div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
@@ -76,15 +91,170 @@
   </aside>
 
   <main class="admin-content-area">
-    <div *ngIf="activePanel() === 'gerenciar-conteudo'">
-      <h2>{{ 'MENU.MANAGE_CONTENT' | translate }}</h2>
-      <p>Área para gerenciar artigos, imagens, etc.</p>
+    <div *ngIf="activePanel() === 'gerenciar-conteudo'" class="admin-panel">
+      <h2>Gerenciar Conteúdo</h2>
+
+      <div class="admin-buttons-grid">
+        <button (click)="openModal('banners')">Banners</button>
+        <button (click)="openModal('logos')">Logos</button>
+        <button (click)="openModal('perguntas')">Perguntas</button>
+        <button (click)="openModal('curiosidades')">Curiosidades</button>
+        <button (click)="openModal('sobrenos')">Sobre Nós</button>
+        <button (click)="openModal('pesquisas')">Pesquisas</button>
+      </div>
     </div>
-    <div *ngIf="activePanel() === 'gerenciar-usuario'">
-      <h2>{{ 'MENU.MANAGE_USER' | translate }}</h2>
-      <p>Área para adicionar, editar ou remover usuários.</p>
+
+    <!-- GERENCIAR USUÁRIOS -->
+    <div *ngIf="activePanel() === 'gerenciar-usuario'" class="admin-panel">
+      <h2>Gerenciar Usuários</h2>
+      <p>Aqui depois entrará a tabela de usuários.</p>
     </div>
   </main>
+
+  <!-- BANNERS -->
+  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'banners'">
+    <div class="admin-modal banner-modal">
+
+      <!-- TOPO -->
+      <div class="banner-modal-header">
+        <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
+        <h3>Gerenciar Banners</h3>
+      </div>
+
+      <!-- BOTÃO NOVO / INPUTS -->
+      <div class="banner-toolbar">
+        <div class="toolbar-actions">
+          <button class="btn-new-banner" (click)="openAddHome()"><i class="fas fa-plus"></i> Adicionar Home</button>
+          <button class="btn-new-banner" (click)="openAddDash()"><i class="fas fa-plus"></i> Adicionar Dashboard</button>
+        </div>
+      </div>
+
+      <!-- TELA HOME -->
+      <h4 class="banner-section-title">Tela Home</h4>
+      <div class="banner-grid">
+        <div class="banner-card" *ngFor="let img of homeBanners; let i = index">
+          <div class="banner-image"><img [src]="img" alt="banner home {{i}}" /></div>
+          <div class="banner-actions">
+            <button class="btn-excluir" (click)="deleteHomeBanner(i)">Excluir</button>
+            <button class="btn-editar" (click)="openEditHome(i)">Editar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TELA DASHBOARD -->
+      <h4 class="banner-section-title">Tela Dashboard</h4>
+      <div class="banner-grid">
+        <div class="banner-card" *ngFor="let img of dashboardBanners; let i = index">
+          <div class="banner-image"><img [src]="img" alt="banner dash {{i}}" /></div>
+          <div class="banner-actions">
+            <button class="btn-excluir" (click)="deleteDashboardBanner(i)">Excluir</button>
+            <button class="btn-editar" (click)="openEditDash(i)">Editar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGOS -->
+  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'logos'">
+    <div class="admin-modal banner-modal">
+
+      <!-- TOPO CINZA -->
+      <div class="banner-modal-header">
+        <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
+        <h3>Gerenciar Logo</h3>
+      </div>
+
+      <!-- BOTÃO ADICIONAR -->
+      <div class="banner-toolbar">
+        <button class="btn-new-banner" (click)="openAddLogo()"><i class="fas fa-plus"></i>Adicionar Logo</button>
+      </div>
+
+      <!-- CONTAINER AZUL -->
+      <div class="logos-container">
+        <div class="logos-grid">
+          <div class="logo-card" *ngFor="let logo of logos; let i = index">
+            <div class="logo-circle">
+              <img [src]="logo" alt="logo {{i}}" />
+            </div>
+            <div class="logo-card-actions">
+              <button class="btn-excluir" (click)="deleteLogo(i)">Excluir</button>
+              <button class="btn-editar" (click)="openEditLogo(i)">Editar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PERGUNTAS -->
+  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'perguntas'">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <button (click)="closeModal()">←</button>
+        <h3>Perguntas</h3>
+      </div>
+
+      <div class="question-card" *ngFor="let pergunta of perguntas">
+        <div class="question-line"></div>
+        <div class="question-line"></div>
+        <div class="question-line"></div>
+
+        <div class="actions">
+          <button class="btn-delete">Excluir</button>
+          <button class="btn-edit">Editar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURIOSIDADES -->
+  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'curiosidades'">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <button (click)="closeModal()">←</button>
+        <h3>Curiosidades</h3>
+      </div>
+
+      <div class="curiosidade-card" *ngFor="let curiosidade of curiosidades">
+        <div class="curiosidade-img">Imagem</div>
+        <div class="actions">
+          <button class="btn-delete">Excluir</button>
+          <button class="btn-edit">Editar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOBRE NÓS -->
+  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'sobrenos'">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <button (click)="closeModal()">←</button>
+        <h3>Sobre Nós</h3>
+      </div>
+
+      <div class="sobre-grid">
+        <div class="sobre-box" *ngFor="let sobreNos of sobreNos">Imagem</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PESQUISAS (SÓ VISUAL POR ENQUANTO) -->
+  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'pesquisas'">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <button (click)="closeModal()">←</button>
+        <h3>Pesquisas</h3>
+      </div>
+
+      <div class="pesquisa-card" *ngFor="let pesquisa of pesquisas">
+        <div class="pesquisa-img">Imagem</div>
+        <div class="pesquisa-text">Enunciado</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <footer class="footer">

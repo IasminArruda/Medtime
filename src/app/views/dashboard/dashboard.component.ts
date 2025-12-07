@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject, firstValueFrom } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ConfigService } from 'src/app/services/config.service';
+import { BannerService } from 'src/app/services/banner.service';
+import { LogoService } from 'src/app/services/logo.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -45,16 +47,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   currentIndex = 0;
   private slideInterval: any;
   private destroy$ = new Subject<void>();
-
-  images = [
-    'assets/img/carrossel2/1.svg',
-    'assets/img/carrossel2/2.svg',
-    'assets/img/carrossel2/3.svg',
-    'assets/img/carrossel2/4.svg',
-    'assets/img/carrossel2/5.svg',
+  images: string[] = [
   ];
+  // logos
+  logos: string[] = [];
+  trackLogos: string[] = [];
 
-  constructor(public authService: AuthService, private router: Router, private translate: TranslateService, private configService: ConfigService) {}
+
+  constructor(public authService: AuthService, private router: Router, private translate: TranslateService, private configService: ConfigService, private bannerService: BannerService, private logoService: LogoService) {}
 
   ngOnInit(): void {
     this.temProgramacao = this.verificarProgramacao();
@@ -102,6 +102,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     // Inicializa o carrossel
     this.startAutoSlide();
+
+    try {
+      this.logoService.logos$.pipe(takeUntil(this.destroy$)).subscribe(l => {
+        this.logos = Array.isArray(l) ? l.slice() : [];
+        this.trackLogos = this.logos.concat(this.logos);
+      });
+    } catch (e) { }
   }
 
   ngOnDestroy(): void {
@@ -180,6 +187,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.userMenuAtivo = false;
         }
     }
+
+    try {
+      this.bannerService.dashboardBanners$.subscribe(b => {
+        if (Array.isArray(b) && b.length) {
+          this.images = b.slice();
+          this.currentIndex = 0;
+        } else {
+          this.updateCarouselImages();
+        }
+      });
+    } catch (e) { }
   }
 
   startAutoSlide(): void {

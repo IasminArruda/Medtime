@@ -1,5 +1,7 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { BannerService } from 'src/app/services/banner.service';
+import { LogoService } from 'src/app/services/logo.service';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent  implements OnInit, OnDestroy{
-  constructor(private router: Router) {}
+  constructor(private router: Router, private bannerService: BannerService, private logoService: LogoService) {}
 
   irParaLogin(): void {
     this.router.navigate(['/login']);
@@ -22,20 +24,25 @@ export class HomeComponent  implements OnInit, OnDestroy{
   }
 
   // Lista de imagens
-  images = [
-    'assets/img/carrossel/1.svg',
-    'assets/img/carrossel/2.svg',
-    'assets/img/carrossel/3.svg',
-    'assets/img/carrossel/4.svg',
-    'assets/img/carrossel/5.svg',
-    'assets/img/carrossel/6.svg',
-  ];
+  images: string[] = [];
+
+  // logos
+  logos: string[] = [];
+  trackLogos: string[] = [];
 
   // Estado do Carrossel
   currentIndex = 0;
   private slideInterval: any;
 
   ngOnInit(): void {
+    this.bannerService.homeBanners$.subscribe(b => {
+      this.images = b.slice();
+      this.currentIndex = 0;
+    });
+    this.logoService.logos$.subscribe(l => {
+      this.logos = l.slice();
+      this.trackLogos = this.logos.concat(this.logos);
+    });
     this.startAutoSlide();
   }
 

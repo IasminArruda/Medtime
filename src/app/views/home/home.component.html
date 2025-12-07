@@ -69,17 +69,7 @@
 <!-- Carrossel de Marcas -->
 <div class="logo-carousel">
   <div class="logo-track" id="logoTrack">
-    <div class="logo-item"><img src="assets/img/marcas/1.svg" alt="Logo 1" /></div>
-    <div class="logo-item"><img src="assets/img/marcas/2.svg" alt="Logo 2" /></div>
-    <div class="logo-item"><img src="assets/img/marcas/3.svg" alt="Logo 3" /></div>
-    <div class="logo-item"><img src="assets/img/marcas/4.svg" alt="Logo 4" /></div>
-    <div class="logo-item"><img src="assets/img/marcas/5.svg" alt="Logo 5" /></div>
-
-    <div class="logo-item"><img src="assets/img/marcas/1.svg" alt="Logo 1" /></div>
-    <div class="logo-item"><img src="assets/img/marcas/2.svg" alt="Logo 2" /></div>
-    <div class="logo-item"><img src="assets/img/marcas/3.svg" alt="Logo 3" /></div>
-    <div class="logo-item"><img src="assets/img/marcas/4.svg" alt="Logo 4" /></div>
-    <div class="logo-item"><img src="assets/img/marcas/5.svg" alt="Logo 5" /></div>
+    <div class="logo-item" *ngFor="let l of trackLogos; let i = index"><img [src]="l" [alt]="'Logo ' + (i+1)" /></div>
   </div>
 </div>
 
