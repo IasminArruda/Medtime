@@ -157,17 +157,17 @@ h1 {
   overflow: hidden;
 
   img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 50%;
-    }
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+  }
 }
 
 /* Footer */
 .footer {
-  width: 99,9%;
+  width: 99, 9%;
   height: 35px;
   background: linear-gradient(to right, #024f87, #0f939b, #7DA0CA);
   color: white;
@@ -376,4 +376,136 @@ h5:hover {
 .overlay.active {
   opacity: 1;
   visibility: visible;
+}
+
+@media (max-width: 600px) {
+
+  .nav {
+    height: 60px;
+    padding: 0 8px;
+  }
+
+  .logo {
+    margin-left: 4px;
+  }
+
+  .logo img {
+    max-width: 40%;
+  }
+
+  h3 {
+    font-size: 8px;
+    margin: 0 6px;
+    padding: 0;
+  }
+
+  .nav-user {
+    margin-right: 4px;
+    gap: 6px;
+  }
+
+  .nav-user-icon {
+    font-size: 1.8rem;
+  }
+
+  .nav-user-name {
+    font-size: 0.85rem;
+  }
+
+ form {
+   width: 25%;
+   height: 37px;
+   margin-left: -50px;
+   top: 12px;
+   padding: 0 8px;
+   border-radius: 18px;
+ }
+
+  form i {
+    font-size: 16px;
+    margin: 0 4px;
+  }
+
+  .input {
+    font-size: 12px;
+    padding: 0 6px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-top: 90px;
+    margin-bottom: 16px;
+    padding: 0 10px;
+  }
+
+  .container {
+    padding: 20px 12px;
+    margin-top: 10px;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    min-height: auto;
+    font-size: 14px;
+    padding: 16px;
+  }
+
+  .card h2 {
+    font-size: 18px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+
+  .imagem {
+    grid-column: auto;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 20px auto;
+  }
+
+  .imagem img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .user-sidebar {
+    width: 240px;
+    height: 280px;
+    right: 6px;
+    left: auto;
+    top: 2px;
+    margin-left: 0;
+  }
+
+  .profile-name {
+    font-size: 1rem;
+  }
+
+  .profile-email {
+    font-size: 0.85rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    gap: 8px;
+    padding: 10px 0;
+  }
+
+  .social-icons {
+    margin-left: 0;
+    gap: 14px;
+  }
+
+  .social-icons .icon {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
 }
