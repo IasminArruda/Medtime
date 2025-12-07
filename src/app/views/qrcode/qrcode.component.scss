@@ -1271,6 +1271,7 @@ h5:hover {
     margin-left: 1px;
     margin-top: 10px;
     transform: none;
+    z-index: 4000;
   }
 
   .nav-user {
@@ -1317,7 +1318,7 @@ h5:hover {
 
   .user-sidebar {
     width: 240px;
-    height: 260px;
+    height: 280px;
     right: 6px;
     left: auto;
     top: 2px;
