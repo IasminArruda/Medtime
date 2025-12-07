@@ -25,6 +25,11 @@
     </div>
     <button type="submit">{{ 'LOGIN.REGISTER' | translate }}</button>
   </form>
+  <!-- TEXTO MOBILE PARA VOLTAR AO LOGIN -->
+<div class="mobile-switch">
+  Já possui uma conta?
+  <span (click)="ativarLogin()">Entrar</span>
+</div>
 </div>
 
 <!-- Formulário de Login -->
@@ -41,6 +46,11 @@
     </div>
     <button type="submit">{{ 'LOGIN.ENTER' | translate }}</button>
   </form>
+  <!-- TEXTO MOBILE PARA IR AO CADASTRO -->
+  <div class="mobile-switch">
+    Ainda não possui conta?
+    <span (click)="ativarCadastro()">Cadastre-se</span>
+  </div>
 </div>
 
 <!-- Painel Azul -->

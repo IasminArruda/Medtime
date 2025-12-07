@@ -65,4 +65,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  ativarCadastro() {
+    this.isRightPanelActive = true;
+  }
+
+  ativarLogin() {
+    this.isRightPanelActive = false;
+  }
+
 }
