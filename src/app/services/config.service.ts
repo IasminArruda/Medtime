@@ -24,7 +24,7 @@ let mockUserData: UserProfile = {
   providedIn: 'root'
 })
 export class ConfigService {
-  private apiBase = 'http://localhost:3000/api';
+  private apiBase = 'http://192.168.15.76:3000/api';
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 

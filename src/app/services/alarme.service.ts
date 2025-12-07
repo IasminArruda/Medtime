@@ -13,7 +13,7 @@ export interface AlarmePayload {
 
 @Injectable({ providedIn: 'root' })
 export class AlarmeService {
-  private base = 'http://localhost:3000/api/alarmes';
+  private base = 'http://192.168.15.76:3000/api/alarmes';
   constructor(private http: HttpClient) {}
 
   createAlarme(payload: AlarmePayload): Observable<any> {

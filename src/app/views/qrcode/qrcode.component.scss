@@ -379,6 +379,92 @@ h5:hover {
   }
 }
 
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .nav {
+    height: 3.75rem;
+    padding: 0 0.75rem;
+  }
+
+  .logo img {
+    max-width: 28%;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .menuImg {
+    display: flex;
+    font-size: 1.9rem;
+  }
+
+  form.nav-search {
+    width: 60%;
+  }
+
+  .nav-user-name {
+    display: none;
+  }
+
+  .container {
+    width: calc(100% - 24px);
+    margin: 100px 12px 12px 12px;
+    padding: 20px;
+  }
+
+  .carrossel {
+    width: calc(100% - 24px);
+    margin: 80px 12px 20px 12px;
+    height: 220px;
+  }
+
+  .logo-item {
+    min-width: 140px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    height: 3.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .logo img {
+    max-width: 36%;
+  }
+
+  form.nav-search {
+    display: none;
+  }
+
+  .menu-mobile {
+    width: 220px;
+    padding: 0.75rem;
+  }
+
+  .container {
+    width: calc(100% - 16px);
+    margin: 84px 8px 12px 8px;
+    padding: 16px;
+  }
+
+  .carrossel {
+    width: calc(100% - 16px);
+    height: 180px;
+    margin: 60px 8px 16px 8px;
+  }
+
+  .alert-container { top: 8px; }
+
+  .phone-prompt-card { padding: 18px; }
+  .phone-prompt-card h3 { font-size: 1.05rem; }
+  .phone-prompt-actions { justify-content: stretch; flex-direction: column-reverse; }
+  .phone-prompt-actions .btn-primary, .phone-prompt-actions .btn.btn-save { width: 100%; }
+  .phone-prompt-actions .btn-secondary { width: 100%; }
+}
+
 /* Container Principal */
 .container {
   width: 800px;
@@ -1079,7 +1165,7 @@ h5:hover {
 .form-edicao .edit-label {
   display: flex;
   flex-direction: column;
-  gap: -0px;
+  gap: -50px;
   font-weight: 600;
   color: #23475b;
 }

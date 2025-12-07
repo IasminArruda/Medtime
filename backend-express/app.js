@@ -22,9 +22,9 @@ db.sequelize
   .then(() => {
     console.log("Tabelas sincronizadas com o banco de dados. (Modo Alter)");
 
-    app.listen(port, () => {
-      console.log(`Backend rodando em http://localhost:${port}`);
-
+    app.listen(port, "0.0.0.0", () => {
+      console.log(`Backend rodando em http://0.0.0.0:${port}`);
+      console.log(`Acesse pelo celular: http://192.168.15.76:${port}`);
       iniciarScheduler();
     });
   })

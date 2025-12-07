@@ -18,7 +18,7 @@ name: any;
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3000/api/users';
+  private apiUrl = 'http://192.168.15.76:3000/api/users';
 
   private currentUserSubject = new BehaviorSubject<Usuario | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();

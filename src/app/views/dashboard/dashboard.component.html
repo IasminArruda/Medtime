@@ -23,7 +23,7 @@
     <input type="text" class="input" [placeholder]="'HOME.SEARCH_PLACEHOLDER' | translate">
   </form>
 
-  <div class="nav-user" *ngIf="authService.currentUser$ | async as user" (click)="toggleUserMenu()" #userIcon>
+  <div class="nav-user" *ngIf="authService.currentUser$ | async as user" (click)="toggleUserMenu($event)" #userIcon>
     <i class="fas fa-user-circle nav-user-icon"></i>
     <span class="nav-user-name">
       {{ user.perfil === 'admin' ? ('NAVIGATION.ADM' | translate) : user.nome }}

@@ -95,7 +95,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.showPhonePrompt = true;
         }
       } catch (e) { }
-      // Recompute whether the current user has scheduled programs
       try {
         this.temProgramacao = this.verificarProgramacao();
       } catch (e) { }
@@ -142,7 +141,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleUserMenu() {
+  toggleUserMenu(event?: MouseEvent) {
+    if (event && event.stopPropagation) {
+      event.stopPropagation();
+    }
     this.userMenuAtivo = !this.userMenuAtivo;
     if (this.userMenuAtivo) {
       this.menuAtivo = false;

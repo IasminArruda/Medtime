@@ -71,7 +71,6 @@
   margin-top: 0.625rem;
 }
 
-/* Essa parte mantém igual, é ela que faz aparecer */
 .menu-mobile.active {
   display: flex;
   opacity: 1;
@@ -172,7 +171,7 @@ form i {
   position: relative;
   width: 1400px;
   height: 355px;
-  margin: 120px auto; // Centraliza o carrossel
+  margin: 120px auto; 
   background-color: white;
   border-radius: 30px;
   overflow: hidden;
@@ -621,13 +620,13 @@ h5:hover {
 
 .phone-prompt-actions .btn-primary,
 .phone-prompt-actions .btn.btn-save {
-  background: linear-gradient(90deg,#0f939b,#024f87);
+  background: linear-gradient(90deg, #0f939b, #024f87);
   color: #fff;
   border: none;
   padding: 12px 18px;
   border-radius: 12px;
   font-weight: 800;
-  box-shadow: 0 8px 18px rgba(2,79,135,0.25);
+  box-shadow: 0 8px 18px rgba(2, 79, 135, 0.25);
   cursor: pointer;
 }
 
@@ -639,7 +638,7 @@ h5:hover {
 .phone-prompt-actions .btn-secondary {
   background: transparent;
   color: #052659;
-  border: 1px solid rgba(5,38,89,0.12);
+  border: 1px solid rgba(5, 38, 89, 0.12);
   padding: 10px 14px;
   border-radius: 10px;
   font-weight: 700;
@@ -656,3 +655,191 @@ h5:hover {
   margin-top: 6px;
 }
 
+@media (max-width: 600px) {
+
+  .nav {
+    height: 60px;
+    padding: 0 8px;
+  }
+
+  .logo {
+    margin-left: 4px;
+  }
+
+  .logo img {
+    max-width: 38%;
+  }
+
+  .menuhamb {
+    width: 40px;
+    margin-left: -6px;
+  }
+
+  .menu-mobile {
+    margin-left: 1px;
+    margin-top: 10px;
+  }
+
+  .menuImg {
+    font-size: 1.9rem;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .nav-user {
+    margin-right: 4px;
+    gap: 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-user-icon {
+    font-size: 1.9rem;
+    margin-right: 2px;
+  }
+
+  .nav-user-name {
+    display: inline-block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  form {
+    width: 40%;
+    height: 37px;
+    margin-left: 20px;
+    top: 12px;
+    padding: 0 8px;
+    border-radius: 18px;
+  }
+
+  .input {
+    font-size: 8px;
+    padding: 0 6px;
+  }
+
+  form i {
+    font-size: 0.9rem;
+  }
+
+  .carrossel {
+    width: 88%;
+    height: 100px;
+    margin: 90px auto 40px auto;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carrossel-images {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+
+  .carrossel-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 18px;
+    flex-shrink: 0;
+  }
+
+  .prev,
+  .next {
+    font-size: 2rem;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding-left: 28px;
+    list-style: none;
+  }
+
+  .faq summary::before {
+    content: "▼";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: black;
+    transition: transform 0.3s ease;
+  }
+
+  .faq[open] summary::before {
+    transform: translateY(-50%) rotate(-180deg);
+  }
+
+  .faq p {
+    font-size: 14px;
+  }
+
+  .logo-item {
+    min-width: 160px;
+    height: 150px;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    gap: 8px;
+  }
+
+  .social-icons {
+    margin-left: 0;
+  }
+
+  .menu-mobile {
+    width: 85%;
+    left: 6px;
+    transform: none;
+  }
+
+  .user-sidebar {
+    width: 240px;
+    height: 260px;
+    right: 6px;
+    left: auto;
+    top: 2px;
+    margin-left: 0;
+  }
+
+  .logo-item {
+    width: 160px;
+    height: 140px;
+  }
+
+  .logo-item img {
+    width: 160px;
+    height: 160px;
+  }
+
+  .phone-prompt-card {
+    padding: 18px 16px;
+  }
+
+  .phone-prompt-form {
+    flex-direction: column;
+  }
+
+  .phone-prompt-actions {
+    flex-direction: column;
+  }
+
+  .phone-prompt-actions button {
+    width: 100%;
+  }
+}
