@@ -748,6 +748,134 @@ h5:hover {
   margin-right: 8px;
 }
 
+// Perguntas
+.faq-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 30px 40px 40px 40px;
+}
+
+.faq-section {
+  border: 2px solid #024f87;
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.faq-section h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #052659;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-item {
+  background: #ffffff;
+}
+
+.faq details.faq {
+  background: #e1e1e1;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.faq summary {
+  font-weight: 600;
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq p {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.faq-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.faq-actions .btn-editar {
+  background: #024f87;
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-top: -30px;
+  cursor: pointer;
+}
+
+.faq-edit {
+  background: #f7f7f7;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 2px solid #0f939b;
+}
+
+.faq-edit label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #052659;
+}
+
+.faq-edit input,
+.faq-edit textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.faq-edit textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+.faq-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-cancel {
+  background: #bdbdbd;
+  color: #000;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-confirm {
+  background: #024f87;
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 /* Footer */
 .footer {
   width: 100%;

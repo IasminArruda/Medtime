@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ConfigService } from 'src/app/services/config.service';
 import { BannerService } from 'src/app/services/banner.service';
 import { LogoService } from 'src/app/services/logo.service';
+import { FaqService, FaqItem } from 'src/app/services/faq.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -52,9 +53,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // logos
   logos: string[] = [];
   trackLogos: string[] = [];
+  dashboardFaq: FaqItem[] = [];
 
 
-  constructor(public authService: AuthService, private router: Router, private translate: TranslateService, private configService: ConfigService, private bannerService: BannerService, private logoService: LogoService) {}
+  constructor(public authService: AuthService, private router: Router, private translate: TranslateService, private configService: ConfigService, private bannerService: BannerService, private logoService: LogoService, private faqService: FaqService) {}
 
   ngOnInit(): void {
     this.temProgramacao = this.verificarProgramacao();
@@ -109,6 +111,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.trackLogos = this.logos.concat(this.logos);
       });
     } catch (e) { }
+
+    try {
+      this.faqService.dashboard$.pipe(takeUntil(this.destroy$)).subscribe(f => {
+        this.dashboardFaq = Array.isArray(f) ? f.slice() : [];
+      });
+    } catch (e) {}
   }
 
   ngOnDestroy(): void {

@@ -106,35 +106,12 @@
 
 <!-- Perguntas -->
 <div class="perguntas-container">
-  <details class="faq">
-    <summary>{{ 'DASHBOARD.FAQ_Q1' | translate }}</summary>
-    <p>{{ 'DASHBOARD.FAQ_A1' | translate }}</p>
-  </details>
-
-  <details class="faq">
-    <summary>{{ 'DASHBOARD.FAQ_Q2' | translate }}</summary>
-    <p>{{ 'DASHBOARD.FAQ_A2' | translate }}</p>
-  </details>
-
-  <details class="faq">
-    <summary>{{ 'DASHBOARD.FAQ_Q3' | translate }}</summary>
-    <p>{{ 'DASHBOARD.FAQ_A3' | translate }}</p>
-  </details>
-
-  <details class="faq">
-    <summary>{{ 'DASHBOARD.FAQ_Q4' | translate }}</summary>
-    <p>{{ 'DASHBOARD.FAQ_A4' | translate }}</p>
-  </details>
-
-  <details class="faq">
-    <summary>{{ 'DASHBOARD.FAQ_Q5' | translate }}</summary>
-    <p>{{ 'DASHBOARD.FAQ_A5' | translate }}</p>
-  </details>
-
-  <details class="faq">
-    <summary>{{ 'DASHBOARD.FAQ_Q6' | translate }}</summary>
-    <p>{{ 'DASHBOARD.FAQ_A6' | translate }}</p>
-  </details>
+  <div *ngIf="dashboardFaq && dashboardFaq.length">
+    <details class="faq" *ngFor="let f of dashboardFaq">
+      <summary>{{ f.q }}</summary>
+      <p>{{ f.a }}</p>
+    </details>
+  </div>
 </div>
 
 <!-- Carrossel de Marcas -->

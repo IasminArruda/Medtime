@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { BannerService } from 'src/app/services/banner.service';
 import { LogoService } from 'src/app/services/logo.service';
+import { FaqService, FaqItem } from 'src/app/services/faq.service';
 
 export interface AdministradorItems {
   id: string;
@@ -29,7 +30,7 @@ export class AdministradorComponent {
   @ViewChild('userMenu') userMenuElement!: ElementRef;
   @ViewChild('userIcon') userIconElement!: ElementRef;
 
-  constructor(public authService: AuthService, private router: Router, private bannerService: BannerService, private logoService: LogoService) { }
+  constructor(public authService: AuthService, private router: Router, private bannerService: BannerService, private logoService: LogoService, public faqService: FaqService) { }
 
   homeBanners: string[] = [];
   dashboardBanners: string[] = [];
@@ -42,6 +43,8 @@ export class AdministradorComponent {
       this.bannerService.homeBanners$.subscribe((b: string[]) => this.homeBanners = b.slice());
       this.bannerService.dashboardBanners$.subscribe((b: string[]) => this.dashboardBanners = b.slice());
       this.logoService.logos$.subscribe((l: string[]) => this.logos = l.slice());
+      this.faqService.home$.subscribe((h: FaqItem[]) => this.perguntasHome = h.slice());
+      this.faqService.dashboard$.subscribe((d: FaqItem[]) => this.perguntasDash = d.slice());
     } catch (e) {}
   }
   banners = [];
@@ -276,6 +279,63 @@ export class AdministradorComponent {
     this.cancelEditHome();
     this.cancelEditDash();
     this.cancelEditLogo();
+  }
+
+  perguntasHome: FaqItem[] = [];
+  perguntasDash: FaqItem[] = [];
+  editingPerguntaHomeIndex: number | null = null;
+  editingPerguntaDashIndex: number | null = null;
+  perguntaTempQ = '';
+  perguntaTempA = '';
+
+  openEditPerguntaHome(i: number) {
+    this.editingPerguntaHomeIndex = i;
+    const it = this.perguntasHome[i] || { q: '', a: '' };
+    this.perguntaTempQ = it.q;
+    this.perguntaTempA = it.a;
+  }
+
+  cancelEditPerguntaHome() {
+    this.editingPerguntaHomeIndex = null;
+    this.perguntaTempQ = '';
+    this.perguntaTempA = '';
+  }
+
+  confirmEditPerguntaHome() {
+    if (this.editingPerguntaHomeIndex === null) return;
+    const item: FaqItem = { q: (this.perguntaTempQ||'').trim(), a: (this.perguntaTempA||'').trim() };
+    this.faqService.updateHome(this.editingPerguntaHomeIndex, item);
+    this.cancelEditPerguntaHome();
+  }
+
+  deletePerguntaHome(i: number) {
+    if (!confirm('Confirma exclusão da pergunta da Home?')) return;
+    this.faqService.removeHome(i);
+  }
+
+  openEditPerguntaDash(i: number) {
+    this.editingPerguntaDashIndex = i;
+    const it = this.perguntasDash[i] || { q: '', a: '' };
+    this.perguntaTempQ = it.q;
+    this.perguntaTempA = it.a;
+  }
+
+  cancelEditPerguntaDash() {
+    this.editingPerguntaDashIndex = null;
+    this.perguntaTempQ = '';
+    this.perguntaTempA = '';
+  }
+
+  confirmEditPerguntaDash() {
+    if (this.editingPerguntaDashIndex === null) return;
+    const item: FaqItem = { q: (this.perguntaTempQ||'').trim(), a: (this.perguntaTempA||'').trim() };
+    this.faqService.updateDash(this.editingPerguntaDashIndex, item);
+    this.cancelEditPerguntaDash();
+  }
+
+  deletePerguntaDash(i: number) {
+    if (!confirm('Confirma exclusão da pergunta do Dashboard?')) return;
+    this.faqService.removeDash(i);
   }
 
 }

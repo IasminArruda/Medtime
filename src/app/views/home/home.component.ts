@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { Router } from '@angular/router';
 import { BannerService } from 'src/app/services/banner.service';
 import { LogoService } from 'src/app/services/logo.service';
+import { FaqService, FaqItem } from 'src/app/services/faq.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,9 @@ import { LogoService } from 'src/app/services/logo.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent  implements OnInit, OnDestroy{
-  constructor(private router: Router, private bannerService: BannerService, private logoService: LogoService) {}
+  perguntasHome: FaqItem[] = [];
+
+  constructor(private router: Router, private bannerService: BannerService, private logoService: LogoService, private faqService: FaqService) {}
 
   irParaLogin(): void {
     this.router.navigate(['/login']);
@@ -42,6 +45,9 @@ export class HomeComponent  implements OnInit, OnDestroy{
     this.logoService.logos$.subscribe(l => {
       this.logos = l.slice();
       this.trackLogos = this.logos.concat(this.logos);
+    });
+    this.faqService.home$.subscribe(h => {
+      this.perguntasHome = Array.isArray(h) ? h.slice() : [];
     });
     this.startAutoSlide();
   }

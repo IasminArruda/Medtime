@@ -190,20 +190,61 @@
 
   <!-- PERGUNTAS -->
   <div class="admin-modal-overlay" *ngIf="modalAberto() === 'perguntas'">
-    <div class="admin-modal">
-      <div class="admin-modal-header">
-        <button (click)="closeModal()">←</button>
+    <div class="admin-modal banner-modal">
+
+      <!-- TOPO CINZA -->
+      <div class="banner-modal-header">
+        <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
         <h3>Perguntas</h3>
       </div>
 
-      <div class="question-card" *ngFor="let pergunta of perguntas">
-        <div class="question-line"></div>
-        <div class="question-line"></div>
-        <div class="question-line"></div>
+      <div class="faq-admin">
+        <div class="faq-section">
+          <h4>Home - Perguntas</h4>
+          <div class="faq-list">
+            <div class="faq-item" *ngFor="let p of perguntasHome; let i = index">
+              <div *ngIf="editingPerguntaHomeIndex !== i">
+                <details class="faq"><summary>{{ p.q }}</summary><p>{{ p.a }}</p></details>
+                <div class="faq-actions">
+                  <button class="btn-editar" (click)="openEditPerguntaHome(i)">Editar</button>
+                </div>
+              </div>
+              <div *ngIf="editingPerguntaHomeIndex === i" class="faq-edit">
+                <label>Pergunta</label>
+                <input type="text" [(ngModel)]="perguntaTempQ" />
+                <label>Resposta</label>
+                <textarea [(ngModel)]="perguntaTempA"></textarea>
+                <div class="faq-edit-actions">
+                  <button class="btn-cancel" (click)="cancelEditPerguntaHome()">Cancelar</button>
+                  <button class="btn-confirm" (click)="confirmEditPerguntaHome()">Salvar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <div class="actions">
-          <button class="btn-delete">Excluir</button>
-          <button class="btn-edit">Editar</button>
+        <div class="faq-section">
+          <h4>Dashboard - Perguntas</h4>
+          <div class="faq-list">
+            <div class="faq-item" *ngFor="let p of perguntasDash; let i = index">
+              <div *ngIf="editingPerguntaDashIndex !== i">
+                <details class="faq"><summary>{{ p.q }}</summary><p>{{ p.a }}</p></details>
+                <div class="faq-actions">
+                  <button class="btn-editar" (click)="openEditPerguntaDash(i)">Editar</button>
+                </div>
+              </div>
+              <div *ngIf="editingPerguntaDashIndex === i" class="faq-edit">
+                <label>Pergunta</label>
+                <input type="text" [(ngModel)]="perguntaTempQ" />
+                <label>Resposta</label>
+                <textarea [(ngModel)]="perguntaTempA"></textarea>
+                <div class="faq-edit-actions">
+                  <button class="btn-cancel" (click)="cancelEditPerguntaDash()">Cancelar</button>
+                  <button class="btn-confirm" (click)="confirmEditPerguntaDash()">Salvar</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
