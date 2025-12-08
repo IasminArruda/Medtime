@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, ViewChild, OnInit, OnDestroy } fro
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { CuriosidadesService, CuriosidadeItem } from 'src/app/services/curiosidades.service';
 
 @Component({
   selector: 'app-curiosidades',
@@ -19,11 +20,15 @@ export class CuriosidadesComponent implements OnInit, OnDestroy {
     private router: Router,
     public authService: AuthService,
     private translate: TranslateService
+     , private curiosidadesService: CuriosidadesService
    ) {}
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe((user) => {
       this.isLoggedIn = !!user;
+    });
+    this.curiosidadesService.curiosidades$.subscribe((list: CuriosidadeItem[]) => {
+      this.listaCuriosidades = (list || []).slice();
     });
   }
 
@@ -82,4 +87,6 @@ export class CuriosidadesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/home']);
     this.userMenuAtivo = false;
   }
+
+  listaCuriosidades: CuriosidadeItem[] = [];
 }

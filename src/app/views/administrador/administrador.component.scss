@@ -479,7 +479,8 @@ h5:hover {
 
 .toolbar-actions {
   display: flex;
-  gap: 12px; /* space between Add buttons */
+  gap: 12px;
+  /* space between Add buttons */
   align-items: center;
 }
 
@@ -567,7 +568,7 @@ h5:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   z-index: 6000;
   padding: 20px;
 }
@@ -579,7 +580,7 @@ h5:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   z-index: 6000;
   padding: 20px;
 }
@@ -593,7 +594,7 @@ h5:hover {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
   justify-content: center;
   align-items: center;
   color: white;
@@ -655,7 +656,8 @@ h5:hover {
   max-width: 1100px;
   max-height: 95vh;
   border-radius: 12px;
-  overflow-y: auto;
+  /* keep overall modal visible and delegate scrolling to the body area */
+  overflow: visible;
   position: relative;
   box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.4);
   animation: modalFade 0.2s ease-in-out;
@@ -704,7 +706,7 @@ h5:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   overflow: hidden;
   border: 2px solid #ccc;
 }
@@ -744,7 +746,7 @@ h5:hover {
   gap: 16px;
 }
 
-.btn-new-banner i{
+.btn-new-banner i {
   margin-right: 8px;
 }
 
@@ -874,6 +876,287 @@ h5:hover {
   padding: 6px 16px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+/* Curiosidades */
+.admin-modal {
+  width: 90%;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.admin-modal-header {
+  background: #cfcfcf;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.admin-modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: white;
+  font-weight: 600;
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.admin-modal-header button {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  color: white;
+  cursor: pointer;
+}
+
+.admin-modal-body {
+  padding: 18px 22px 26px 22px;
+  background: #f4f4f4;
+  max-height: calc(95vh - 72px);
+  overflow-y: auto;
+}
+
+.curiosidades-toolbar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+}
+
+.btn-new-banner {
+  background: #024f87;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.curiosidades-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.curiosidade-card {
+  border: 2px solid #bcd6f1;
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 14px 16px;
+  overflow: visible;
+  position: relative;
+}
+
+.curiosidade-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 160px;
+}
+
+.curiosidade-body {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.curiosidade-body p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.curiosidade-img {
+  width: 160px;
+  height: 160px;
+  background: #024f87;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.curiosidade-img {
+  width: 160px;
+  height: 220px;
+  background: #024f87;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  flex-shrink: 0;
+  transform: translateY(18px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  z-index: 1;
+}
+.curiosidade-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  display: block;
+
+}
+
+.curiosidade-img .placeholder {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+
+.curiosidade-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.curiosidade-actions .btn-excluir {
+  background: #024f87;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.curiosidade-actions .btn-editar {
+  background: #024f87;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.curiosidade-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 7000;
+}
+
+.curiosidade-modal {
+  width: 90%;
+  max-width: 720px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.curiosidade-modal h3 {
+  margin: 0 0 12px 0;
+  text-align: center;
+  color: #052659;
+}
+
+.curiosidade-modal input[type='text'],
+.curiosidade-modal textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 12px;
+  font-size: 0.98rem;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.curiosidade-modal textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.curiosidade-modal .curiosidade-form {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 18px;
+  align-items: start;
+}
+
+.curiosidade-modal .curiosidade-form.single {
+  grid-template-columns: 1fr;
+}
+
+.curiosidade-modal .form-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.curiosidade-modal .image-preview {
+  width: 100%;
+  background: #fafafa;
+  border: 1px dashed #e6e6e6;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.curiosidade-modal .image-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.curiosidade-modal .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.curiosidade-modal .btn-cancel {
+  background: #024f87;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 24px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.curiosidade-modal .btn-cancel:hover {
+  background-color: white;
+  color: #024f87;
+  border: 2px solid #024f87;
+}
+
+.curiosidade-modal .btn-save {
+  font-size: 15px;
+  background: #024f87;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.curiosidade-modal .btn-save:hover {
+  background-color: white;
+  color: #024f87;
+  border: 2px solid #024f87;
 }
 
 /* Footer */

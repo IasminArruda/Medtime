@@ -55,7 +55,6 @@
             <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
             <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
       <i class="fas fa-horizontal-rule"></i>
-
     </div>
       </div>
 
@@ -74,7 +73,6 @@
             <i class="fas fa-sign-out-alt option-icon"></i>
             <h5>Fazer Logout</h5>
           </a>
-
   </div>
 </div>
 <div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
@@ -100,7 +98,7 @@
         <button (click)="openModal('perguntas')">Perguntas</button>
         <button (click)="openModal('curiosidades')">Curiosidades</button>
         <button (click)="openModal('sobrenos')">Sobre Nós</button>
-        <button (click)="openModal('pesquisas')">Pesquisas</button>
+        <button (click)="openModal('pesquisas')">Privacidade</button>
       </div>
     </div>
 
@@ -115,13 +113,11 @@
   <div class="admin-modal-overlay" *ngIf="modalAberto() === 'banners'">
     <div class="admin-modal banner-modal">
 
-      <!-- TOPO -->
       <div class="banner-modal-header">
         <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
         <h3>Gerenciar Banners</h3>
       </div>
 
-      <!-- BOTÃO NOVO / INPUTS -->
       <div class="banner-toolbar">
         <div class="toolbar-actions">
           <button class="btn-new-banner" (click)="openAddHome()"><i class="fas fa-plus"></i> Adicionar Home</button>
@@ -129,7 +125,6 @@
         </div>
       </div>
 
-      <!-- TELA HOME -->
       <h4 class="banner-section-title">Tela Home</h4>
       <div class="banner-grid">
         <div class="banner-card" *ngFor="let img of homeBanners; let i = index">
@@ -141,7 +136,6 @@
         </div>
       </div>
 
-      <!-- TELA DASHBOARD -->
       <h4 class="banner-section-title">Tela Dashboard</h4>
       <div class="banner-grid">
         <div class="banner-card" *ngFor="let img of dashboardBanners; let i = index">
@@ -159,18 +153,15 @@
   <div class="admin-modal-overlay" *ngIf="modalAberto() === 'logos'">
     <div class="admin-modal banner-modal">
 
-      <!-- TOPO CINZA -->
       <div class="banner-modal-header">
         <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
         <h3>Gerenciar Logo</h3>
       </div>
 
-      <!-- BOTÃO ADICIONAR -->
       <div class="banner-toolbar">
         <button class="btn-new-banner" (click)="openAddLogo()"><i class="fas fa-plus"></i>Adicionar Logo</button>
       </div>
 
-      <!-- CONTAINER AZUL -->
       <div class="logos-container">
         <div class="logos-grid">
           <div class="logo-card" *ngFor="let logo of logos; let i = index">
@@ -192,7 +183,6 @@
   <div class="admin-modal-overlay" *ngIf="modalAberto() === 'perguntas'">
     <div class="admin-modal banner-modal">
 
-      <!-- TOPO CINZA -->
       <div class="banner-modal-header">
         <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
         <h3>Perguntas</h3>
@@ -254,16 +244,65 @@
   <div class="admin-modal-overlay" *ngIf="modalAberto() === 'curiosidades'">
     <div class="admin-modal">
       <div class="admin-modal-header">
-        <button (click)="closeModal()">←</button>
+        <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
         <h3>Curiosidades</h3>
       </div>
 
-      <div class="curiosidade-card" *ngFor="let curiosidade of curiosidades">
-        <div class="curiosidade-img">Imagem</div>
-        <div class="actions">
-          <button class="btn-delete">Excluir</button>
-          <button class="btn-edit">Editar</button>
+      <div class="admin-modal-body">
+        <div class="curiosidades-toolbar">
+          <button class="btn-new-banner" (click)="openAddCuriosidade()"><i class="fas fa-plus"></i>Adicionar Curiosidade</button>
         </div>
+
+          <div class="curiosidade-modal-overlay" *ngIf="showAddCuriosidade || editingCuriosidadeIndex !== null" (click)="cancelAddCuriosidade(); cancelEditCuriosidade()">
+            <div class="curiosidade-modal" (click)="$event.stopPropagation()">
+              <h3 *ngIf="editingCuriosidadeIndex === null">Nova Curiosidade</h3>
+              <h3 *ngIf="editingCuriosidadeIndex !== null">Editar Curiosidade</h3>
+
+              <div class="curiosidade-form single">
+                <div class="form-col">
+                  <label>Título</label>
+                  <input type="text" [(ngModel)]="curiosidadeTempTitle" />
+
+                  <label>Texto</label>
+                  <textarea [(ngModel)]="curiosidadeTempText"></textarea>
+
+                  <label>URL da Imagem (opcional)</label>
+                  <input type="text" [(ngModel)]="curiosidadeTempImg" placeholder="assets/img/your-image.png" />
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn-cancel" *ngIf="editingCuriosidadeIndex === null" (click)="cancelAddCuriosidade()">Cancelar</button>
+                <button type="button" class="btn-save" *ngIf="editingCuriosidadeIndex === null" (click)="confirmAddCuriosidade()">Confirmar</button>
+
+                <button type="button" class="btn-cancel" *ngIf="editingCuriosidadeIndex !== null" (click)="cancelEditCuriosidade()">Cancelar</button>
+                <button type="button" class="btn-save" *ngIf="editingCuriosidadeIndex !== null" (click)="confirmEditCuriosidade()">Salvar</button>
+              </div>
+            </div>
+          </div>
+
+      <div class="curiosidades-grid">
+        <div class="curiosidade-card" *ngFor="let curiosidade of curiosidades; let i = index">
+          <div class="curiosidade-inner">
+            <div class="curiosidade-body">
+              <div>
+                <h4>{{ curiosidade.title }}</h4>
+                <p>{{ curiosidade.text }}</p>
+              </div>
+            </div>
+            <div class="curiosidade-img">
+              <img *ngIf="curiosidade.img" [src]="curiosidade.img" alt="curiosidade {{i}}" />
+              <div class="placeholder" *ngIf="!curiosidade.img">Imagem</div>
+            </div>
+
+          </div>
+          <div class="curiosidade-actions">
+            <button class="btn-excluir" (click)="deleteCuriosidade(i)">Excluir</button>
+            <button class="btn-editar" (click)="openEditCuriosidade(i)">Editar</button>
+          </div>
+
+        </div>
+      </div>
       </div>
     </div>
   </div>
@@ -282,17 +321,17 @@
     </div>
   </div>
 
-  <!-- PESQUISAS (SÓ VISUAL POR ENQUANTO) -->
-  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'pesquisas'">
+  <!-- Privacidade  -->
+  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'privacidade'">
     <div class="admin-modal">
       <div class="admin-modal-header">
         <button (click)="closeModal()">←</button>
-        <h3>Pesquisas</h3>
+        <h3>Privacidade</h3>
       </div>
 
-      <div class="pesquisa-card" *ngFor="let pesquisa of pesquisas">
-        <div class="pesquisa-img">Imagem</div>
-        <div class="pesquisa-text">Enunciado</div>
+      <div class="privacidade-card" *ngFor="let privacidade of privacidades">
+        <div class="privacidade-img">Imagem</div>
+        <div class="privacidade-text">Enunciado</div>
       </div>
     </div>
   </div>

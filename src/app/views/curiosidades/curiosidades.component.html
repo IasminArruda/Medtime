@@ -51,23 +51,16 @@
 
 <h1>{{ 'CURIOSITIES.TITLE' | translate }}</h1>
 
-<div class="curiosidade">
-  <div class="texto">
-    <h2>{{ 'CURIOSITIES.Q1_TITLE' | translate }}</h2>
-    <p>{{ 'CURIOSITIES.Q1_TEXT' | translate }}</p>
-  </div>
-  <div class="imagem">
-    <img src="assets/img/img1.svg" alt="Img">
-  </div>
-</div>
-
-<div class="curiosidade">
-  <div class="texto">
-    <h2>{{ 'CURIOSITIES.Q2_TITLE' | translate }}</h2>
-    <p>{{ 'CURIOSITIES.Q2_TEXT' | translate }}</p>
-  </div>
-  <div class="imagem">
-    <img src="assets/img/img2.svg" alt="Img">
+<div class="curiosidades-container">
+  <div class="curiosidade" *ngFor="let item of listaCuriosidades">
+    <div class="texto">
+      <h2>{{ item.title }}</h2>
+      <p>{{ item.text }}</p>
+    </div>
+    <div class="imagem">
+      <img *ngIf="item.img" [src]="item.img" alt="Img">
+      <div *ngIf="!item.img" class="placeholder-img">Imagem</div>
+    </div>
   </div>
 </div>
 
