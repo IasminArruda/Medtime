@@ -6,6 +6,8 @@ import { BannerService } from 'src/app/services/banner.service';
 import { LogoService } from 'src/app/services/logo.service';
 import { FaqService, FaqItem } from 'src/app/services/faq.service';
 import { CuriosidadesService, CuriosidadeItem } from 'src/app/services/curiosidades.service';
+import { SobreService, SobreItem } from 'src/app/services/sobre.service';
+
 
 export interface AdministradorItems {
   id: string;
@@ -32,7 +34,14 @@ export class AdministradorComponent {
   @ViewChild('userMenu') userMenuElement!: ElementRef;
   @ViewChild('userIcon') userIconElement!: ElementRef;
 
-  constructor(public authService: AuthService, private router: Router, private bannerService: BannerService, private logoService: LogoService, public faqService: FaqService, private translate: TranslateService, private curiosidadesService: CuriosidadesService) { }
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private bannerService: BannerService,
+    private logoService: LogoService, public faqService: FaqService,
+    private translate: TranslateService,
+    private curiosidadesService: CuriosidadesService,
+    private sobreService: SobreService) { }
 
   homeBanners: string[] = [];
   dashboardBanners: string[] = [];
@@ -51,6 +60,10 @@ export class AdministradorComponent {
     this.loadCuriosidades();
     this.curiosidadesService.curiosidades$.subscribe(list => {
       this.curiosidades = (list || []).slice();
+    });
+    // subscribe to SobreService so admin reflects the public page
+    this.sobreService.sobre$.subscribe(list => {
+      this.sobreNos = (list || []).slice();
     });
   }
   banners: any[] = [];
@@ -422,5 +435,62 @@ export class AdministradorComponent {
     this.curiosidadesService.remove(i);
     console.log('Curiosidade excluída', i);
   }
+
+  // Sobre Nós
+  editingSobreIndex: number | null = null;
+  sobreTempText: string = '';
+  editingImageIndex: number | null = null;
+  sobreTempImg: string = '';
+  showSobreImageOverlay: boolean = false;
+
+  openEditSobre(i: number) {
+    this.editingSobreIndex = i;
+    this.sobreTempText = (this.sobreNos[i] && this.sobreNos[i].text) || '';
+  }
+
+  cancelEditSobre() {
+    this.editingSobreIndex = null;
+    this.sobreTempText = '';
+  }
+
+  confirmEditSobre() {
+    if (this.editingSobreIndex === null) return;
+    const idx = this.editingSobreIndex;
+    const text = (this.sobreTempText || '').trim();
+    const existing = this.sobreNos[idx] || { id: `sobre-${idx + 1}`, text: '', img: '' };
+    const updated: SobreItem = { id: existing.id, text, img: existing.img || '' };
+    try {
+      this.sobreService.update(idx, updated);
+    } catch (e) { }
+    this.cancelEditSobre();
+  }
+
+  openEditSobreImage(i: number) {
+    this.editingImageIndex = i;
+    this.sobreTempImg = (this.sobreNos[i] && this.sobreNos[i].img) || '';
+    this.showSobreImageOverlay = true;
+  }
+
+  cancelEditSobreImage() {
+    this.editingImageIndex = null;
+    this.sobreTempImg = '';
+    this.showSobreImageOverlay = false;
+  }
+
+  confirmEditSobreImage() {
+    if (this.editingImageIndex === null) return;
+    const idx = this.editingImageIndex;
+    const img = (this.sobreTempImg || '').trim();
+    const existing = this.sobreNos[idx] || { id: `sobre-${idx + 1}`, text: '', img: '' };
+    const updated: SobreItem = { id: existing.id, text: existing.text || '', img };
+    try {
+      console.log('[Admin] confirmEditSobreImage -> saving image', idx, img);
+      this.sobreService.update(idx, updated);
+      console.log('[Admin] sobre list after save', this.sobreService.getList());
+    } catch (e) { }
+    this.cancelEditSobreImage();
+  }
+
+
 
 }

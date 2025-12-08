@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit, ViewChild, ElementRef, HostListener } fro
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { SobreService, SobreItem } from 'src/app/services/sobre.service';
+
 
 @Component({
   selector: 'app-sobre',
@@ -11,6 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class SobreComponent implements OnInit, OnDestroy {
   userMenuAtivo = false;
   isLoggedIn = false;
+  sobreNos: any[] = [];
+
 
   @ViewChild('userMenu') userMenuElement!: ElementRef;
   @ViewChild('userIcon') userIconElement!: ElementRef;
@@ -18,11 +22,22 @@ export class SobreComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public authService: AuthService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private sobreService: SobreService
   ) {}
 
   ngOnInit(): void {
     document.body.classList.add('body-sobre');
+
+    try {
+      this.sobreService.sobre$.subscribe(list => {
+        this.sobreNos = (list || []).slice();
+      });
+    } catch (e) {
+      const raw = localStorage.getItem('sobre_nos');
+      if (raw) this.sobreNos = JSON.parse(raw);
+    }
+
     this.authService.currentUser$.subscribe((user) => {
       this.isLoggedIn = !!user;
     });

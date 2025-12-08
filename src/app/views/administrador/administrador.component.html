@@ -10,8 +10,10 @@
     <a routerLink="/curiosidades" (click)="toggleMenu()">{{ 'NAVIGATION.CURIOSITIES' | translate }}</a>
     <a *ngIf="!temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear QR Code</a>
     <a *ngIf="temProgramacao" routerLink="/scanner" (click)="toggleMenu()">Escanear novo QR Code</a>
-    <a *ngIf="temProgramacao" href="#" (click)="navigateToVerProgramacao(); toggleMenu(); $event.preventDefault()">Ver Programação</a>
-    <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate }}</a>
+    <a *ngIf="temProgramacao" href="#" (click)="navigateToVerProgramacao(); toggleMenu(); $event.preventDefault()">Ver
+      Programação</a>
+    <a *ngIf="isAdmin" routerLink="/administrador" (click)="toggleMenu()">{{ 'NAVIGATION.ADMINISTRATOR' | translate
+      }}</a>
   </div>
 
   <div class="logo">
@@ -31,11 +33,29 @@
   </div>
 </div>
 
-<div class="global-add-overlay" *ngIf="showAddHome || showAddDash || showAddLogo || editingHomeIndex !== null || editingDashIndex !== null || editingLogoIndex !== null" (click)="cancelAddHome(); cancelAddDash(); cancelAddLogo(); cancelEditHome(); cancelEditDash(); cancelEditLogo()">
+<div class="sobre-image-overlay" *ngIf="showSobreImageOverlay" (click)="cancelEditSobreImage()">
+  <div class="sobre-image-modal" (click)="$event.stopPropagation()">
+    <h3>Editar Imagem</h3>
+    <input type="text" [(ngModel)]="sobreTempImg" placeholder="assets/img/img1.png" />
+    <div class="imagem-preview" *ngIf="sobreTempImg">
+      <p>Pré-visualização</p>
+      <img [src]="sobreTempImg" alt="Prévia" />
+    </div>
+    <div class="sobre-image-actions">
+      <button class="btn-cancel" (click)="cancelEditSobreImage()">Cancelar</button>
+      <button class="btn-save" (click)="confirmEditSobreImage()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="global-add-overlay"
+  *ngIf="showAddHome || showAddDash || showAddLogo || editingHomeIndex !== null || editingDashIndex !== null || editingLogoIndex !== null"
+  (click)="cancelAddHome(); cancelAddDash(); cancelAddLogo(); cancelEditHome(); cancelEditDash(); cancelEditLogo()">
   <div class="add-panel-content" (click)="$event.stopPropagation()">
     <input type="text" [(ngModel)]="addTempUrl" placeholder="Cole a URL da imagem aqui" />
     <div class="add-panel-actions">
-      <button class="btn-cancel" (click)="cancelAddHome(); cancelAddDash(); cancelAddLogo(); cancelEditHome(); cancelEditDash(); cancelEditLogo()">Cancelar</button>
+      <button class="btn-cancel"
+        (click)="cancelAddHome(); cancelAddDash(); cancelAddLogo(); cancelEditHome(); cancelEditDash(); cancelEditLogo()">Cancelar</button>
       <button class="btn-confirm" *ngIf="showAddHome" (click)="confirmAddHome()">Confirmar</button>
       <button class="btn-confirm" *ngIf="showAddDash" (click)="confirmAddDash()">Confirmar</button>
       <button class="btn-confirm" *ngIf="showAddLogo" (click)="confirmAddLogo()">Confirmar</button>
@@ -57,7 +77,6 @@
       <i class="fas fa-horizontal-rule"></i>
     </div>
       </div>
-
     <div class="user-menu-options">
     <div class="config">
       <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
@@ -121,7 +140,8 @@
       <div class="banner-toolbar">
         <div class="toolbar-actions">
           <button class="btn-new-banner" (click)="openAddHome()"><i class="fas fa-plus"></i> Adicionar Home</button>
-          <button class="btn-new-banner" (click)="openAddDash()"><i class="fas fa-plus"></i> Adicionar Dashboard</button>
+          <button class="btn-new-banner" (click)="openAddDash()"><i class="fas fa-plus"></i> Adicionar
+            Dashboard</button>
         </div>
       </div>
 
@@ -194,7 +214,10 @@
           <div class="faq-list">
             <div class="faq-item" *ngFor="let p of perguntasHome; let i = index">
               <div *ngIf="editingPerguntaHomeIndex !== i">
-                <details class="faq"><summary>{{ p.q }}</summary><p>{{ p.a }}</p></details>
+                <details class="faq">
+                  <summary>{{ p.q }}</summary>
+                  <p>{{ p.a }}</p>
+                </details>
                 <div class="faq-actions">
                   <button class="btn-editar" (click)="openEditPerguntaHome(i)">Editar</button>
                 </div>
@@ -218,7 +241,10 @@
           <div class="faq-list">
             <div class="faq-item" *ngFor="let p of perguntasDash; let i = index">
               <div *ngIf="editingPerguntaDashIndex !== i">
-                <details class="faq"><summary>{{ p.q }}</summary><p>{{ p.a }}</p></details>
+                <details class="faq">
+                  <summary>{{ p.q }}</summary>
+                  <p>{{ p.a }}</p>
+                </details>
                 <div class="faq-actions">
                   <button class="btn-editar" (click)="openEditPerguntaDash(i)">Editar</button>
                 </div>
@@ -250,59 +276,65 @@
 
       <div class="admin-modal-body">
         <div class="curiosidades-toolbar">
-          <button class="btn-new-banner" (click)="openAddCuriosidade()"><i class="fas fa-plus"></i>Adicionar Curiosidade</button>
+          <button class="btn-new-banner" (click)="openAddCuriosidade()"><i class="fas fa-plus"></i>Adicionar
+            Curiosidade</button>
         </div>
 
-          <div class="curiosidade-modal-overlay" *ngIf="showAddCuriosidade || editingCuriosidadeIndex !== null" (click)="cancelAddCuriosidade(); cancelEditCuriosidade()">
-            <div class="curiosidade-modal" (click)="$event.stopPropagation()">
-              <h3 *ngIf="editingCuriosidadeIndex === null">Nova Curiosidade</h3>
-              <h3 *ngIf="editingCuriosidadeIndex !== null">Editar Curiosidade</h3>
+        <div class="curiosidade-modal-overlay" *ngIf="showAddCuriosidade || editingCuriosidadeIndex !== null"
+          (click)="cancelAddCuriosidade(); cancelEditCuriosidade()">
+          <div class="curiosidade-modal" (click)="$event.stopPropagation()">
+            <h3 *ngIf="editingCuriosidadeIndex === null">Nova Curiosidade</h3>
+            <h3 *ngIf="editingCuriosidadeIndex !== null">Editar Curiosidade</h3>
 
-              <div class="curiosidade-form single">
-                <div class="form-col">
-                  <label>Título</label>
-                  <input type="text" [(ngModel)]="curiosidadeTempTitle" />
+            <div class="curiosidade-form single">
+              <div class="form-col">
+                <label>Título</label>
+                <input type="text" [(ngModel)]="curiosidadeTempTitle" />
 
-                  <label>Texto</label>
-                  <textarea [(ngModel)]="curiosidadeTempText"></textarea>
+                <label>Texto</label>
+                <textarea [(ngModel)]="curiosidadeTempText"></textarea>
 
-                  <label>URL da Imagem (opcional)</label>
-                  <input type="text" [(ngModel)]="curiosidadeTempImg" placeholder="assets/img/your-image.png" />
+                <label>URL da Imagem (opcional)</label>
+                <input type="text" [(ngModel)]="curiosidadeTempImg" placeholder="assets/img/your-image.png" />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-cancel" *ngIf="editingCuriosidadeIndex === null"
+                (click)="cancelAddCuriosidade()">Cancelar</button>
+              <button type="button" class="btn-save" *ngIf="editingCuriosidadeIndex === null"
+                (click)="confirmAddCuriosidade()">Confirmar</button>
+
+              <button type="button" class="btn-cancel" *ngIf="editingCuriosidadeIndex !== null"
+                (click)="cancelEditCuriosidade()">Cancelar</button>
+              <button type="button" class="btn-save" *ngIf="editingCuriosidadeIndex !== null"
+                (click)="confirmEditCuriosidade()">Salvar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="curiosidades-grid">
+          <div class="curiosidade-card" *ngFor="let curiosidade of curiosidades; let i = index">
+            <div class="curiosidade-inner">
+              <div class="curiosidade-body">
+                <div>
+                  <h4>{{ curiosidade.title }}</h4>
+                  <p>{{ curiosidade.text }}</p>
                 </div>
               </div>
-
-              <div class="form-actions">
-                <button type="button" class="btn-cancel" *ngIf="editingCuriosidadeIndex === null" (click)="cancelAddCuriosidade()">Cancelar</button>
-                <button type="button" class="btn-save" *ngIf="editingCuriosidadeIndex === null" (click)="confirmAddCuriosidade()">Confirmar</button>
-
-                <button type="button" class="btn-cancel" *ngIf="editingCuriosidadeIndex !== null" (click)="cancelEditCuriosidade()">Cancelar</button>
-                <button type="button" class="btn-save" *ngIf="editingCuriosidadeIndex !== null" (click)="confirmEditCuriosidade()">Salvar</button>
+              <div class="curiosidade-img">
+                <img *ngIf="curiosidade.img" [src]="curiosidade.img" alt="curiosidade {{i}}" />
+                <div class="placeholder" *ngIf="!curiosidade.img">Imagem</div>
               </div>
-            </div>
-          </div>
 
-      <div class="curiosidades-grid">
-        <div class="curiosidade-card" *ngFor="let curiosidade of curiosidades; let i = index">
-          <div class="curiosidade-inner">
-            <div class="curiosidade-body">
-              <div>
-                <h4>{{ curiosidade.title }}</h4>
-                <p>{{ curiosidade.text }}</p>
-              </div>
             </div>
-            <div class="curiosidade-img">
-              <img *ngIf="curiosidade.img" [src]="curiosidade.img" alt="curiosidade {{i}}" />
-              <div class="placeholder" *ngIf="!curiosidade.img">Imagem</div>
+            <div class="curiosidade-actions">
+              <button class="btn-excluir" (click)="deleteCuriosidade(i)">Excluir</button>
+              <button class="btn-editar" (click)="openEditCuriosidade(i)">Editar</button>
             </div>
 
           </div>
-          <div class="curiosidade-actions">
-            <button class="btn-excluir" (click)="deleteCuriosidade(i)">Excluir</button>
-            <button class="btn-editar" (click)="openEditCuriosidade(i)">Editar</button>
-          </div>
-
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -310,29 +342,66 @@
   <!-- SOBRE NÓS -->
   <div class="admin-modal-overlay" *ngIf="modalAberto() === 'sobrenos'">
     <div class="admin-modal">
+
       <div class="admin-modal-header">
-        <button (click)="closeModal()">←</button>
+        <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
         <h3>Sobre Nós</h3>
       </div>
 
-      <div class="sobre-grid">
-        <div class="sobre-box" *ngFor="let sobreNos of sobreNos">Imagem</div>
+      <div class="admin-modal-body">
+        <div class="sobre-grid">
+          <ng-container *ngFor="let item of sobreNos; let i = index">
+
+            <div class="sobre-card" *ngIf="i !== 3">
+              <div class="sobre-square">
+                <div *ngIf="editingSobreIndex !== i">
+                  <p>{{ item?.text }}</p>
+                </div>
+
+                <div *ngIf="editingSobreIndex === i" class="sobre-edit-text">
+                  <textarea [(ngModel)]="sobreTempText"></textarea>
+                  <div class="sobre-edit-actions">
+                    <button class="btn-cancel" (click)="cancelEditSobre()">Cancelar</button>
+                    <button class="btn-save" (click)="confirmEditSobre()">Salvar</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-right">
+                <div class="sobre-actions">
+                  <button class="btn-editar" (click)="openEditSobre(i)">Editar</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="sobre-card image-only" *ngIf="i === 3">
+              <div class="sobre-img-circle" (click)="openEditSobreImage(i)" title="Editar imagem">
+                <img *ngIf="item?.img" [src]="item.img" alt="Imagem Sobre {{i}}" />
+                <div *ngIf="!item?.img" class="placeholder">Imagem</div>
+              </div>
+
+              <div class="sobre-actions">
+                <button class="btn-editar" (click)="openEditSobreImage(i)">Editar</button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Privacidade  -->
-  <div class="admin-modal-overlay" *ngIf="modalAberto() === 'privacidade'">
-    <div class="admin-modal">
-      <div class="admin-modal-header">
-        <button (click)="closeModal()">←</button>
-        <h3>Privacidade</h3>
-      </div>
+<!-- Privacidade  -->
+<div class="admin-modal-overlay" *ngIf="modalAberto() === 'privacidade'">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <button (click)="closeModal()">←</button>
+      <h3>Privacidade</h3>
+    </div>
 
-      <div class="privacidade-card" *ngFor="let privacidade of privacidades">
-        <div class="privacidade-img">Imagem</div>
-        <div class="privacidade-text">Enunciado</div>
-      </div>
+    <div class="privacidade-card" *ngFor="let privacidade of privacidades">
+      <div class="privacidade-img">Imagem</div>
+      <div class="privacidade-text">Enunciado</div>
     </div>
   </div>
 </div>

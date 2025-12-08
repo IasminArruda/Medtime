@@ -51,30 +51,25 @@
 
   <h1>{{ 'ABOUT.TITLE' | translate }}</h1>
 
-<!-- Cards -->
 <div class="container">
   <div class="cards-grid">
-    <div class="card">
-      <h2>{{ 'ABOUT.KNOW_MEDTIME_TITLE' | translate }}</h2>
-      <p>{{ 'ABOUT.KNOW_MEDTIME_TEXT' | translate }}</p>
-    </div>
+    <ng-container *ngFor="let item of sobreNos; let i = index">
+      <div class="card" *ngIf="i < 3">
+        <h2 *ngIf="i === 0">{{ 'ABOUT.KNOW_MEDTIME_TITLE' | translate }}</h2>
+        <h2 *ngIf="i === 1">{{ 'ABOUT.OUR_OBJECTIVE_TITLE' | translate }}</h2>
+        <h2 *ngIf="i === 2">{{ 'ABOUT.BEHIND_MEDTIME_TITLE' | translate }}</h2>
+        <p [innerText]="item?.text"></p>
+      </div>
 
-    <div class="card">
-      <h2>{{ 'ABOUT.OUR_OBJECTIVE_TITLE' | translate }}</h2>
-      <p>{{ 'ABOUT.OUR_OBJECTIVE_TEXT' | translate }}</p>
-    </div>
-
-    <div class="card">
-      <h2>{{ 'ABOUT.BEHIND_MEDTIME_TITLE' | translate }}</h2>
-      <p>{{ 'ABOUT.BEHIND_MEDTIME_TEXT' | translate }}</p>
-    </div>
-
-    <div class="imagem">
-      <img src="assets/img/foto.png" alt="Imagem">
-    </div>
-
-    </div>
-    </div>
+      <div class="image-only" *ngIf="i === 3">
+        <div class="imagem">
+          <img *ngIf="item?.img" [src]="item.img" alt="Imagem Sobre" />
+          <div *ngIf="!item?.img" class="imagem-placeholder">Imagem</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
 
 <footer class="footer">
   <div class="footer-content">

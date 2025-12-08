@@ -216,11 +216,11 @@ form i {
 /* Perguntas */
 .perguntas-container {
   max-width: 1300px;
-  margin: 50px auto; // Centraliza o container
-  padding: 0 20px; // Espaçamento lateral
+  margin: 50px auto;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
-  gap: 40px; // Espaçamento entre as perguntas
+  gap: 36px;
 }
 
 .faq {

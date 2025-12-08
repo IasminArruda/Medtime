@@ -105,13 +105,11 @@
 </div>
 
 <!-- Perguntas -->
-<div class="perguntas-container">
-  <div *ngIf="dashboardFaq && dashboardFaq.length">
-    <details class="faq" *ngFor="let f of dashboardFaq">
-      <summary>{{ f.q }}</summary>
-      <p>{{ f.a }}</p>
-    </details>
-  </div>
+<div class="perguntas-container" *ngIf="dashboardFaq && dashboardFaq.length">
+  <details class="faq" *ngFor="let f of dashboardFaq">
+    <summary>{{ f.q }}</summary>
+    <p>{{ f.a }}</p>
+  </details>
 </div>
 
 <!-- Carrossel de Marcas -->
