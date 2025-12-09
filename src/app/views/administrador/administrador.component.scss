@@ -1553,3 +1553,266 @@ h5:hover {
   color: #ffffff;
   transform: scale(1.1);
 }
+
+@media (max-width: 600px) {
+
+  .nav {
+    height: 60px;
+    padding: 0 8px;
+  }
+
+  .logo {
+    margin-left: 4px;
+  }
+
+  .logo img {
+    max-width: 38%;
+  }
+
+  .menuhamb {
+    width: 40px;
+    margin-left: -6px;
+  }
+
+  .menu-mobile {
+    margin-left: 1px;
+    margin-top: 10px;
+  }
+
+  .menuImg {
+    font-size: 1.9rem;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .nav-user {
+    margin-right: 4px;
+    gap: 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-user-icon {
+    font-size: 1.9rem;
+    margin-right: 5px;
+  }
+
+  .nav-user-name {
+    display: inline-block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    margin-right: 15px;
+  }
+
+  .user-sidebar {
+    width: 240px;
+    height: 260px;
+    right: 6px;
+    left: auto;
+    top: 2px;
+    margin-left: 0;
+  }
+
+  form {
+    width: 35%;
+    height: 37px;
+    margin-left: 10px;
+    top: 12px;
+    padding: 0 8px;
+    border-radius: 18px;
+  }
+
+  .input {
+    font-size: 8px;
+    padding: 0 6px;
+  }
+
+  form i {
+    font-size: 0.9rem;
+  }
+
+  /* ===== LAYOUT ADMIN ===== */
+  .admin-sidebar-wrapper {
+    flex-direction: column;
+    margin-top: 56px;
+    height: auto;
+  }
+
+  /* ===== MENU LATERAL VIRA MENU HORIZONTAL ===== */
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    display: flex;
+    overflow-x: auto;
+    padding: 8px 6px;
+  }
+
+  .admin-nav {
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .nav-item {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    min-width: 52px;
+    border-bottom: none;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-item i {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .nav-text {
+    display: none;
+  }
+
+  .nav-item.active {
+    background: #fff;
+    color: #024f87;
+  }
+
+  /* ===== ÁREA DE CONTEÚDO ===== */
+  .admin-content-area {
+    padding: 12px;
+  }
+
+  /* ===== PAINEL PRINCIPAL ===== */
+  .admin-panel {
+    width: 80%;
+    height: auto;
+    padding: 10px;
+  }
+
+  .admin-panel h2 {
+    font-size: 1.4rem;
+    margin-bottom: 50px;
+  }
+
+  /* ===== BOTÕES ===== */
+  .admin-buttons-grid {
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+
+  .admin-buttons-grid button {
+    height: auto;
+    font-size: 1rem;
+    padding: 14px;
+  }
+
+  /* ===== MODAIS ===== */
+  .admin-modal,
+  .banner-modal,
+  .curiosidade-modal {
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .admin-modal-header h3 {
+    font-size: 1rem;
+  }
+
+  /* ===== BANNERS ===== */
+  .banner-grid {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  /* ===== LOGOS ===== */
+  .logos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logo-circle {
+    width: 140px;
+    height: 140px;
+  }
+
+  /* ===== FAQ ===== */
+  .faq-admin {
+    padding: 12px;
+  }
+
+  .faq details.faq {
+    font-size: 0.9rem;
+  }
+
+  /* ===== CURIOSIDADES ===== */
+  .curiosidade-inner {
+    flex-direction: column;
+  }
+
+  .curiosidade-img {
+    width: 100%;
+    height: 200px;
+    transform: none;
+  }
+
+  .curiosidade-modal .curiosidade-form {
+    grid-template-columns: 1fr;
+  }
+
+  /* ===== SOBRE NÓS ===== */
+  .sobre-grid {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .sobre-card {
+    flex-direction: column;
+  }
+
+  .col-right {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .sobre-card.image-only .sobre-img-circle {
+    width: 220px;
+    height: 220px;
+  }
+
+  .sobre-edit-text textarea {
+    width: 100%;
+    height: 220px;
+  }
+
+  /* ===== PRIVACIDADE ===== */
+  .admin-modal-body {
+    padding: 10px;
+  }
+
+  .privacidade-card {
+    padding: 14px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    font-size: 0.8rem;
+    height: auto;
+    padding: 6px;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+
+  .social-icons .icon {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+}

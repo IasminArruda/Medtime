@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Component, ElementRef, HostListener, signal, ViewChild, WritableSignal, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -45,6 +45,8 @@ export class AdministradorComponent {
     private sobreService: SobreService,
     private privacidadeService: PrivacidadeService) { }
 
+  private alarmesCheckInterval: any = null;
+
   homeBanners: string[] = [];
   dashboardBanners: string[] = [];
   logos: string[] = [];
@@ -71,6 +73,15 @@ export class AdministradorComponent {
     this.privacidadeService.items$.subscribe(list => {
       this.privacidades = (list || []).slice();
     });
+
+    // initialize alarm check and keep in sync with localStorage changes
+    this.checkAlarmesInStorage();
+    // listen for storage events (other tabs)
+    try {
+      window.addEventListener('storage', () => this.checkAlarmesInStorage());
+    } catch (e) {}
+    // also poll periodically to catch same-tab updates
+    this.alarmesCheckInterval = setInterval(() => this.checkAlarmesInStorage(), 10000);
   }
   banners: any[] = [];
   perguntas: any[] = [];
@@ -500,7 +511,46 @@ export class AdministradorComponent {
     } catch (e) { }
     this.cancelEditSobreImage();
   }
-  
+
+  private getCurrentUserId(): string | number | null {
+    try {
+      const u: any = (this.authService as any).getUsuario?.();
+      if (!u) return null;
+      if (typeof u === 'object' && typeof u.subscribe === 'function') {
+        return null;
+      }
+      return u?.id ?? u?.ID ?? u?.userId ?? null;
+    } catch (e) { return null; }
+  }
+
+  private checkAlarmesInStorage() {
+    try {
+      const key = 'medtime_alarmes_agendados';
+      const raw = localStorage.getItem(key);
+      if (!raw) {
+        this.temProgramacao = false;
+        return;
+      }
+      const arr: any[] = JSON.parse(raw) || [];
+      const userId = this.getCurrentUserId();
+      if (!userId) {
+        this.temProgramacao = arr.length > 0;
+        return;
+      }
+      const mine = arr.filter(a => String(a.userId) === String(userId));
+      this.temProgramacao = mine.length > 0;
+    } catch (e) {
+      this.temProgramacao = false;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.alarmesCheckInterval) {
+      clearInterval(this.alarmesCheckInterval);
+      this.alarmesCheckInterval = null;
+    }
+  }
+
   // Privacidade
   openEditPriv(i: number) {
     this.editingPrivIndex = i;
