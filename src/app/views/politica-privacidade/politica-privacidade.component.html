@@ -16,58 +16,40 @@
 </div>
 
 <div class="user-sidebar" #userMenu [class.active]="userMenuAtivo">
-    <div class="user-profile-card">
-        <div class="profile-avatar">
-            <i class="fas fa-user-circle"></i>
-          </div>
-        <div class="profile-details">
-            <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
-            <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
+  <div class="user-profile-card">
+    <div class="profile-avatar">
+      <i class="fas fa-user-circle"></i>
+    </div>
+    <div class="profile-details">
+      <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
+      <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
       <i class="fas fa-horizontal-rule"></i>
-         
-    </div>
-      </div>
+    </div>
+  </div>
 
-    <div class="user-menu-options">
-    <div class="config">
-      <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
-        <i class="fas fa-cog option-icon"></i>
-        <h5>{{ 'NAVIGATION.SETTINGS' | translate }}</h5>
-      </a>
-    </div>
-        <a routerLink="/politica-privacidade" (click)="toggleUserMenu()" class="menu-option">
-            <i class="fas fa-shield-alt option-icon"></i>
-            <h5>Política de Privacidade</h5>
-          </a>
-        <a (click)="efetuarLogout()" class="menu-option logout-option">
-            <i class="fas fa-sign-out-alt option-icon"></i>
-            <h5>Fazer Logout</h5>
-          </a>
-     
+  <div class="user-menu-options">
+  <div class="config">
+    <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
+      <i class="fas fa-cog option-icon"></i>
+      <h5>{{ 'NAVIGATION.SETTINGS' | translate }}</h5>
+    </a>
   </div>
+    <a routerLink="/politica-privacidade" (click)="toggleUserMenu()" class="menu-option">
+      <i class="fas fa-shield-alt option-icon"></i>
+      <h5>Política de Privacidade</h5>
+    </a>
+    <a (click)="efetuarLogout()" class="menu-option logout-option">
+      <i class="fas fa-sign-out-alt option-icon"></i>
+      <h5>Fazer Logout</h5>
+    </a>
+  </div>
 </div>
 <div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
 
 <h1>Política de Privacidade</h1>
 
 <div class="container">
-  <p>A MedTime valoriza sua privacidade e protege seus dados pessoais de acordo com a Lei Geral de Proteção de Dados (LGPD).</p>
-  <h3>O que coletamos:</h3>
-  <h4> - Dados fornecidos por você: nome, e-mail, telefone, medicamentos, histórico e condições de saúde.</h4>
-  <h4> - Dados do uso do app: leitura de QR Codes, horários de uso, tipo de dispositivo e páginas acessadas.</h4>
-  <h3>Como usamos:</h3>
-  <h4> - Para enviar alertas e registrar o uso de medicamentos.</h4>
-  <h4> - Para exibir informações dos remédios, como bulas.</h4>
-  <h4> - Para melhorar a plataforma com dados anônimos.</h4>
-  <h4> - Para garantir a segurança do serviço.</h4>
-  <h3>Segurança e compartilhamento:</h3>
-  <h4>Seus dados são armazenados com segurança e só são compartilhados com parceiros essenciais para o funcionamento do
-  serviço. Não vendemos seus dados.</h4>
-  <h3>Seus direitos:</h3>
-  <h4>Você pode acessar, corrigir ou excluir seus dados, além de gerenciar autorizações a qualquer momento.
-  Esta política pode ser atualizada. Sempre que houver mudanças importantes, você será informado no aplicativo ou site.</h4>
-  <h3>Se tiver dúvidas sobre Política de Privacidade, entre em contato</h3>
-  <h3>E-mail: suporte@medtime.com</h3>
+  <div class="policy-content" [innerHTML]="policyHtml"></div>
 </div>
 
 <footer class="footer">

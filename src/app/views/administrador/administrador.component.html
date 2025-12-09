@@ -75,8 +75,10 @@
             <span class="profile-name">{{ authService.getUsuario()?.nome || authService.getUsuario()?.name }}</span>
             <span class="profile-email">{{ authService.getUsuario()?.email }}</span>
       <i class="fas fa-horizontal-rule"></i>
+         
     </div>
       </div>
+
     <div class="user-menu-options">
     <div class="config">
       <a routerLink="/configuracao" (click)="toggleUserMenu()" class="menu-option">
@@ -92,6 +94,7 @@
             <i class="fas fa-sign-out-alt option-icon"></i>
             <h5>Fazer Logout</h5>
           </a>
+     
   </div>
 </div>
 <div class="overlay" [class.active]="userMenuAtivo" (click)="toggleUserMenu()"></div>
@@ -117,7 +120,7 @@
         <button (click)="openModal('perguntas')">Perguntas</button>
         <button (click)="openModal('curiosidades')">Curiosidades</button>
         <button (click)="openModal('sobrenos')">Sobre Nós</button>
-        <button (click)="openModal('pesquisas')">Privacidade</button>
+        <button (click)="openModal('privacidade')">Privacidade</button>
       </div>
     </div>
 
@@ -395,13 +398,33 @@
 <div class="admin-modal-overlay" *ngIf="modalAberto() === 'privacidade'">
   <div class="admin-modal">
     <div class="admin-modal-header">
-      <button (click)="closeModal()">←</button>
+      <button (click)="closeModal()"><i class="fas fa-circle-arrow-left"></i></button>
       <h3>Privacidade</h3>
     </div>
 
-    <div class="privacidade-card" *ngFor="let privacidade of privacidades">
-      <div class="privacidade-img">Imagem</div>
-      <div class="privacidade-text">Enunciado</div>
+    <div class="admin-modal-body">
+      <div class="privacidade-list">
+        <div class="privacidade-card" *ngFor="let priv of privacidades; let i = index">
+          <h4>{{ priv.title }}</h4>
+
+          <div *ngIf="editingPrivIndex !== i">
+            <div class="privacidade-content" [innerHTML]="priv.content"></div>
+            <div class="privacidade-actions">
+              <button class="btn-editar" (click)="openEditPriv(i)">Editar</button>
+            </div>
+          </div>
+
+          <div *ngIf="editingPrivIndex === i" class="privacidade-edit">
+            <label>Conteúdo (HTML permitido)</label>
+            <textarea [(ngModel)]="privTempContent" rows="10"></textarea>
+            <div class="privacidade-edit-actions">
+              <button class="btn-cancel" (click)="cancelEditPriv()">Cancelar</button>
+              <button class="btn-save" (click)="confirmEditPriv()">Salvar</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

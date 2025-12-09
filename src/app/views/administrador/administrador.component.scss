@@ -913,13 +913,6 @@ h5:hover {
   cursor: pointer;
 }
 
-.admin-modal-body {
-  padding: 18px 22px 26px 22px;
-  background: #f4f4f4;
-  max-height: calc(95vh - 72px);
-  overflow-y: auto;
-}
-
 .curiosidades-toolbar {
   display: flex;
   justify-content: flex-start;
@@ -1399,6 +1392,121 @@ h5:hover {
   box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
   transform: translateY(-2px);
   color: white;
+}
+
+// Privacidade
+.admin-modal-body {
+  padding: 18px 22px 26px 22px;
+  background: #f4f4f4;
+  max-height: calc(95vh - 72px);
+  overflow-y: auto;
+
+  .privacidade-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 8px 4px 18px 4px;
+  }
+
+  .privacidade-card {
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+    padding: 18px;
+    position: relative;
+    min-height: 160px;
+    box-shadow: 0 6px 18px rgba(3, 27, 80, 0.06);
+  }
+
+  .privacidade-card h4 {
+    margin: 0 0 8px 0;
+    color: #052659;
+    font-weight: 700;
+  }
+
+  .privacidade-content {
+    color: #222;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-height: 220px;
+    overflow: auto;
+    padding-right: 6px;
+  }
+
+  .privacidade-actions {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+  }
+
+  .privacidade-actions .btn-editar {
+    background: #024f87;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+  .privacidade-actions .btn-editar:hover {
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    transform: translateY(-2px);
+    color: white;
+  }
+
+  .privacidade-edit textarea {
+    width: 100%;
+    min-height: 220px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #d0d0d0;
+    box-sizing: border-box;
+  }
+
+  .privacidade-edit-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+
+  .privacidade-edit-actions .btn-cancel {
+    background: white;
+    color: #024f87;
+    border: 1px solid #024f87;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .privacidade-edit-actions .btn-cancel:hover {
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    transform: translateY(-2px);
+    color: #024f87;
+  }
+
+  .privacidade-edit-actions .btn-save {
+    width: 100px;
+    height: 38px;
+    background: #024f87;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    margin-left: 10px;
+  }
+
+  .privacidade-edit-actions .btn-save:hover {
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    transform: translateY(-2px);
+    color: white;
+  }
 }
 
 /* Footer */

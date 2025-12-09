@@ -7,6 +7,7 @@ import { LogoService } from 'src/app/services/logo.service';
 import { FaqService, FaqItem } from 'src/app/services/faq.service';
 import { CuriosidadesService, CuriosidadeItem } from 'src/app/services/curiosidades.service';
 import { SobreService, SobreItem } from 'src/app/services/sobre.service';
+import { PrivacidadeService, PrivacidadeItem } from 'src/app/services/privacidade.service';
 
 
 export interface AdministradorItems {
@@ -41,7 +42,8 @@ export class AdministradorComponent {
     private logoService: LogoService, public faqService: FaqService,
     private translate: TranslateService,
     private curiosidadesService: CuriosidadesService,
-    private sobreService: SobreService) { }
+    private sobreService: SobreService,
+    private privacidadeService: PrivacidadeService) { }
 
   homeBanners: string[] = [];
   dashboardBanners: string[] = [];
@@ -65,12 +67,20 @@ export class AdministradorComponent {
     this.sobreService.sobre$.subscribe(list => {
       this.sobreNos = (list || []).slice();
     });
+    // subscribe to privacidade service
+    this.privacidadeService.items$.subscribe(list => {
+      this.privacidades = (list || []).slice();
+    });
   }
   banners: any[] = [];
   perguntas: any[] = [];
   curiosidades: any[] = [];
   sobreNos: any[] = [];
   privacidades: any[] = [];
+
+  // Privacidade editing state
+  editingPrivIndex: number | null = null;
+  privTempContent: string = '';
 
 
   toggleMenu() {
@@ -489,6 +499,29 @@ export class AdministradorComponent {
       console.log('[Admin] sobre list after save', this.sobreService.getList());
     } catch (e) { }
     this.cancelEditSobreImage();
+  }
+  
+  // Privacidade
+  openEditPriv(i: number) {
+    this.editingPrivIndex = i;
+    const it = this.privacidades[i] || { content: '' };
+    this.privTempContent = it.content || '';
+  }
+
+  cancelEditPriv() {
+    this.editingPrivIndex = null;
+    this.privTempContent = '';
+  }
+
+  confirmEditPriv() {
+    if (this.editingPrivIndex === null) return;
+    const idx = this.editingPrivIndex;
+    const existing: PrivacidadeItem = (this.privacidades[idx] || { id: `priv-${idx}`, title: idx === 0 ? 'Política de Privacidade' : 'Termos de Uso', content: '' });
+    const updated: PrivacidadeItem = { id: existing.id, title: existing.title, content: (this.privTempContent || '').trim() };
+    try {
+      this.privacidadeService.update(idx, updated);
+    } catch (e) { }
+    this.cancelEditPriv();
   }
 
 
